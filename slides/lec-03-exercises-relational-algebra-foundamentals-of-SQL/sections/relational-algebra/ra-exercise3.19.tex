@@ -1,0 +1,74 @@
+\def\schemaEx3.19{\small \begin{align*}
+    CLIENTI &= (\underline{Codice}, Nome, Indirizzo, Citta)\\
+    NOLEGGI &= (\underline{Cliente, Auto, DataPrelievo}, DataRestituzione)\\
+    AUTOVETTURE &= (\underline{Targa}, Modello, Colore, AnnoImmatricolazione, CostoGiornaliero)
+    \end{align*}
+    $NOLEGGI$ con vincolo di integrit\`a referenziale fra l'attributo $Auto$ e la relazione $AUTOVETTURE$ e con vincolo di integrit\`a referenziale fra l'attributo $Cliente$ e la relazione $CLIENTI$.}
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{3.19.1}
+    \vspace{-3.cm}
+    \schemaEx3.19
+    \vspace{.3cm}
+
+    Formulare l'interrogazione che restituisce i dati dei clienti che hanno noleggiato almeno un'autovettura nell'anno 2006.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.1}
+    \vspace*{-2cm}
+    \schemaEx3.19
+    \vspace{.3cm}
+
+    {\small Formulare l'interrogazione che restituisce i dati dei clienti che hanno noleggiato almeno un'autovettura nell'anno 2006:}
+    \small
+    \begin{gather*}
+        A = \sigma_{(DataPrelievo~\geq~'01/01/2006')~AND~(DataPrelievo~\leq~'31/12/2006')}~(NOLEGGI);\\
+        CLIENTI~\bowtie_{Codice~=~Cliente} A
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{3.19.2}
+    \vspace{-3.cm}
+    \schemaEx3.19
+    \vspace{.3cm}
+
+    Formulare l'interrogazione che restituisce i clienti che hanno noleggiato pi\`u di un'autovettura.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.2}
+    \vspace*{-2cm}
+    \schemaEx3.19
+    \vspace{.3cm}
+
+    {\small Formulare l'interrogazione che restituisce i clienti che hanno noleggiato pi\`u di un'autovettura:}
+    \small
+    \begin{gather*}
+        \pi_{Cliente} (\sigma_{Auto~\neq~Auto'} (NOLEGGI~\bowtie_{Cliente=Cliente'}~(\rho_{X'~\leftarrow~X} NOLEGGI)))
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{3.19.3}
+    \vspace{-3.cm}
+    \schemaEx3.19
+    \vspace{.3cm}
+
+    Formulare l'interrogazione che restituisce i clienti che hanno noleggiato autovetture di un solo modello.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.3}
+    \vspace*{-2cm}
+    \schemaEx3.19
+    \vspace{.3cm}
+
+    {\small Formulare l'interrogazione che restituisce i clienti che hanno noleggiato autovetture di un solo modello:}
+    \small
+    \begin{gather*}
+        V = NOLEGGI~\bowtie_{Auto~=~Targa}~AUTOVETTURE\\
+        V_{1} = V~\bowtie_{Cliente~=~Cliente'} (\rho_{X'~\leftarrow~X} V)\\
+        \pi_{Cliente}~NOLEGGI - \pi_{Cliente}~(\sigma_{Modello~\neq~Modello'} V_1)
+    \end{gather*}
+\end{frame}

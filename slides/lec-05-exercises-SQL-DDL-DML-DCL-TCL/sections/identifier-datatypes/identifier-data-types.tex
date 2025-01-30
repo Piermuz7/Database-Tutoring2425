@@ -1,0 +1,44 @@
+\begin{frame}{Identificatori}
+    \onslide<1->Gli \textbf{Identificatori} (nomi di tabelle e di attributi) sono costituiti da sequenze di caratteri: devono iniziare con una lettera e possono anche contenere il carattere \_ .
+    \newline
+    \onslide<2->\\ Il nome di un attributo (colonna di una tabella) \`e identificato per mezzo della notazione:
+    \[ NomeTabella.NomeAttributo \]
+    \onslide<2->Il nome della tabella pu\`o essere omesso se non ci sono ambiguit\`a nell'identificazione dell'attributo.
+\end{frame}
+%
+\begin{frame}[allowframebreaks]{Tipi di Dati}
+    Ogni colonna di una tabella di database deve avere un nome e un tipo di dati.
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \rowcolor{cyan!30}Tipo di dato & Descrizione \\
+        \hline
+        CHARACTER(n) & Stringa di caratteri. Lunghezza fissa n \\ \hline
+        VARCHAR(n) & Stringa di caratteri. Lunghezza variabile. Lunghezza massima n \\ \hline
+        BINARY(n) & Stringa binaria. Lunghezza fissa n \\ \hline
+        BOOLEAN & Memorizza i valori TRUE o FALSE \\ \hline
+        VARBINARY(n) & Stringa binaria. Lunghezza variabile. Lunghezza massima n \\ \hline
+        INTEGER(p) & Numero intero (senza decimali). Precisione p \\ \hline
+        SMALLINT & Numero intero (senza decimali). Precisione 5 \\ \hline
+        INTEGER	& Numero intero (senza decimali). Precisione 10 \\ \hline
+        BIGINT & Numero intero (senza decimali). Precisione 19 \\ \hline
+        DECIMAL(p,s) & Numero decimale con precisione p e s cifre decimali \\ \hline
+        NUMERIC(p,s) & Numero decimale con precisione p e s cifre decimali \\ \hline
+        \end{tabular}
+
+        \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \rowcolor{cyan!30}Tipo di dato & Descrizione \\
+        \hline
+        FLOAT(p) & Numero reale con mantissa di precisione p \\ \hline
+        REAL & Numero reale con mantissa di precisione 7 \\ \hline
+        FLOAT & Numero reale con mantissa di precisione 16 \\ \hline
+        DOUBLE PRECISION & Numero reale con mantissa di precisione 16 \\ \hline
+        DATE & Memorizza i valori di anno, mese e giorno \\ \hline
+        TIME & Memorizza i valori di ore, minuti e secondi \\ \hline
+        TIMESTAMP & Memorizza i valori di anno, mese, giorno, ora, minuto e secondo \\ \hline
+        ARRAY & un insieme ordinato di n elementi \\ \hline
+        XML & Memorizza dati XML \\ \hline
+        \end{tabular}
+\end{frame}

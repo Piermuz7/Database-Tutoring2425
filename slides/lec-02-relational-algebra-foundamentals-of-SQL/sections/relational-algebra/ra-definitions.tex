@@ -1,0 +1,94 @@
+\begin{frame}{Algebra Relazionale}
+    \begin{block}{Algebra relazionale}
+        \`E un linguaggio procedurale in cui le operazioni complesse vengono specificate descrivendo il procedimento da seguire per ottenere le soluzioni.
+    \end{block}
+    
+    \noindent \`E uno strumento tecnico di fondamentale importanza per comprendere come si interrogano i database relazionali.
+        
+    
+    \end{frame}
+    %
+    \begin{frame}[allowframebreaks]{Definizioni}
+        \begin{minipage}{0.7\textwidth}
+            \begin{block}{Ennupla}
+                Una $n$-upla (o tupla) \`e una collezione ordinata di $n$ oggetti.
+            \end{block}
+          \end{minipage}
+        \begin{block}{Relazione binaria}
+            Una relazione $r$ su 2 insiemi $A$ e $B$ \`e un sottoinsieme del prodotto cartesiano $A \times B$ dei due insiemi.
+            \[ r \subseteq A \times B\]
+        \end{block}
+        \begin{block}{Relazione $n$-aria}
+        Una relazione su $n$ insiemi $A_1, A_2, \dotsc, A_n$ \`e un sottoinsieme di tutte le $n$-uple ordinate $a_1,a_2,\dotsc,a_n$ che si possono costruire prendendo nell'ordine un elemento $a_1$ dal primo insieme $A_1$, $a_2$ dal scondo insiemie $A_2$ e cos\`i via.
+        \end{block}
+        {Dato che una relazione \`e un insieme:
+        \begin{itemize}
+            \item l'ordine delle $n$-uple \`e irrilevante;
+            \item ogni $n$-upla \`e ordinata e distinta;
+            \item possiamo rappresentarla sotto forma di tabella se...
+        \end{itemize}}
+        \framebreak
+        ...vengono rispettati i requisiti fondamentali delle tabelle di un database:
+        \begin{itemize}
+            \item tutte le righe sono diverse tra loro;
+            \item tutte le intestazioni delle colonne sono diverse tra loro;
+            \item i valori di ogni colonna sono fra loro omogenei;
+            \item l'ordine delle righe \`e irrilevante;
+            \item l'ordine delle colonne \`e irrilevante.
+        \end{itemize}
+        \framebreak
+        \begin{itemize}
+            \item \textbf{Attributo}: nome con il quale si identifica una colonna;
+            \item \textbf{Dominio}: insieme dei valori che possono essere assunti da un attributo (int, boolean, float, string);
+            \item Una \textbf{ennupla} su in insieme $X$ di attributi \`e una funzione che associa a ciascun attributo $A$ in $X$ un valore del dominio di $A$;
+            \item \textbf{Schema di relazione} $R(X)$:
+            \begin{itemize}
+                \item $R$ \`e il nome della relazione;
+                \item $X$ \`e un insieme di attributi $X=\{A_1, \dotsc, A_n$\}
+            \end{itemize}
+            \item Uno \textbf{schema di Basi di Dati} \`e un insieme di schemi di relazione distinti:
+            \[ R=\{R_1(X_1),\dotsc,R_k(X_k)\}\]
+            \item L'\textbf{instanza di una relazione} su uno schema $R(X)$ \`e l'insieme di $n$-uple su X;
+            \item L'\textbf{instanza di una base di dati} su uno schema $R=\{R_1(X_1),\dotsc,R_k(X_k)\}$ \`e l'insieme di relazioni $r=\{r_1,\dotsc,r_k\}~|~r_i$ \`e una relazione su $R_i$.
+        \end{itemize}
+    \end{frame}
+    %
+    \begin{frame}{Esempio di Relazione}
+        \vspace{-.7cm}
+        \[ Docente = \{Re, Gagliardi, Marcantoni\} \]
+        \[ Corso = \{Basi~di~Dati, Reti\} \]
+        \[ r = ``Insegna'' \]
+        \[ Insegna \subseteq Docente \times Corso \]
+        \pause
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small Prodotto cartesiano: $Docente \times Corso$}
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Docente & Corso \\
+            \hline
+            Re & Basi di Dati \\ \hline
+            Re & Reti \\ \hline
+            Gagliardi & Basi di Dati \\ \hline
+            Gagliardi & Reti \\ \hline
+            Marcantoni & Basi di Dati \\ \hline
+            Marcantoni & Reti \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                \pause
+                {\small Insegna}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30}Docente & Corso \\
+                    \hline
+                    Re & Basi di Dati \\ \hline
+                    Gagliardi & Basi di Dati \\ \hline
+                    Marcantoni & Reti \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+    \end{frame}

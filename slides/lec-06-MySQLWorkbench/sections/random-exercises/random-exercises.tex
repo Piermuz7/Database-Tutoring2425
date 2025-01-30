@@ -1,0 +1,436 @@
+\def\schemaPersonaMatrimonio{\small \begin{align*}
+    &PERSONA(\underline{CF}, cognome, nome, annoNascita, sesso)\\
+    &MATRIMONIO(\underline{CFmoglie}, \underline{CFmarito}, anno, luogo)
+    \end{align*}}
+\def\schemaNegoziProdottiListino{\small \begin{align*}
+    &NEGOZI(\underline{IDnegozio}, nome, citta)\\
+    &PRODOTTI(\underline{codProdotto}, nomeProdotto, marca)\\
+    &LISTINO(\underline{negozio}, \underline{prodotto}, prezzo)
+    \end{align*}}
+\def\schemaVenditeClientiDettagliVendite{\small \begin{align*}
+    &Vendite(\underline{NumeroScontrino}, Data)\\
+    &Clienti(\underline{Codice}, Cognome, Eta)\\
+    &DettagliVendite(\underline{NumeroScontrino}, \underline{Riga}, Prodotto, Importo, Cliente)
+    \end{align*}}
+\def\schemaClientiNoleggiAuto{\small \begin{align*}
+    &CLIENTI(\underline{Codice}, Nome, Indirizzo, Citta)\\
+    &NOLEGGI(\underline{Cliente}, \underline{Auto}, DataPrelievo, DataRestituzione)\\
+    &AUTOVETTURE(\underline{Targa}, Modello, Colore, AnnoImmatricolazione, CostoGiornaliero)
+    \end{align*}}
+\def\schemaProdottiVendite{\small \begin{align*}
+    &PRODOTTI(\underline{Codice}, Descrizione, Marca)\\
+    &VENDITE(\underline{Prodotto}, \underline{Mese}, \underline{Anno}, Quantita)  
+    \end{align*}}
+\def\schemaRivisteArticoli{\small \begin{align*}
+    &RIVISTE(\underline{CodR}, NomeR, Editore)\\
+    &ARTICOLI(\underline{CodA}, Titolo, Argomento, CodR)
+    \end{align*}}
+\def\schemaMuseiOpereArtisti{\small \begin{align*}
+    &MUSEI (\underline{IdMuseo}, NomeM, Citta, Nazione)\\
+    &OPERE (\underline{IdOpera}, Titolo, Tipo, AnnoO, IdMuseo^{*}, NomeA^{*})\\
+    &ARTISTI (\underline{NomeA}, Nazione, AnnoN, AnnoM)
+    \end{align*}}
+\begin{frame}[fragile]{Random: Es. 1}
+Dato il seguente schema:
+\schemaPersonaMatrimonio
+
+Trovare cognome e Nome delle persone di sesso femminile in ordine alfabetico di cognome.
+\pause
+\begin{lstlisting}
+SELECT Nome, Cognome
+FROM Persona
+WHERE Sesso = `F'
+ORDER BY cognome;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 2}
+Dato il seguente schema:
+\schemaPersonaMatrimonio
+
+Trovare il numero di persone di ogni sesso.
+\pause
+\begin{lstlisting}
+SELECT Sesso, COUNT(*)
+FROM Persona
+GROUP BY Sesso;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 3}
+Dato il seguente schema:
+\schemaPersonaMatrimonio
+
+Trovare nome e cognome degli uomini pi\`u giovani della loro moglie.
+\pause
+\begin{lstlisting}
+SELECT m.Nome, m.Cognome
+FROM Matrimonio JOIN Persona AS m ON CFmarito = m.CF
+JOIN Persona AS f ON CFmoglie = f.CF
+WHERE m.AnnoNascita > f.AnnoNascita;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 4}
+Dato il seguente schema:
+\schemaPersonaMatrimonio
+
+Trovare il codice fiscale degli uomini che si sono sposati pi\`u volte.
+\pause
+\begin{lstlisting}
+SELECT CFmarito
+FROM Matrimonio
+GROUP BY CFMarito
+HAVING COUNT(*) > 1;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 5}
+Dato il seguente schema:
+\schemaPersonaMatrimonio
+
+Elencare nome e cognome degli sposati nell'anno 2012.
+\pause
+\begin{lstlisting}
+SELECT m.Nome, m.Cognome, f.Nome, f.Cognome
+FROM Matrimonio JOIN Persona AS m ON CFmarito = m.CF
+JOIN Persona AS f ON CFmoglie = f.CF
+WHERE anno = 2012;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 6}
+Dato il seguente schema:
+\schemaNegoziProdottiListino
+Con vincoli di integrit\`a referenziale fra l'attributo Negozio di LISTINO e la relazione NEGOZI e fra l'attributo Prodotto di LISTINO e la relazione PRODOTTI.
+\newline
+\\Trovare nomi e citt\`a dei negozi che vendono i prodotti della marca `Durex'.
+\pause
+\begin{lstlisting}
+SELECT DISTINCT Negozi.Nome, Negozi.Citta
+FROM Negozi JOIN Listino ON Negozi.IDNegozio = Listino.Negozio
+JOIN Prodotti ON Listino.Prodotto = Prodotti.CodProdotto
+WHERE UPPER(Prodotti.Marca) = `DUREX';
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 7}
+Dato il seguente schema:
+\schemaNegoziProdottiListino
+Con vincoli di integrit\`a referenziale fra l'attributo Negozio di LISTINO e la relazione NEGOZI e fra l'attributo Prodotto di LISTINO e la relazione PRODOTTI.
+\newline
+\\Quanti negozi vendono il prodotto con codice `A'.
+\pause
+\begin{lstlisting}
+SELECT COUNT(*)
+FROM Listino PRODOTTI.
+WHERE Prodotto = `A';
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 8}
+Dato il seguente schema:
+\schemaNegoziProdottiListino
+Con vincoli di integrit\`a referenziale fra l'attributo Negozio di LISTINO e la relazione NEGOZI e fra l'attributo Prodotto di LISTINO e la relazione PRODOTTI.
+\newline
+\\I codici dei prodotti che vengono venduti in una sola citt\`a.
+\pause
+\begin{lstlisting}
+SELECT DISTINCT Prodotto, COUNT(citta)
+FROM Listino JOIN Negozi ON Negozio=IDnegozio
+GROUP BY prodotto
+HAVING COUNT(*) = 1;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 9}
+Dato il seguente schema:
+\schemaVenditeClientiDettagliVendite
+con valori nulli ammessi sull'attributo Cliente e con vincoli di integrit\`a referenziale fra NumeroScontrino e la relazione Vendite fra Cliente e la relazione Clienti.
+\newline
+\\Definire in SQL la vista VenditeConTotale(NumeroScontrino, Totale) che riporta, per ogni scontrino, l'importo totale (ottenuto come somma degli importi dei prodotti riportati su tale scontrino).
+\pause
+\begin{lstlisting}
+CREATE VIEW VenditeConTotale AS
+SELECT NumeroScontrino, SUM(Importo) AS Totale
+FROM DettagliVendite
+GROUP BY NumeroScontrino;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 10}
+Dato il seguente schema:
+\schemaClientiNoleggiAuto
+con vincoli di integrit\`a referenziale fra l'attributo Auto della relazione Noleggi e la relazione Autovetture e fra l'attributo Cliente della relazione Noleggi e la relazione Clienti.
+\newline
+\\Formulare in SQL l'interrogazione che restituisce, per ogni noleggio del 2008, il costo globale (ottenuto moltiplicando il costo giornaliero dell'auto noleggiata per la durata del noleggio) e i dati del cliente.
+\pause
+\begin{lstlisting}
+SELECT Auto, DataPrelievo, CLIENTI.*, 
+(DataRestituzione-DataPrelievo)*CostoGiornaliero AS CostoGlobale
+FROM NOLEGGI JOIN CLIENTI ON Cliente = Codice
+JOIN AUTOVETTURE ON Auto = Targa
+AND YEAR(DataPrelievo) = 2008;    
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 11}
+Dato il seguente schema:
+\schemaClientiNoleggiAuto
+con vincoli di integrit\`a referenziale fra l'attributo Auto della relazione Noleggi e la relazione Autovetture e fra l'attributo Cliente della relazione Noleggi e la relazione Clienti.
+\newline
+\\Formulare in SQL l'interrogazione che restituisce i clienti che hanno noleggiato pi\`u di un'autovettura.
+\pause
+\begin{lstlisting}   
+SELECT DISTINCT N1.Cliente
+FROM NOLEGGI N1 JOIN NOLEGGI N2 ON N1.Cliente = N2.Cliente
+WHERE N1.Auto <> N2.Auto;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 12}
+Dato il seguente schema:
+\schemaClientiNoleggiAuto
+con vincoli di integrit\`a referenziale fra l'attributo Auto della relazione Noleggi e la relazione Autovetture e fra l'attributo Cliente della relazione Noleggi e la relazione Clienti.
+\newline
+\\Formulare in SQL l'interrogazione che restituisce, per ogni autovettura, il numero di clienti che l'hanno noleggiata (che pu\`o essere zero).
+\pause
+\begin{lstlisting}   
+SELECT Targa, COUNT (Cliente)
+FROM Autovetture LEFT JOIN NOLEGGI ON Targa = Auto
+GROUP BY Targa;    
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 13}
+Dato il seguente schema:
+\schemaProdottiVendite
+con vincolo di integrit\`a referenziale fra Prodotto e la relazione PRODOTTI.
+\newline
+\\Formulare in SQL l'interrogazione che trova codice, descrizione e marca per ogni prodotto che abbia almeno una vendita nell'anno 2007.
+\pause
+\begin{lstlisting}   
+SELECT DISTINCT Codice, Descrizione, Marca
+FROM PRODOTTI JOIN VENDITE ON Codice = Prodotto
+WHERE Anno = 2007;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 14}
+Dato il seguente schema:
+\schemaProdottiVendite
+con vincolo di integrit\`a referenziale fra Prodotto e la relazione PRODOTTI.
+\newline
+\\Formulare in SQL l'interrogazione che trova, per ogni prodotto (basta mostrare il codice), la quantit\`a venduta nel 2007 (cio\`e la somma delle quantit\`a vendute nei mesi del 2007); mostrare due formulazioni, una che ignora i prodotti non venduti nel 2007 e l'altra che li include, ponendo il valore pari a 0.
+\pause
+Formulazione 1:
+\begin{lstlisting}   
+SELECT Prodotto AS Codice, SUM(Quantita) AS QTot
+FROM VENDITE
+WHERE Anno = 2007
+GROUP BY Prodotto;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 14}
+\vspace{-.7cm}
+Dato il seguente schema:
+\schemaProdottiVendite
+con vincolo di integrit\`a referenziale fra Prodotto e la relazione PRODOTTI.
+
+\pause
+Formulazione 2: include i prodotti non venduti nel 2007, ponendo il valore pari a 0
+\begin{lstlisting}   
+SELECT Prodotto AS Codice, SUM(Quantita) AS QTot
+FROM VENDITE
+WHERE Anno = 2007
+GROUP BY Prodotto
+UNION
+SELECT Codice, 0 AS QTot
+FROM PRODOTTI
+WHERE Codice NOT IN (
+    SELECT Prodotto
+    FROM VENDITE
+    WHERE Anno = 2007
+);
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 15}
+Dato il seguente schema:
+\schemaRivisteArticoli
+\newline
+\\Formulare in SQL l'interrogazione per estrarre il codice e il nome delle riviste che hanno pubblicato almeno un articolo di motociclismo.
+\pause
+
+\begin{lstlisting}   
+SELECT CodR, NomeR
+FROM RIVISTE
+WHERE CodR IN (
+    SELECT CodR
+    FROM ARTICOLI
+    WHERE Argoment = `Motociclismo'
+);
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 15}
+Dato il seguente schema:
+\schemaRivisteArticoli
+\newline
+\\Formulare in SQL l'interrogazione per estrarre il codice e il nome delle riviste che hanno pubblicato almeno un articolo di motociclismo.
+
+Altra possibile soluzione:
+\begin{lstlisting}   
+SELECT CodR, NomeR
+FROM RIVISTE AS R
+WHERE EXISTS (
+    SELECT *
+    FROM ARTICOLI AS A
+    WHERE A.CodR = R.CodR AND Argomento = `Motociclismo'
+);   
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 16}
+Dato il seguente schema:
+\schemaRivisteArticoli
+\newline
+\\Formulare in SQL l'interrogazione per estrarre il nome delle riviste che hanno pubblicato solo articoli di motociclismo.
+\pause
+
+\begin{lstlisting}   
+SELECT DISTINCT NomeR
+FROM RIVISTE JOIN ARTICOLI ON RIVISTE.CodR = ARTICOLI.CodR
+WHERE RIVISTE.CodR NOT IN (
+    SELECT CodR
+    FROM ARTICOLI
+    WHERE Argomento <> `Motociclismo'
+);   
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 17}
+\vspace{-.5cm}
+Dato il seguente schema:
+\schemaRivisteArticoli
+\\Formulare in SQL l'interrogazione per estrarre il nome delle riviste che hanno pubblicato almeno 10 articoli di automobilismo e almeno 25 articoli di motociclismo.
+\pause
+
+\begin{lstlisting}   
+SELECT NomeR FROM RIVISTE
+WHERE CodR IN (
+    SELECT CodR FROM ARTICOLI
+    WHERE Argomento = `Automobilismo'
+    GROUP BY CodR HAVING COUNT(*)>=10
+    ) 
+AND CodR IN 
+        (SELECT CodR FROM ARTICOLO
+        WHERE Argomento = `Motociclismo'
+        GROUP BY CodR HAVING COUNT(*) >= 25
+        );   
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 18}
+\vspace{-.5cm}
+Dato il seguente schema:
+\schemaMuseiOpereArtisti
+con vincoli di integrit\`a referenziale indicati da $*$.
+\newline
+\\Si formuli la seguente interrogazione SQL che restituisce senza duplicazione dei risultati:
+
+Per ciascun museo che conserva solo dipinti, il nome del museo ed il numero di dipinti.
+\pause
+
+\begin{lstlisting}   
+SELECT M.NomeM, COUNT(*) AS NumeroDipinti
+FROM MUSEI AS M JOIN OPERE AS O ON M.IdMuseo = O.IdMuseo
+WHERE NOT EXISTS (
+    SELECT *
+    FROM OPERE AS O2 JOIN O ON O2.IdMuseo = O.IdMuseo
+    WHERE O2.Tipo <> `Dipinto' )
+GROUP BY M.IdMuseo, M.NomeM;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 19}
+\vspace{-.5cm}
+Dato il seguente schema:
+\schemaMuseiOpereArtisti
+con vincoli di integrit\`a referenziale indicati da $*$.
+\newline
+\\Si formuli la seguente interrogazione SQL che restituisce senza duplicazione dei risultati:
+
+Per ogni museo italiano, il numero di opere di artisti inglesi.
+\pause
+
+\begin{lstlisting}   
+SELECT M.IdMuseo, COUNT(*) AS numeroOpere
+FROM MUSEI AS M JOIN OPERE AS O ON M.IdMuseo = O.IdMuseo
+JOIN ARTISTI AS A ON O.NomeA = A.NomeA
+WHERE M.Nazione = `Italia' AND A.Nazione = `Inghilterra'
+GROUP BY M.IdMuseo;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 20}
+\vspace{-.5cm}
+Dato il seguente schema:
+\schemaMuseiOpereArtisti
+con vincoli di integrit\`a referenziale indicati da $*$.
+\newline
+\\Si formuli la seguente interrogazione SQL che restituisce senza duplicazione dei risultati:
+
+Il nome dell'artista ed il titolo delle opere di artisti francesi conservate nei musei di Londra.
+\pause
+
+\begin{lstlisting}   
+SELECT A.NomeA, O.Titolo
+FROM ARTISTI AS A JOIN OPERE AS O ON A.NomeA = O.NomeA
+JOIN MUSEI AS M ON O.IdMuseo = M.IdMuseo
+WHERE A.Nazionalita = `Francia' AND M.Citta = `Londra';
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 21}
+\vspace{-.5cm}
+Dato il seguente schema:
+\schemaMuseiOpereArtisti
+con vincoli di integrit\`a referenziale indicati da $*$.
+\newline
+\\Si formuli la seguente interrogazione SQL che restituisce senza duplicazione dei risultati:
+
+Il nome e la citt\`a dei musei che conservano almeno 20 opere di uno stesso artista.
+\pause
+
+\begin{lstlisting}   
+SELECT DISTINCT M.NomeM, M.Citta
+FROM MUSEI AS M JOIN OPERE AS O ON M.IdMuseo = O.IdMuseo
+GROUP BY M.IdMuseo, M.NomeM, M.Citta, O.NomeA
+HAVING COUNT(*) >= 20;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Random: Es. 21}
+\vspace{-.5cm}
+Dato il seguente schema:
+\schemaMuseiOpereArtisti
+con vincoli di integrit\`a referenziale indicati da $*$.
+\newline
+\\Si formuli la seguente interrogazione SQL che restituisce senza duplicazione dei risultati:
+
+Il nome degli artisti italiani che non hanno opere in musei francesi tranne che al Louvres.
+\pause
+
+\begin{lstlisting}   
+SELECT A.NomeA
+FROM ARTISTI AS A
+WHERE A.Nazione = `Italia' AND NOT EXISTS (
+    SELECT *
+    FROM OPERE AS O JOIN MUSEI AS M
+    ON (O.IdMuseo = M.IdMuseo AND O.NomeA = A.NomeA)
+    WHERE M.Nazione = `Francia' AND M.NomeM <> `Louvres'
+);
+\end{lstlisting}
+\end{frame}

@@ -1,0 +1,335 @@
+%%%%%%%%%%%%%%%%
+\begin{frame}{GROUP BY}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+100  & 30 & 27035 \\
+100  & 28 & 27038 \\
+100  & 18 & 27010 \\
+102  & 21 & 27038 \\
+101  & 25 & 27045 \\
+102 & 21 & 27010 \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{2}{|c|}{Result} \\
+\hline
+\rowcolor{cyan!30} matricola  & voti \\
+\hline
+100  & 3 \\
+101  & 1  \\
+102  & 2 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT matricola, COUNT(voto) AS voti\\FROM Esame\\GROUP BY matricola;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{HAVING}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+100  & 30 & 27035 \\
+100  & 28 & 27038 \\
+100  & 18 & 27010 \\
+102  & 21 & 27038 \\
+101  & 25 & 27045 \\
+102 & 21 & 27010 \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT matricola, COUNT(voto) AS voti\\FROM Esame\\GROUP BY matricola\\HAVING COUNT(voto)>1;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{HAVING}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+100  & 30 & 27035 \\
+100  & 28 & 27038 \\
+100  & 18 & 27010 \\
+102  & 21 & 27038 \\
+101  & 25 & 27045 \\
+102 & 21 & 27010 \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{2}{|c|}{Result} \\
+\hline
+\rowcolor{cyan!30} matricola  & voti \\
+\hline
+100  & 3 \\
+102  & 2  \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT matricola, COUNT(voto) AS voti\\FROM Esame\\GROUP BY matricola\\HAVING COUNT(voto)>1;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{ORDER BY}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+100  & 30 & 27035 \\
+100  & 28 & 27038 \\
+100  & 18 & 27010 \\
+102  & 21 & 27038 \\
+101  & 25 & 27045 \\
+102 & 21 & 27010 \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT *\\FROM Esame\\ORDER BY matricola ASC;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{ORDER BY}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+100  & 30 & 27035 \\
+100  & 28 & 27038 \\
+100  & 18 & 27010 \\
+102  & 21 & 27038 \\
+101  & 25 & 27045 \\
+102 & 21 & 27010 \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+100 & 30 & 27035 \\
+100 & 28 & 27038 \\
+100 & 18 & 27010 \\
+101 & 25 & 27045 \\
+102 & 21 & 27038 \\
+102 & 21 & 27010 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT *\\FROM Esame\\ORDER BY matricola ASC;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{ORDER BY}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+100  & 30 & 27035 \\
+100  & 28 & 27038 \\
+100  & 18 & 27010 \\
+102  & 21 & 27038 \\
+101  & 25 & 27045 \\
+102 & 21 & 27010 \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT *\\FROM Esame\\ORDER BY matricola DESC, voto ASC;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{ORDER BY}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+100  & 30 & 27035 \\
+100  & 28 & 27038 \\
+100  & 18 & 27010 \\
+102  & 21 & 27038 \\
+101  & 25 & 27045 \\
+102 & 21 & 27010 \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30} matricola  & voto & corso \\
+\hline
+102 & 21 & 27038 \\
+102 & 21 & 27010 \\
+101 & 25 & 27045 \\
+100 & 18 & 27010 \\
+100 &  28 & 27038 \\
+100 & 30 & 27035 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT *\\FROM Esame\\ORDER BY matricola DESC, voto ASC;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{UNION}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Studente} \\
+\hline
+\rowcolor{cyan!30} Nome  & Cognome & AnnoDiNascita \\
+\hline
+ciccio  & pasticcio & 1992 \\
+pippo  & calippo & 1994 \\
+
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Professore} \\
+\hline
+\rowcolor{cyan!30} Nome  & Cognome & DataNascita \\
+\hline
+balema & giuseppina & 1967 \\
+
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT * FROM Studente\\UNION\\SELECT * FROM Professore;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{UNION}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Studente} \\
+\hline
+\rowcolor{cyan!30} Nome  & Cognome & AnnoDiNascita \\
+\hline
+ciccio  & pasticcio & 1992 \\
+pippo  & calippo & 1994 \\
+
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Professore} \\
+\hline
+\rowcolor{cyan!30} Nome  & Cognome & AnnoDiNascita \\
+\hline
+balema & giuseppina & 1967 \\
+
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT * FROM Studente\\UNION\\SELECT * FROM Professore;}
+\begin{itemize}
+    \item Stesso numero di colonne nelle SELECT
+    \item Stesso ordine di colonne nelle SELECT
+    \item Stesso tipo dato nelle colonne delle SELECT
+\end{itemize}
+\end{frame}

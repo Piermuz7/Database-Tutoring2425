@@ -1,0 +1,1075 @@
+\begin{frame}{Operazioni Relazionali}
+    \begin{itemize}
+        \item Agiscono su una o pi\`u relazioni per ottenere una nuova relazione;
+        \item Consentono di effettuare le interrogazioni al database per ottenere le informazioni desiderate: \begin{itemize}
+            \item estraendo da una tabella una sottotabella;
+            \item combinando tra loro 2 o pi\`u tabelle;
+            \item generando nuove relazioni. 
+        \end{itemize}
+        \item Dato che le relazioni sono insiemi:
+        \begin{itemize}
+            \item $X$ insieme di attributi su cui le relazioni $A$ e $B$ sono definite;
+            \item \textbf{unione} $A~\mathbb{U}~B$: relazione su $X$ contente le tuple appartenenti a $A$ o $B$ o entrambe;
+            \item \textbf{intersezione} $A~\cap~B$: relazione su $X$ contente le tuple appartenenti a $A$ e $B$;
+            \item \textbf{differenza} $A~-~B$: relazione su $X$ contente le tuple appartenenti a $A$ ma non a $B$.
+        \end{itemize}
+    \end{itemize}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Unione}
+        \vspace{-1.4cm}
+        \begin{align*}
+        X &= \{Nome, Cognome\}\\
+        Docenti(X) &= \{(Barbara,Re),(Roberto,Gagliardi),(Fausto,Marcantoni),\\&(Mario,Rossi)\}\\
+            Studenti(X) &= \{(Mario,Rossi),(Luigi,Verdi),(Pinco,Pallino)\}
+        \end{align*}
+        \pause
+        \onslide<1->{
+            \begin{columns}
+                \begin{column}{0.48\textwidth}
+                    \centering
+                    {\small Docenti}
+                    \newline
+            \begin{tabular}{|c|c|}
+                \hline
+                \rowcolor{cyan!30}Nome & Cognome \\
+                \hline
+                Barbara & Re \\ \hline
+                Roberto & Gagliardi \\ \hline
+                Fausto & Marcantoni \\ \hline
+                Mario & Rossi \\ \hline
+                \end{tabular}
+                \end{column}
+                \begin{column}{0.48\textwidth}
+                    \centering
+                    {\small Studenti}
+                    \newline
+                    \begin{tabular}{|c|c|}
+                        \hline
+                        \rowcolor{cyan!30} Nome & Cognome \\ \hline
+                        Mario & Rossi \\
+                        \hline
+                        Luigi & Verdi \\ \hline
+                        Pinco & Pallino \\ \hline
+                        \end{tabular}
+                \end{column}
+            \end{columns}
+        }
+        \vspace*{0.2cm}
+        \onslide<2> \centering Docenti~$\mathbb{U}~Studenti = ?$
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Unione}
+        \vspace{-1cm}
+        \begin{align*}Docenti(X) &= \{(Barbara,Re),(Roberto,Gagliardi),(Fausto,Marcantoni),\\&(Mario,Rossi)\}\\
+        Studenti(X) &= \{(Mario,Rossi),(Luigi,Verdi),(Pinco,Pallino)\}\\
+        Docenti~\mathbb{U}~Studenti &= \{(Barbara,Re),(Roberto,Gagliardi),(Fausto,Marcantoni),\\&(Mario,Rossi),(Luigi,Verdi),(Pinco,Pallino)\}
+        \end{align*}
+        \centering
+        $Docenti~\mathbb{U}~Studenti$\\
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Nome & Cognome \\
+            \hline
+            Barbara & Re \\ \hline
+            Roberto & Gagliardi \\ \hline
+            Fausto & Marcantoni \\ \hline
+            \rowcolor{red!30}Mario & Rossi \\ \hline
+            Luigi & Verdi \\ \hline
+            Pinco & Pallino \\ \hline
+        \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Intersezione}
+        \vspace{-1.4cm}
+        \begin{align*}
+        X &= \{Nome, Cognome\}\\
+        Docenti(X) &= \{(Barbara,Re),(Roberto,Gagliardi),(Fausto,Marcantoni),\\&(Mario,Rossi)\}\\
+            Studenti(X) &= \{(Mario,Rossi),(Luigi,Verdi),(Pinco,Pallino)\}
+            \end{align*}
+        \pause
+        \onslide<1->{
+            \begin{columns}
+                \begin{column}{0.48\textwidth}
+                    \centering
+                    {\small Docenti}
+                    \newline
+            \begin{tabular}{|c|c|}
+                \hline
+                \rowcolor{cyan!30}Nome & Cognome \\
+                \hline
+                Barbara & Re \\ \hline
+                Roberto & Gagliardi \\ \hline
+                Fausto & Marcantoni \\ \hline
+                Mario & Rossi \\ \hline
+                \end{tabular}
+                \end{column}
+                \begin{column}{0.48\textwidth}
+                    \centering
+                    {\small Studenti}
+                    \newline
+                    \begin{tabular}{|c|c|}
+                        \hline
+                        \rowcolor{cyan!30} Nome & Cognome \\ \hline
+                        Mario & Rossi \\
+                        \hline
+                        Luigi & Verdi \\ \hline
+                        Pinco & Pallino \\ \hline
+                        \end{tabular}
+                \end{column}
+            \end{columns}
+        }
+        \vspace*{0.2cm}
+        \onslide<2> \centering Docenti~$\cap~Studenti = ?$
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Intersezione}
+        \vspace{-1cm}
+        \begin{align*}Docenti(X) &= \{(Barbara,Re),(Roberto,Gagliardi),(Fausto,Marcantoni),\\&(Mario,Rossi)\}\\
+        Studenti(X) &= \{(Mario,Rossi),(Luigi,Verdi),(Pinco,Pallino)\}\\
+        Docenti~\cap~Studenti &= \{(Mario,Rossi)\}
+        \end{align*}
+        \centering
+        $Docenti~\cap~Studenti$\\
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Nome & Cognome \\
+            \hline
+            Mario & Rossi \\ \hline
+        \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Differenza}
+        \vspace{-1.4cm}
+        \begin{align*}
+        X &= \{Nome, Cognome\}\\
+        Docenti(X) &= \{(Barbara,Re),(Roberto,Gagliardi),(Fausto,Marcantoni),\\&(Mario,Rossi)\}\\
+            Studenti(X) &= \{(Mario,Rossi),(Luigi,Verdi),(Pinco,Pallino)\}
+            \end{align*}
+        \pause
+        \onslide<1->{
+            \begin{columns}
+                \begin{column}{0.48\textwidth}
+                    \centering
+                    {\small Docenti}
+                    \newline
+            \begin{tabular}{|c|c|}
+                \hline
+                \rowcolor{cyan!30}Nome & Cognome \\
+                \hline
+                Barbara & Re \\ \hline
+                Roberto & Gagliardi \\ \hline
+                Fausto & Marcantoni \\ \hline
+                Mario & Rossi \\ \hline
+                \end{tabular}
+                \end{column}
+                \begin{column}{0.48\textwidth}
+                    \centering
+                    {\small Studenti}
+                    \newline
+                    \begin{tabular}{|c|c|}
+                        \hline
+                        \rowcolor{cyan!30} Nome & Cognome \\ \hline
+                        Mario & Rossi \\
+                        \hline
+                        Luigi & Verdi \\ \hline
+                        Pinco & Pallino \\ \hline
+                        \end{tabular}
+                \end{column}
+            \end{columns}
+        }
+        \vspace*{0.2cm}
+        \onslide<2> \centering $Docenti~-~Studenti = ?$
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Differenza}
+        \vspace{-1cm}
+        \begin{align*}Docenti(X) &= \{(Barbara,Re),(Roberto,Gagliardi),(Fausto,Marcantoni),(Mario,Rossi)\}\\
+        Studenti(X) &= \{(Mario,Rossi),(Luigi,Verdi),(Pinco,Pallino)\}\\
+        Docenti~-~Studenti &= \{(Mario,Rossi)\}
+        \end{align*}
+        \centering
+        $Docenti~-~Studenti$\\
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Nome & Cognome \\
+            \hline
+            Barbara & Re \\ \hline
+            Roberto & Gagliardi \\ \hline
+            Fausto & Marcantoni \\ \hline
+        \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Ridenominazione}
+        L'operatore $\rho$ \textbf{Ridenominazione} viene utilizzato per rinominare uno o pi\`u attributi $A_1,\dotsc,A_n$ in $A'_1,\dotsc,A'_n$ di una relazione r.
+        \[\rho_{A'_1,\dotsc,A'_n \leftarrow A_1,\dotsc,A_n} (r)\]
+        \onslide<1->{
+            \begin{columns}
+                \begin{column}{0.48\textwidth}
+                    \centering
+                    {\small Cani}
+                    \newline
+            \begin{tabular}{|c|c|}
+                \hline
+                \rowcolor{cyan!30}NomeCane & RazzaCane \\
+                \hline
+                Alfred & Beagle \\ \hline
+                Bruce & Chihuahua \\ \hline
+                Tom & Bassotto \\ \hline
+                \end{tabular}
+                \end{column}
+                \begin{column}{0.48\textwidth}
+                    \centering
+                    {\small Gatti}
+                    \newline
+                    \begin{tabular}{|c|c|}
+                        \hline
+                        \rowcolor{cyan!30} NomeGatto & RazzaGatto \\ \hline
+                        Virgola & Siamese \\ \hline
+                Joker & Persiano \\ \hline
+                Elvis & Siberiano \\ \hline
+                        \end{tabular}
+                \end{column}
+            \end{columns}
+        }
+        \vspace*{0.2cm}
+        \onslide<2-> \centering $Cani~\mathbb{U}~Gatti = ?$
+    
+        \onslide<3> \centering Non si pu\`o fare.\\ \`E necessario usare $\rho$ per ridenominare NomeCane e NomeGatto! \\\`E necessario usare $\rho$ per ridenominare RazzaCane e RazzaGatto!
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Ridenominazione}
+        \vspace{-1.2cm}
+        \[\rho_{Nome,Razza \leftarrow NomeCane, RazzaCane} (Cani)\]
+        \[\rho_{Nome,Razza \leftarrow NomeGatto, RazzaGatto} (Gatti)\]
+        \vspace{-.4cm}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small Cani}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \cellcolor{red!30}Nome & \cellcolor{green!30}Razza \\
+            \hline
+            Alfred & Beagle \\ \hline
+            Bruce & Chihuahua \\ \hline
+            Tom & Bassotto \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small Gatti}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \cellcolor{red!30}Nome & \cellcolor{green!30}Razza \\ \hline
+                    Virgola & Siamese \\ \hline
+            Joker & Persiano \\ \hline
+            Elvis & Siberiano \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \centering
+        $Cani~\mathbb{U}~Gatti$\\
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Nome & Razza \\
+            \hline
+            Alfred & Beagle \\ \hline
+            Bruce & Chihuahua \\ \hline
+            Tom & Bassotto \\ \hline
+            Virgola & Siamese \\ \hline
+            Joker & Persiano \\ \hline
+            Elvis & Siberiano \\ \hline
+        \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Selezione (Taglio orizzontale)}
+        L'operatore $\sigma$ \textbf{Selezione} viene utilizzato su una relazione $r$ per produrre una nuova relazione in base a una condizione booleana $C$.
+        \\La nuova relazione conterr\`a tutte le $n$-uple che soddisfano $C$.
+        \[\sigma_C (r)\]
+        \onslide<1->{
+                    \begin{center}
+                        {\small Studenti}
+                        
+                        \begin{tabular}{|c|c|c|}
+                            \hline
+                            \rowcolor{cyan!30}Nome & Cognome & Eta \\
+                            \hline
+                            Mario & Rossi & 19 \\ \hline
+                            Luigi & Verdi & 22 \\ \hline
+                            Pinco & Pallino & 21 \\ \hline
+                            Mario & Verdini & 20 \\ \hline
+                            \end{tabular}
+                    
+                    \end{center}
+            }
+        \vspace*{0.2cm}
+        \onslide<2-> \centering Studenti con pi\`u di 20 anni?
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Selezione (Taglio orizzontale)}
+        Studenti con pi\`u di 20 anni:
+        \[\sigma_{Eta~>~20} (Studenti)\]
+                    \begin{center}
+                        {\small Studenti}
+                        
+                        \begin{tabular}{|c|c|c|}
+                            \hline
+                            \rowcolor{cyan!30}Nome & Cognome & Eta \\
+                            \hline
+                            Mario & Rossi & 19 \\ \hline
+                            \rowcolor{red}Luigi & Verdi & 22 \\ \hline
+                            \rowcolor{red}Pinco & Pallino & 21 \\ \hline
+                            Mario & Verdini & 20 \\ \hline
+                            \end{tabular}
+                    
+                    \end{center}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Selezione (Taglio orizzontale)}
+        \onslide<1->Studenti di nome ``Mario'' con pi\`u di 20 anni?
+        \onslide<2->\[\sigma_{Nome=`Mario'~AND~ Eta~>~20} (Studenti)\]
+        \onslide<3>{            \begin{center}
+                        {\small Studenti}
+                        
+                        \begin{tabular}{|c|c|c|}
+                            \hline
+                            \rowcolor{cyan!30}Nome & Cognome & Eta \\
+                            \hline
+                            & & \\
+                            \hline
+                            \end{tabular}
+    
+                    \end{center}}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Proiezione (Taglio verticale)}
+        L'operatore $\pi$ \textbf{Proiezione} viene utilizzato su una relazione $r$ per produrre una nuova relazione in base a una lista di attributi $L$ specificata.
+        \\La nuova relazione conterr\`a tutte le $n$-uple di $r$ con gli attributi presenti in $L$.
+        \[\pi_L (r)\]
+        \onslide<1->{
+                    \begin{center}
+                        {\small Studenti}
+                        
+                        \begin{tabular}{|c|c|c|}
+                            \hline
+                            \rowcolor{cyan!30}Nome & Cognome & Eta \\
+                            \hline
+                            Mario & Rossi & 19 \\ \hline
+                            Luigi & Verdi & 22 \\ \hline
+                            Pinco & Pallino & 21 \\ \hline
+                            Mario & Verdini & 20 \\ \hline
+                            \end{tabular}
+                    
+                    \end{center}
+            }
+        \vspace*{0.2cm}
+        \onslide<2-> \centering Nome e Cognome degli studenti?
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Proiezione (Taglio verticale)}
+        Nome e cognome degli studenti:
+        \[\pi_{Nome,Cognome} (Studenti)\]
+                    \begin{center}
+                        {\small Studenti}
+                        
+                        \begin{tabular}{|c|c|c|}
+                            \hline
+                            \rowcolor{cyan!30}Nome & Cognome & Eta \\
+                            \hline
+                            \cellcolor{red}Mario & \cellcolor{red}Rossi & 19 \\ \hline
+                            \cellcolor{red}Luigi & \cellcolor{red}Verdi & 22 \\ \hline
+                            \cellcolor{red}Pinco & \cellcolor{red}Pallino & 21 \\ \hline
+                            \cellcolor{red}Mario & \cellcolor{red}Verdini & 20 \\ \hline
+                            \end{tabular}
+                    
+                    \end{center}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Selezione (Taglio orizzontale) e Proiezione (Taglio verticale)}
+        \onslide<1->Nome ed et\`a degli studenti con meno di 21 anni?
+        \onslide<2->\[\pi_{Nome,Eta}\color{red}({\sigma_{Eta~<=~20} (Studenti)})\]
+        \onslide<3>{            \begin{center}
+                        {\small Studenti}
+                        
+                        \begin{tabular}{|c|c|c|}
+                            \hline
+                            \rowcolor{cyan!30}Nome & Cognome & Eta \\
+                            \hline
+                            \cellcolor{red}Mario & \cellcolor{red}Rossi & \cellcolor{red}19 \\ \hline
+                            Luigi & Verdi & 22 \\ \hline
+                            Pinco & Pallino & 21 \\ \hline
+                            \cellcolor{red}Mario & \cellcolor{red}Verdini & \cellcolor{red}20 \\ \hline
+                            \end{tabular}
+    
+                    \end{center}}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Selezione (Taglio orizzontale) e Proiezione (Taglio verticale)}
+        Nome ed et\`a degli studenti con meno di 21 anni?
+        \[{\color{red}{\pi Nome,Eta}}(\sigma_{Eta~<=~20} (Studenti))\]
+                    \begin{center}
+                        {\small Studenti}
+                        
+                        \begin{tabular}{|c|c|c|}
+                            \hline
+                            \rowcolor{cyan!30}Nome & Eta \\
+                            \hline
+                            \cellcolor{red}Mario &  \cellcolor{red}19 \\ \hline
+                            Luigi & 22 \\ \hline
+                            Pinco & 21 \\ \hline
+                            \cellcolor{red}Mario & \cellcolor{red}20 \\ \hline
+                            \end{tabular}
+    
+                    \end{center}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Join}
+        L'operatore $\bowtie$ \textbf{Join} viene utilizzato per correlare dati in relazioni diverse basandosi sui valori degli attributi.
+        \pause
+        \\Esistono diversi tipi di join:
+        \begin{itemize}
+            \item \textbf{Natural Join};
+            \item \textbf{Join completo, incompleto, vuoto};
+            \item \textbf{Outer Join};
+            \begin{itemize}
+                \item Left outer Join;
+                \item Right outer Join;
+                \item Full outer Join.
+            \end{itemize}
+            \item \textbf{SemiJoin};
+            \item \textbf{Theta Join};
+            \item \textbf{Equi-Join}.
+        \end{itemize}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Natural Join}
+        Il \textbf{natural join} correla i dati in 2 relazioni diverse sulla base di valori uguali negli attributi con lo stesso nome.
+        \[ R_1 \bowtie R_2~=~\{ t \in~X_1~ \mathbb{U}~X_2~|~t[X_1] \in R_1 \land~t[X_2]~\in~R_2 \} \]
+        \`E una relazione definita sull'unione degli insiemi degli attributi delle due relazioni $R_1(X_1)$ e $R_2(X_2)$ ossia $X_1~\mathbb{U}~X_2$.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \rowcolor{cyan!30}Col1 & Col2 & Col3 \\
+            \hline
+            1 & a & b \\ \hline
+            2 & c & d \\ \hline
+            3 & e & f \\ \hline
+            4 & g & h \\ \hline
+            5 & g & j \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Col2 & Col4 \\ \hline
+                    a & 50 \\ \hline
+                    g & 120 \\ \hline
+                    m & 345 \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Natural Join}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \rowcolor{cyan!30}Col1 & Col2 & Col3 \\
+            \hline
+            1 & \cellcolor{green!30}a & b \\ \hline
+            2 & c & d \\ \hline
+            3 & e & f \\ \hline
+            4 & \cellcolor{red!30}g & h \\ \hline
+            5 & \cellcolor{red!30}g & j \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Col2 & Col4 \\ \hline
+                    \cellcolor{green!30}a & 50 \\ \hline
+                    \cellcolor{red!30}g & 120 \\ \hline
+                    m & 345 \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        $R_1 \bowtie R_2$
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} Col1 & Col2 & Col3 & Col4 \\ \hline
+            1 & a & b & 50 \\ \hline
+            4 & g & h & 50 \\ \hline
+            5 & g & j & 120 \\ \hline
+            \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Join Completo}
+        Il Join \`e \textbf{completo} se ogni tupla di ciascuna relazione degli operandi contribuisce almeno a una tupla del risultato.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}ID & Carattere \\
+            \hline
+            1 & \cellcolor{green!30}a \\ \hline
+            2 & \cellcolor{red!30}b \\ \hline
+            3 & \cellcolor{red!30}b \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Carattere & Numero \\ \hline
+                    \cellcolor{green!30}a & Uno \\ \hline
+                    \cellcolor{red!30}b & Due \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        $R_1 \bowtie R_2$
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} ID & Carattere & Numero \\ \hline
+            1 & a & Uno \\ \hline
+            2 & b & Due \\ \hline
+            3 & b & Due \\ \hline
+            \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Join Incompleto}
+        Il Join \`e \textbf{incompleto} se almeno una tupla delle relazioni degli operandi non contribuisce al risultato.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}ID & Carattere \\
+            \hline
+            1 & \cellcolor{green!30}a \\ \hline
+            2 & b \\ \hline
+            3 & b \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Carattere & Numero \\ \hline
+                    \cellcolor{green!30}a & Uno \\ \hline
+                    \cellcolor{red}c & Due \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        $R_1 \bowtie R_2$
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} ID & Carattere & Numero \\ \hline
+            1 & a & Uno \\ \hline
+            \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Join Esterno}
+        Il \textbf{join esterno} (outer join) include tutte le tuple di una relazione estese con le tuple dell'altra relazione che rispettano la condizione di join.
+        \\Gli attributi delle tuple che non rispettano la condizione di join sono riempite con i valori \textbf{NULL}.
+        \newline
+        3 tipi di join esterno:
+        \begin{itemize}
+            \item \textbf{sinistro}: include tutte le tuple della prima relazione
+            \[R_1 \leftouterjoin R_2\]
+            \item \textbf{destro}: include tutte le tuple della seconda relazione
+            \[R_1\rightouterjoin R_2\]
+            \item \textbf{completo}: include tutte le tuple della prima e della seconda relazione
+            \[R_1\fullouterjoin R_2\]
+        \end{itemize}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Left Join}
+        Il \textbf{Left join} include tutte le tuple della prima relazione.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}ID & Carattere \\
+            \hline
+            1 & a \\ \hline
+            2 & \cellcolor{green}b \\ \hline
+            3 & \cellcolor{green}b \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Carattere & Numero \\ \hline
+                    a & Uno \\ \hline
+                    \cellcolor{red}c & Due \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        \pause
+        {\small $R_1 \leftouterjoin R_2$}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} ID & Carattere & Numero \\ \hline
+            1 & a & Uno \\ \hline
+            2 & b & NULL \\ \hline
+            3 & b & NULL \\ \hline
+            \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Right Join}
+        Il \textbf{Right join} include tutte le tuple della seconda relazione.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}ID & Carattere \\
+            \hline
+            1 & a \\ \hline
+            2 & \cellcolor{red}b \\ \hline
+            3 & \cellcolor{red}b \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Carattere & Numero \\ \hline
+                    a & Uno \\ \hline
+                    \cellcolor{green}c & Due \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        \pause
+        {\small $R_1 \rightouterjoin R_2$}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} ID & Carattere & Numero \\ \hline
+            1 & a & Uno \\ \hline
+            NULL & c & Due \\ \hline
+            \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Full Join}
+        Il \textbf{Full join} include tutte le tuple della prima e della seconda relazione.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}ID & Carattere \\
+            \hline
+            1 & a \\ \hline
+            2 & \cellcolor{red}b \\ \hline
+            3 & \cellcolor{red}b \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Carattere & Numero \\ \hline
+                    a & Uno \\ \hline
+                    \cellcolor{red}c & Due \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        \pause
+        {\small $R_1 \fullouterjoin R_2$}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} ID & Carattere & Numero \\ \hline
+            1 & a & Uno \\ \hline
+            \rowcolor{red}2 & b & NULL \\ \hline
+            \rowcolor{red}3 & b & NULL \\ \hline
+            \rowcolor{red}NULL & c & Due \\ \hline
+            \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Join Vuoto}
+        Il Join \`e \textbf{vuoto} se nessuna tupla delle relazioni degli operandi contribuisce al risultato finale.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}ID & Carattere \\
+            \hline
+            1 & a \\ \hline
+            2 & b \\ \hline
+            3 & b \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Carattere & Numero \\ \hline
+                    \cellcolor{red}c & Uno \\ \hline
+                    \cellcolor{red}d & Due \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        \pause
+        $R_1 \bowtie R_2~=~\emptyset$
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} ID & Carattere & Numero \\ \hline
+            & & \\ \hline
+            \end{tabular}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Natural Join senza attributi in comune}
+        Se nel natural join non ci sono attributi in comune, il risultato \`e il \textbf{prodotto cartesiano} delle relazioni $R_1~\times~R_2$.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}ID & Carattere \\
+            \hline
+            1 & a \\ \hline
+            2 & b \\ \hline
+            3 & b \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Carattere & Numero \\ \hline
+                    a & Uno \\ \hline
+                    c & Due \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.1cm}
+        \centering
+        \pause
+        {\small $R_1 \times R_2$
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} ID & Carattere$R_1$ & Carattere$R_2$ & Numero \\ \hline
+            1 & a & a & Uno \\ \hline
+            1 & a & c & Due \\ \hline
+            2 & b & a & Uno \\ \hline
+            2 & b & c & Due \\ \hline
+            3 & b & a & Uno \\ \hline
+            3 & b & c & Due \\ \hline
+            \end{tabular}}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Natural Join con attributi in comune (SemiJoin)}
+        Il natural join con tutti gli attributi in comune viene detto \textbf{SemiJoin} ed il risultato \`e l'intersezione delle relazioni $R_1~\cap~R_2$ su $X_1$.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_1$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}ID & Carattere \\
+            \hline
+            1 & \cellcolor{red!30}a \\ \hline
+            2 & b \\ \hline
+            3 & b \\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $R_2$}
+                \newline
+                \begin{tabular}{|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Carattere & Numero \\ \hline
+                    \cellcolor{red!30}a & Uno \\ \hline
+                    c & Due \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.1cm}
+        \centering
+        \pause
+        {\small $(R_1 \cap R_2)(X_1)$
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30} ID & Carattere \\ \hline
+            1 & a \\ \hline
+            \end{tabular}}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Theta Join (Join condizionale)}
+        Il \textbf{theta join} correla i dati in due relazioni diverse sulla base di una condizione booleana $C$\\(AND, OR, NOT, $>,~<,~<=,~>=$).
+        \[ R_1 \bowtie_C R_2\]
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $Supereroi$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Nome & Film \\
+            \hline
+            Bruce Wayne & The Batman \\ \hline
+            Bruce Wayne & Batman Begins \\ \hline
+            Peter Parker & Spiderman \\ \hline
+            Clark Kent & Superman\\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $Film$}
+                \newline
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Titolo & AnnoUscita & Durata \\ \hline
+                    The Batman & 2022 & 176 \\ \hline
+                    Spiderman & 2002 & 121 \\ \hline
+                    Superman & 1978 & 151 \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Theta Join (Join condizionale)}
+        \vspace{-1.2cm}
+        \[ Supereroi \bowtie_{Film~=~Titolo~AND~Durata~<~160} Film\]
+        \vspace{-.5cm}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $Supereroi$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Nome & Film \\
+            \hline
+            Bruce Wayne & The Batman \\ \hline
+            Bruce Wayne & Batman Begins \\ \hline
+            Peter Parker & Spiderman \\ \hline
+            Clark Kent & Superman\\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $Film$}
+                \newline
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Titolo & AnnoUscita & Durata \\ \hline
+                    The Batman & 2022 & 176 \\ \hline
+                    Spiderman & 2002 & 121 \\ \hline
+                    Superman & 1978 & 151 \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        \pause
+        {\small $Supereroi \bowtie_{Film~=~Titolo~AND~Durata~<~160} Film$
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} Nome & Film & Titolo & AnnoUscita & Durata\\ \hline
+            Peter Parker & Spiderman & Spiderman & 2002 & 121 \\ \hline
+            Clark Kent & Superman & Superman & 1978 & 151\\ \hline
+            \end{tabular}}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Equi-Join}
+        Se la condizione \`e composta da operatori di uguaglianza (=), eventualmente in congiunzione (AND) tra loro, il theta join \`e detto \textbf{equi-join}.
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $Supereroi$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Nome & Film \\
+            \hline
+            Bruce Wayne & The Batman \\ \hline
+            Bruce Wayne & Batman Begins \\ \hline
+            Peter Parker & Spiderman \\ \hline
+            Clark Kent & Superman\\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $Film$}
+                \newline
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Titolo & AnnoUscita & Durata \\ \hline
+                    The Batman & 2022 & 176 \\ \hline
+                    Spiderman & 2002 & 121 \\ \hline
+                    Superman & 1978 & 151 \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Equi-Join}
+        \vspace{-1.2cm}
+        \[ Supereroi \bowtie_{Film~=~Titolo} Film\]
+        \vspace{-.5cm}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $Supereroi$}
+                \newline
+        \begin{tabular}{|c|c|}
+            \hline
+            \rowcolor{cyan!30}Nome & Film \\
+            \hline
+            Bruce Wayne & The Batman \\ \hline
+            Bruce Wayne & Batman Begins \\ \hline
+            Peter Parker & Spiderman \\ \hline
+            Clark Kent & Superman\\ \hline
+            \end{tabular}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \centering
+                {\small $Film$}
+                \newline
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Titolo & AnnoUscita & Durata \\ \hline
+                    The Batman & 2022 & 176 \\ \hline
+                    Spiderman & 2002 & 121 \\ \hline
+                    Superman & 1978 & 151 \\ \hline
+                    \end{tabular}
+            \end{column}
+        \end{columns}
+        \vspace{.5cm}
+        \centering
+        \pause
+        {\small $Supereroi \bowtie_{Film=Titolo} Film$
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} Nome & Film & Titolo & AnnoUscita & Durata\\ \hline
+            Bruce Wayne & The Batman & The Batman & 2022 & 176 \\ \hline
+            Peter Parker & Spiderman & Spiderman & 2002 & 121 \\ \hline
+            Clark Kent & Superman & Superman & 1978 & 151\\ \hline
+            \end{tabular}}
+    \end{frame}
+    %
+    \begin{frame}{Operazioni Relazionali}
+        \framesubtitle{Equi-Join e Natural Join}
+        \vspace{-1.2cm}
+        \[ Supereroi \bowtie_{Film~=~Titolo} Film\]
+        \vspace{-.5cm}
+        \begin{center}
+        {\small $Supereroi \bowtie Film\footnote{ovviamente ridenominando prima Titolo in Film...}$
+        \newline
+                \begin{tabular}{|c|c|c|c|}
+                    \hline
+                    \rowcolor{cyan!30} Nome & Film & AnnoUscita & Durata\\ \hline
+                    Bruce Wayne & The Batman & 2022 & 176 \\ \hline
+                    Peter Parker & Spiderman & 2002 & 121 \\ \hline
+                    Clark Kent & Superman & 1978 & 151\\ \hline
+                    \end{tabular}}
+                    \vspace{.5cm}
+        {
+        \small \\$Supereroi \bowtie_{Film=Titolo} Film$
+        
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \rowcolor{cyan!30} Nome & Film & Titolo & AnnoUscita & Durata\\ \hline
+            Bruce Wayne & The Batman & The Batman & 2022 & 176 \\ \hline
+            Peter Parker & Spiderman & Spiderman & 2002 & 121 \\ \hline
+            Clark Kent & Superman & Superman & 1978 & 151\\ \hline
+            \end{tabular}}
+        \end{center}
+    \end{frame}

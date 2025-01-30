@@ -1,0 +1,330 @@
+\begin{frame}{INNER JOIN}
+    \begin{center}
+\begin{venndiagram2sets}[shade=red,tikzoptions={opacity=0.5},labelA={},labelB={}, showframe=false, ]
+    \fillACapB
+    \setpostvennhook
+    {
+        \draw (labelA) node[above=2pt] {A};
+        \draw (labelB) node[above=2pt] {B};
+    }
+\end{venndiagram2sets}
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{INNER JOIN}
+    
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30}\multicolumn{3}{|c|}{Studente} \\
+\hline
+\rowcolor{cyan!30} matricola & nome & cognome \\
+\hline
+100 & Gianni & Morandi \\
+101 & Jerry & Cal\`a \\
+102 & Pippo & Franco \\
+103 & Mara & Venier \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30}matricola & voto & corso \\
+\hline
+100 & 30 & 27035 \\
+100 & 30 & 27038 \\
+100 & 30 & 27010 \\
+102 & 21 & 27038 \\
+90 & 25 & 27045 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT st.matricola, cognome, voto, corso\\FROM Studente AS st INNER JOIN Esame AS es ON st.matricola=es.matricola;}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{INNER JOIN}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{4}{|c|}{Result} \\
+\hline
+\rowcolor{cyan!30} matricola & cognome & voto & corso \\
+\hline
+100 & Morandi & 30 & 27035 \\
+100 & Morandi & 30 & 27038 \\
+100 & Morandi & 30 & 27010 \\
+102 & Franco & 21 & 27038 \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{INNER JOIN}
+    
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30}\multicolumn{3}{|c|}{Studente} \\
+\hline
+\rowcolor{cyan!30} matricola & nome & cognome \\
+\hline
+100 & Gianni & Morandi \\
+101 & Jerry & Cal\`a \\
+102 & Pippo & Franco \\
+103 & Mara & Venier \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30}matricola & voto & corso \\
+\hline
+100 & 30 & 27035 \\
+100 & 30 & 27038 \\
+100 & 30 & 27010 \\
+102 & 21 & 27038 \\
+90 & 25 & 27045 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT Studente.matricola, cognome, voto, corso\\ FROM Studente, Esame\\WHERE Studente.matricola=Esame.matricola;}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{LEFT JOIN}
+\begin{center}
+\begin{venndiagram2sets}[shade=red,tikzoptions={opacity=0.5},labelA={},labelB={}, showframe=false, ]
+    \fillA
+    \setpostvennhook
+    {
+        \draw (labelA) node[above=2pt] {A};
+        \draw (labelB) node[above=2pt] {B};
+    }
+\end{venndiagram2sets}    
+    \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{LEFT JOIN}
+        
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30}\multicolumn{3}{|c|}{Studente} \\
+\hline
+\rowcolor{cyan!30} matricola & nome & cognome \\
+\hline
+100 & Gianni & Morandi \\
+101 & Jerry & Cal\`a \\
+102 & Pippo & Franco \\
+103 & Mara & Venier \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30}matricola & voto & corso \\
+\hline
+100 & 30 & 27035 \\
+100 & 30 & 27038 \\
+100 & 30 & 27010 \\
+102 & 21 & 27038 \\
+90 & 25 & 27045 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT st.matricola, cognome, voto, corso\\FROM Studente AS st LEFT JOIN Esame AS es ON st.matricola=es.matricola;}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{LEFT JOIN}
+    \begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{4}{|c|}{Result} \\
+\hline
+\rowcolor{cyan!30} matricola & cognome & voto & corso \\
+\hline
+100 & Morandi & 30 & 27035 \\
+100 & Morandi & 30 & 27038 \\
+100 & Morandi & 30 & 27010 \\
+101 & Cal\`a & NULL & NULL \\
+102 & Franco & 21 & 27038 \\
+103 & Venier & NULL & NULL \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{RIGHT JOIN}
+\begin{center}
+\begin{venndiagram2sets}[shade=red,tikzoptions={opacity=0.5},labelA={},labelB={}, showframe=false, ]
+    \fillB
+    \setpostvennhook
+    {
+        \draw (labelA) node[above=2pt] {A};
+        \draw (labelB) node[above=2pt] {B};
+    }
+\end{venndiagram2sets}    
+    \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{RIGHT JOIN}
+        
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30}\multicolumn{3}{|c|}{Studente} \\
+\hline
+\rowcolor{cyan!30} matricola & nome & cognome \\
+\hline
+100 & Gianni & Morandi \\
+101 & Jerry & Cal\`a \\
+102 & Pippo & Franco \\
+103 & Mara & Venier \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30}matricola & voto & corso \\
+\hline
+100 & 30 & 27035 \\
+100 & 30 & 27038 \\
+100 & 30 & 27010 \\
+102 & 21 & 27038 \\
+90 & 25 & 27045 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT st.matricola, cognome, voto, corso\\FROM Studente AS st RIGHT JOIN Esame AS es ON st.matricola=es.matricola;}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{RIGHT JOIN}
+    \begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{4}{|c|}{Result} \\
+\hline
+\rowcolor{cyan!30} matricola & cognome & voto & corso \\
+\hline
+100 & Morandi & 30 & 27035 \\
+100 & Morandi & 30 & 27038 \\
+100 & Morandi & 30 & 27010 \\
+102 & Franco & 21 & 27038 \\
+90 & NULL & 25 & 27045 \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{FULL OUTER JOIN}
+\begin{center}
+\begin{venndiagram2sets}[shade=red,tikzoptions={opacity=0.5},labelA={},labelB={}, showframe=false, ]
+    \fillA
+    \fillB
+    \setpostvennhook
+    {
+        \draw (labelA) node[above=2pt] {A};
+        \draw (labelB) node[above=2pt] {B};
+    }
+\end{venndiagram2sets}    
+    \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{FULL OUTER JOIN}
+\begin{table}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30}\multicolumn{3}{|c|}{Studente} \\
+\hline
+\rowcolor{cyan!30} matricola & nome & cognome \\
+\hline
+100 & Gianni & Morandi \\
+101 & Jerry & Cal\`a \\
+102 & Pippo & Franco \\
+103 & Mara & Venier \\
+\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{.45\textwidth}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{3}{|c|}{Esame} \\
+\hline
+\rowcolor{cyan!30}matricola & voto & corso \\
+\hline
+100 & 30 & 27035 \\
+100 & 30 & 27038 \\
+100 & 30 & 27010 \\
+102 & 21 & 27038 \\
+90 & 25 & 27045 \\
+\hline
+\end{tabular}
+\end{minipage}
+\end{table}
+\vspace{2em}
+\texttt{SELECT st.matricola, cognome, voto, corso\\FROM Studente AS st FULL OUTER JOIN Esame AS es
+ON st.matricola=es.matricola;}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}{FULL OUTER JOIN}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\rowcolor{cyan!30} \multicolumn{4}{|c|}{Result} \\
+\hline
+\rowcolor{cyan!30} matricola & cognome & voto & corso \\
+\hline
+100 & Morandi & 30 & 27035 \\
+100 & Morandi & 30 & 27038 \\
+100 & Morandi & 30 & 27010 \\
+101 & Cal\`a & NULL & NULL \\
+102 & Franco & 21 & 27038 \\
+103 & Venier & NULL & NULL \\
+90 & NULL & 25 & 27045 \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}

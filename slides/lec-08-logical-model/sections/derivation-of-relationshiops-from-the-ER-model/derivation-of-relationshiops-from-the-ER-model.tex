@@ -1,0 +1,442 @@
+\def\ERDipendenteAutoAziendale{
+    \begin{tikzpicture}[remember picture]
+        % Define styles for shapes
+        \tikzstyle{rectangle} = [draw, minimum width=3cm, minimum height=1cm]
+        \tikzstyle{rhombus} = [draw, diamond, minimum width=3cm, minimum height=1cm, aspect=2]
+        % Draw shapes
+        \node[rectangle] (rect1) at (1.5, -1) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{Dipendente} \\
+                    \hline
+                    Matricola \{PK\} \\
+                    Cognome \\
+                    Nome \\
+                    DataNascita \\
+                    LuogoNascita \\
+                \end{tabular}
+        };
+        \node[rhombus] (rhombus) at (7, -1) {\scriptsize EssereAssegnata};
+        \node[rectangle] (rect2) at (12.5, -1) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{AutoAziendale} \\
+                    \hline
+                    Targa \{PK\} \\
+                    Modello \\
+                    Costruttore \\
+                    Cilindrata \\
+                \end{tabular}
+            };
+
+        % Draw arrows
+        \draw (rect1) -- (rhombus) node[midway, above] {(0,1)};
+        \draw (rhombus) -- (rect2) node[midway, above] {(1,1)};
+    \end{tikzpicture}
+}
+\begin{frame}{La derivazione delle relazioni dal modello E/R}
+Dal modello concettuale dei dati \`e possibile ottenere il \textbf{modello logico} dei dati.
+
+\pause
+In altre parole si pu\`o definire la struttura degli archivi adatti per organizzare i dati.
+
+\pause
+Nel caso del modello relazionale le tabelle, che costituiscono il modello logico, vengono ricavate dal modello E/R mediante alcune semplici \textbf{regole di derivazione}.
+\end{frame}
+%
+\begin{frame}[allowframebreaks]{Le regole di derivazione}
+\begin{enumerate}
+    \item Ogni entit\`a diventa una relazione.
+    \item Ogni attributo di un'entit\`a diventa un attributo della relazione, cio\`e il nome di una colonna della tabella.
+    \item Ogni attributo della relazione eredita le caratteistiche dell'attributo dell'entit\`a da cui deriva.
+    \item L'identificaziore univoco di un'entit\`a diventa la \textit{chiave primaria} della relazione derivata.
+    \item L'associazione \textit{uno a uno} diventa un'unica relazione che contiene gli attributi della prima e della seconda entit\`a.
+    \item L'associazione \textit{uno a molti} viene rappresentata aggiungendo, agli attributi dell'entit\`a che svolge il ruolo a molto, l'identificatore univoco dell'entit\`a che svolge il ruolo a uno nell'associazione. Questo identificatore che prende il nome di \textbf{chiave esterna} (foreign key) dell'entit\`a associata, \`e costituito dll'insieme di attributi che compongono la chiave dell'entit\`a a uno dell'assocazione. Gli eventuali attributi dell'associazione vengono inseriti nella relazione che rappresenta l'entit\`a a molti, assieme alla chiave esterna.
+    \item L'associazione \textit{molti a molti} diventa una nuova relazione composta dagli identificatori univoci delle due entit\`a e dagli eventuali attributi che compongono le chiavi delle 2 entit\`a.
+\end{enumerate}
+\end{frame}
+%
+\begin{frame}{Suggerimenti}
+\begin{itemize}[<+->]
+    \item Applicare le regole di derivazione in modo sistematico;
+    \item Sottolineare la \underline{chiave primaria};
+    \item Aggiungere simboli come $^*$ o $^\#$ per indicare la presenza di chiavi esterne: $chiaveEsterna1^*$, $chiaveEsterna2^\#$ \ldots;
+    \item Convertire i nomi delle entit\`a al plurale, per rappresentare il fatto che la relazione contiene l'insieme delle tuple che sono le istanze delle entit\`a.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}{Regole di derivazione: Associazioni 1 a 1}
+\begin{center}
+    \begin{tikzpicture}[remember picture]
+        % Define styles for shapes
+        \tikzstyle{rectangle} = [draw, minimum width=3cm, minimum height=1cm]
+        \tikzstyle{rhombus} = [draw, diamond, minimum width=3cm, minimum height=1cm, aspect=2]
+        % Draw shapes
+        \node[rectangle] (rect1) at (1.5, -1) {
+                \begin{tabular}{c}
+                    \textbf{Cittadino} \\
+                    \hline
+                    CodiceFiscale \{PK\} \\
+                    Cognome \\
+                    Nome \\
+                    DataNascita \\
+                    LuogoNascita \\
+                \end{tabular}
+        };
+        \node[rhombus] (rhombus) at (7, -1) {EssereAssegnato};
+        \node[rectangle] (rect2) at (12.5, -1) {
+                \begin{tabular}{c}
+                    \textbf{CodiceSSN} \\
+                    \hline
+                    CodiceSanitario \{PK\} \\
+                    NumeroAsl \\
+                    CodRegione \\
+                \end{tabular}
+            };
+
+        % Draw arrows
+        \draw (rect1) -- (rhombus) node[midway, above] {(1,1)};
+        \draw (rhombus) -- (rect2) node[midway, above] {(1,1)};
+    \end{tikzpicture}
+\end{center}
+\pause
+
+Applicando le regole di derivazione, si ricava la tabella \textbf{Anagrafe} con gli attributi di entrambe le entit\`a:
+
+\textbf{Anagrafe}(\underline{CodiceFiscale}, Cognome, Nome, DataNascita, LuogoNascita, CodiceSanitario, NumeroAsl, CodRegione)
+\end{frame}
+%
+\begin{frame}{Regole di derivazione: Associazioni 1 a 1}
+\begin{minipage}{0.9\textwidth}
+Consideriamo l'associazione tra \textit{Dipendente} e \textit{AutoAziendale} nel caso di un'azienda dove, come avviene nella maggior parte dei casi, solo a una piccola parte dei dipendenti \`e assegnata un'auto aziendale.
+\end{minipage}
+\pause
+\begin{center}
+\ERDipendenteAutoAziendale
+\end{center}
+\pause
+
+Applicando le regola di derivazione 5, si ricava la seguente tabella:
+\pause
+
+\textbf{Dipendenti}(\underline{Matricola}$^*$, Cognome, Nome, DataNascita, LuogoNascita, Targa, Modello, Costruttore, Cilindrata)
+\pause
+
+\`E corretto modellare in questo modo l'associazione tra \textit{Dipendente} e \textit{AutoAziendale}?
+\pause
+
+S\`i, ma poich\`e solo una piccola parte dei dipendenti ha un'auto aziendale, la maggior parte dei valori degli attributi \textit{Targa}, \textit{Modello}, \textit{Costruttore} e \textit{Cilindrata} saranno \textit{NULL}.
+\end{frame}
+%
+\begin{frame}{Regole di derivazione: Associazioni 1 a 1}
+In alcune situazioni \`e preferibile trattare le associazioni uno a uno in altro modo e modellarle come se fossero uno a molti:
+\pause
+\begin{center}
+\ERDipendenteAutoAziendale
+\end{center}
+\pause
+
+Applicando le regola di derivazione 6 al posto della 5, (Dipendente: uno, AutoAziendale: molti) si ricavano le seguenti tabelle:
+\pause
+
+\textbf{Dipendenti}(\underline{Matricola}$^*$, Cognome, Nome, DataNascita, LuogoNascita)
+\pause
+
+\textbf{AutoAziendali}(\underline{Targa}, Modello, Costruttore, Cilindrata, Matricola$^*$)
+\end{frame}
+%
+\begin{frame}{Regole di derivazione: Associazioni 1 a N}
+\begin{center}
+    \begin{tikzpicture}[remember picture]
+        % Define styles for shapes
+        \tikzstyle{rectangle} = [draw, minimum width=3cm, minimum height=1cm]
+        \tikzstyle{rhombus} = [draw, diamond, minimum width=3cm, minimum height=1cm, aspect=2]
+        % Draw shapes
+        \node[rectangle] (rect1) at (1.5, -1) {
+                \begin{tabular}{c}
+                    \textbf{Contratto} \\
+                    \hline
+                    Codice \{PK\} \\
+                    Descrizione \\
+                    StipendioBase \\
+                    DataScadenza \\
+                \end{tabular}
+        };
+        \node[rhombus] (rhombus) at (7, -1) {Applicare};
+        \node[rectangle] (rect2) at (12.5, -1) {
+                \begin{tabular}{c}
+                    \textbf{Dipendente} \\
+                    \hline
+                    Matricola \{PK\} \\
+                    Cognome \\
+                    Nome \\
+                    Indirizzo \\
+                    Qualifica \\
+                \end{tabular}
+            };
+
+        % Draw arrows
+        \draw (rect1) -- (rhombus) node[midway, above] {(0,N)};
+        \draw (rhombus) -- (rect2) node[midway, above] {(1,1)};
+    \end{tikzpicture}
+\end{center}
+\pause
+
+Applicando le regole di derivazione, si ricavano le seguenti tabelle:
+
+\textbf{Contratti}(\underline{Codice}$^*$, Descrizione, StipendioBase, DataScadenza)
+\pause
+
+\textbf{Dipendenti}(\underline{Matricola}, Cognome, Nome, Indirizzo, Qualifica, CodiceContratto$^*$)
+
+\pause
+\vspace{.1cm}
+
+Agli attributi di \textit{Dipendenti} (a molti) \`e aggiunta come chiave esterna \textit{CodiceContratto}, in corrispondenza della chiave primaria della tabella \textit{Contratti} (a uno).
+\end{frame}
+%
+\begin{frame}{Regole di derivazione: Associazioni 1 a N con attributi}
+\begin{center}
+    \begin{tikzpicture}[remember picture]
+        % Define styles for shapes
+        \tikzstyle{rectangle} = [draw, minimum width=2cm, minimum height=1cm]
+        \tikzstyle{rhombus} = [draw, diamond, minimum width=2cm, minimum height=1cm, aspect=2]
+        % Draw shapes
+        \node[rectangle] (rect1) at (1.5, -1) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{Persona} \\
+                    \hline
+                    CodiceFiscale \{PK\} \\
+                    Cognome \\
+                    Nome \\
+                    DataNascita \\
+                    Indirizzo \\
+                \end{tabular}
+        };
+        \node[rhombus] (rhombus) at (7, -1) {\scriptsize Acquistare};
+        \node[rectangle] (rect2) at (11.5, -1) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{Automobile} \\
+                    \hline
+                    Targa \{PK\} \\
+                    Modello \\
+                    Costruttore \\
+                    Cilindrata \\
+                    PrezzoListino \\
+                \end{tabular}
+            };
+        % Acquistare rectangle under the rhombus
+        \node[rectangle] (rect3) at (7, -3) {
+            \scriptsize
+            \begin{tabular}{c}
+                 \\
+                \hline
+                Data \\
+                Prezzo \\
+            \end{tabular}
+        };
+
+        % Draw arrows
+        \draw (rect1) -- (rhombus) node[midway, above] {(0,N)};
+        \draw (rhombus) -- (rect2) node[midway, above] {(1,1)};
+        % line from rhombus to the Fornire rectangle
+        \draw (rhombus) -- (rect3) node[midway, right] {};
+    \end{tikzpicture}
+\end{center}
+\pause
+
+Applicando le regole di derivazione, si ricavano le seguenti tabelle:
+
+\pause
+
+\textbf{Persone}(\underline{CodiceFiscale}, Cognome, Nome, DataNascita, Indirizzo)
+\pause
+
+\textbf{Automobili}(\underline{Targa}, Modello, Costruttore, Cilindrata, PrezzoListino, CodiceFiscale$^*$, Data, Prezzo)
+
+\pause
+\vspace{.1cm}
+
+Nella tabella \textit{Automobili} agli attributi di \textit{Automobile}, sono aggiunti: la chiave esterna, CodiceFiscale e gli attributi che fanno parte dell'associazione \textit{Acquistare}.
+\end{frame}
+%
+\begin{frame}{Regole di derivazione: Associazioni N a N con attributi}
+\begin{center}
+    \begin{tikzpicture}[remember picture]
+        % Define styles for shapes
+        \tikzstyle{rectangle} = [draw, minimum width=2cm, minimum height=1cm]
+        \tikzstyle{rhombus} = [draw, diamond, minimum width=2cm, minimum height=1cm, aspect=2]
+        % Draw shapes
+        \node[rectangle] (rect1) at (1.5, -1) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{Docente} \\
+                    \hline
+                    CodiceDocente \{PK\} \\
+                    Cognome \\
+                    Nome \\
+                    Qualifica \\
+                    Materia \\
+                \end{tabular}
+        };
+        \node[rhombus] (rhombus) at (7, -1) {\scriptsize Insegnare};
+        \node[rectangle] (rect2) at (11, -1) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{Classe} \\
+                    \hline
+                    SiglaClasse \{PK\} \\
+                    NumeroAlunni \\
+                    Aula \\
+                \end{tabular}
+            };
+        % Acquistare rectangle under the rhombus
+        \node[rectangle] (rect3) at (7, -3) {
+            \scriptsize
+            \begin{tabular}{c}
+                 \\
+                \hline
+                NumeroOre \\
+            \end{tabular}
+        };
+
+        % Draw arrows
+        \draw (rect1) -- (rhombus) node[midway, above] {(0,N)};
+        \draw (rhombus) -- (rect2) node[midway, above] {(1,N)};
+        % line from rhombus to the Fornire rectangle
+        \draw (rhombus) -- (rect3) node[midway, right] {};
+    \end{tikzpicture}
+\end{center}
+\pause
+
+Applicando le regole di derivazione, si ricavano le seguenti tabelle:
+
+\pause
+
+\textbf{Docenti}(\underline{CodiceDocente}$^*$, Cognome, Nome, Qualifica, Materia)
+\pause
+
+\textbf{Classi}(\underline{SiglaClasse}$^\#$, NumeroAlunni, Aula)
+
+\pause
+
+\textbf{Insegnare}(\underline{CodiceDocente}$^*$, \underline{SiglaClasse}$^\#$, NumeroOre)
+
+\pause
+La tabella \textit{Insegnare} contiene le chiavi esterne delle tabelle \textit{Docenti} e \textit{Classi} e l'attributo NumeroOre che fa parte dell'associazione \textit{Insegnare}.
+\end{frame}
+%
+\begin{frame}{Regole di derivazione: Dettagli su Associazioni 1 a 1}
+\begin{minipage}{0.9\textwidth}
+Ogni classe deve avere uno e un solo coordinatore, un docente coordinare una sola classe, ma ci sono docenti che non sono coordinatori.
+\end{minipage}
+\begin{center}
+    \begin{tikzpicture}[remember picture]
+        % Define styles for shapes
+        \tikzstyle{rectangle} = [draw, minimum width=2cm, minimum height=1cm]
+        \tikzstyle{rhombus} = [draw, diamond, minimum width=2cm, minimum height=1cm, aspect=2]
+        % Draw shapes
+        \node[rectangle] (rect1) at (1.5, -1) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{Docente} \\
+                    \hline
+                    CodiceDocente \{PK\} \\
+                    Cognome \\
+                    Nome \\
+                    Qualifica \\
+                    Materia \\
+                \end{tabular}
+        };
+        \node[rhombus] (rhombus) at (7, -1) {\scriptsize Coordinare};
+        \node[rectangle] (rect2) at (11, -1) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{Classe} \\
+                    \hline
+                    SiglaClasse \{PK\} \\
+                    NumeroAlunni \\
+                    Aula \\
+                \end{tabular}
+            };
+
+        % Draw arrows
+        \draw (rect1) -- (rhombus) node[midway, above] {(0,1)};
+        \draw (rhombus) -- (rect2) node[midway, above] {(1,1)};
+    \end{tikzpicture}
+\end{center}
+\vspace{-.4cm}
+\pause
+
+Applicando le regole di derivazione, si ricaverebbe una sola tabella dove comparirebbero molte righe con valori NULL per i docenti che non sono coordinatori.
+
+\pause
+
+Meglio trattare l'associazione come 1 a N, con \textit{Docente} che gioca il ruolo a molti:
+
+\pause
+
+\textbf{Classi}(\underline{SiglaClasse}, NumeroAlunni, Aula, Coordinatore$^*$)
+
+\pause
+
+\textbf{Docenti}(\underline{CodiceDocente}$^*$, Cognome, Nome, Qualifica, Materia)
+
+\pause
+
+Nel caso di partecipazione facoltativa di entrambe le entit\`a \`e indifferente  la scelta dell'entit\`a che gioca il ruolo a molti.
+\end{frame}
+%
+\begin{frame}{Regole di derivazione: Dettagli su Associazioni ricorsive}
+\vspace{-.5cm}
+\begin{minipage}{0.9\textwidth}
+\textit{Coordinare} \`e un'associazione ricorsiva uno a molti tra i dipendenti di un'impresa: alcuni dipendenti sono anche supervisori e coordinano un certo numero di persone. I dipendenti coordinati (collaboratori) dipendono da un solo supervisore, ma ci sono dipendenti che non dipendono da alcun supervisore.
+\end{minipage}
+
+\begin{center}
+    \begin{tikzpicture}
+        % Define styles for shapes
+        \tikzset{
+            rectangle/.style={draw, minimum width=3cm, minimum height=1cm},
+            rhombus/.style={draw, diamond, minimum width=3cm, minimum height=1cm, aspect=2}
+        }
+        % Draw shapes
+        \node[rectangle] (rect1) at (2, -0.5) {
+            \scriptsize
+                \begin{tabular}{c}
+                    \textbf{Dipendente} \\
+                    \hline
+                    Matricola \{PK\} \\
+                    Cognome \\
+                    Nome \\
+                    DataNascita \\
+                    LuogoNascita \\
+                \end{tabular}
+        };
+
+        \node[rhombus] (rhombus) at (7, -0.5) {\scriptsize Coordinare};
+        % Draw arrows
+        \draw[-] (rect1) -- (rhombus) node[midway, above] {};
+        \draw[-] (rhombus) -- (rect1) node[midway, below] {};
+        % Additional arrows
+        \draw[-] (rhombus) -- ++(0,-1.5) -| (rect1) node[pos=0.25, below] {};
+        
+        \node[above right=-0.1cm of rect1] {\scriptsize\ Supervisore};
+        \node[below right=-0.2cm of rect1] {\scriptsize\ Collaboratore};
+    \end{tikzpicture}
+\end{center}
+\pause
+\vspace{-0.5cm}
+Dato che \textit{Dipendente} compare sia come entit\`a 1 che come entit\`a N, la chiave di \textit{Dipendente} apparir\`a sia come chiave primaria che come chiave esterna della tabella derivata:
+
+\pause
+
+\textbf{Dipendenti}(\underline{Matricola}$^*$, Cognome, Nome, DataNascita, LuogoNascita, Supervisore$^*$)
+
+\pause
+\vspace{.3cm}
+Considerazioni analoghe si possono fare per associazioni uno a uno ricorsive.
+
+\end{frame}

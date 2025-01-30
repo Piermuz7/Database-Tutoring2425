@@ -1,0 +1,103 @@
+\def\schemaEx3.8{\small \begin{align*}
+    DEPUTATI &= (\underline{Codice}, Cognome, Nome, Commissione, Provincia, Collegio)\\
+    COLLEGI &= (\underline{Provincia}, Numero,Nome)\\
+    PROVINCE &= (\underline{Sigla}, Nome, Regione)\\
+    REGIONI &= (\underline{Codice}, Nome)\\
+    COMMISSIONI &= (\underline{Numero}, Nome, Presidente)\\
+    \end{align*}}
+\begin{frame}{Esercizio 3.8}
+    \framesubtitle{3.8.1}
+    \schemaEx3.8
+    Trovare nome e cognome dei presidenti di commissioni cui partecipa almeno un deputato eletto in una provincia della Sicilia.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.8}
+    \framesubtitle{Soluzione 3.8.1}
+    \vspace*{-1.2cm}
+    \schemaEx3.8
+    {\small Nome e cognome dei presidenti di commissioni cui partecipa almeno un deputato eletto in una provincia della Sicilia:}
+    \small
+    \begin{gather*}
+        \onslide<8->{\pi_{Nom,Cogn}}\\
+        \onslide<7->{((\rho_{Nom,Cogn~\leftarrow~Nome,Cognome}}
+        \onslide<6->{(DEPUTATI))~\bowtie_{Presidente~=~Codice}}\\
+        \onslide<5->{(COMMISSIONI~\bowtie_{Numero~=~Comm}}
+        \onslide<4->{(\rho_{Comm~\leftarrow~{Commissione}}}
+        \onslide<3->{(DEPUTATI~\bowtie_{Provincia~=~Sigla}}\\
+        \onslide<2->{(PROVINCE~\bowtie_{Regione~=~Codice}}\\
+        \onslide<1->{(\sigma_{Nome~=~'Sicilia'}(REGIONI))}
+        \onslide<2->{)}
+        \onslide<3->{)}
+        \onslide<4->{)}
+        \onslide<5->{)}
+        \onslide<6->{)}
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.8}
+    \framesubtitle{3.8.2}
+    \schemaEx3.8
+    Trovare nome e cognome dei deputati della commissione Bilancio.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.8}
+    \framesubtitle{Soluzione 3.8.2}
+    \vspace*{-1.2cm}
+    \schemaEx3.8
+    {\small Nome e cognome dei deputati della commissione Bilancio:}
+    \small
+    \begin{gather*}
+        \onslide<4->{\pi_{NomeC,Cognome}(}
+        \onslide<3->{(\rho_{NomeC~\leftarrow~Nome}}
+        \onslide<2->{(DEPUTATI))~\bowtie_{Commissione~=~Numero}}\\
+        \onslide<1->{(\sigma_{Nome~=~'Bilancio'}(COMMISSIONI))}
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.8}
+    \framesubtitle{3.8.3}
+    \schemaEx3.8
+    Trovare nome, cognome e provincia di elezione dei deputati della commissione Bilancio.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.8}
+    \framesubtitle{Soluzione 3.8.3}
+    \vspace*{-1.2cm}
+    \schemaEx3.8
+    {\small Nome, cognome e provincia di elezione dei deputati della commissione Bilancio:}
+    \small
+    \begin{gather*}
+        \onslide<6->{\pi_{NomeC,Cognome,NomeP}(}\\
+        \onslide<5->{(\rho_{NomeP~\leftarrow~Nome}}
+        \onslide<4->{(PROVINCE))~\bowtie_{Sigla~=~Provincia}}\\
+        \onslide<3->{((\rho_{NomeC~\leftarrow~Nome}}
+        \onslide<2->{(DEPUTATI))~\bowtie_{Commissione~=~Numero}}\\
+        \onslide<1->{(\sigma_{Nome~=~'Bilancio'}(COMMISSIONI))}
+        \onslide<3->{)}
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.8}
+    \framesubtitle{3.8.4}
+    \schemaEx3.8
+    Trovare nome, cognome, provincia e regione di elezione dei deputati della commissione Bilancio.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.8}
+    \framesubtitle{Soluzione 3.8.4}
+    \vspace*{-1.2cm}
+    \schemaEx3.8
+    {\small Nome, cognome, provincia e regione di elezione dei deputati della commissione Bilancio:}
+    \small
+    \begin{gather*}
+        \onslide<8->{\pi_{NomeC,Cognome,NomeP,NomeR}(}\\
+        \onslide<7->{(\rho_{NomeR~\leftarrow~Nome}}
+        \onslide<6->{(REGIONI))~\bowtie_{Codice~=~Regione}}\\
+        \onslide<5->{(\rho_{NomeP~\leftarrow~Nome}}
+        \onslide<4->{(PROVINCE))~\bowtie_{Sigla~=~Provincia}}\\
+        \onslide<3->{((\rho_{NomeC~\leftarrow~Nome}}
+        \onslide<2->{(DEPUTATI))~\bowtie_{Commissione~=~Numero}}\\
+        \onslide<1->{(\sigma_{Nome~=~'Bilancio'}(COMMISSIONI))}
+        \onslide<3->{)}
+    \end{gather*}
+\end{frame}

@@ -1,0 +1,81 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usepackage[italian]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[export]{adjustbox}
+% Custom bullets
+\usepackage{pifont}
+\usepackage[useregional]{datetime2}
+\usepackage{tikz}
+\usepackage[table]{colortbl}
+\usepackage{venndiagram}
+\usepackage{amsmath}
+
+% custom legend
+\newcommand{\cbox}[1]{\raisebox{\depth}{\fcolorbox{black}{#1}{\null}}}
+
+\usetheme{Madrid}
+\usecolortheme{spruce}
+
+% Redefine labels
+\deftranslation[to=Italian]{Section}{Sezione}
+\deftranslation[to=Italian]{Subsection}{Sottosezione}
+
+% Join commands
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\author[Gianluca Lanchini \and Piermichele Rosati]{Gianluca Lanchini \and Piermichele Rosati}
+
+\institute[]{\large Universit\`a di Camerino\\ \footnotesize Tutorato - Basi di Dati}
+
+\title[Esercizi - Fondamenti SQL (Pt. 2)]{4. Esercizi - Fondamenti SQL (Parte 2)}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+%\titlegraphic{\includegraphics[width=6cm]{img/unicam-logo.jpg}}
+\makeatletter
+\setbeamertemplate{footline}{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+            \usebeamerfont{date in head/foot}\today\hspace*{5 em}
+            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+        \end{beamercolorbox}%
+    }%
+    \vskip0pt%
+}
+\makeatother
+
+
+\AtBeginSection[]
+{
+\begin{frame}<beamer>
+\frametitle{Indice}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{document}
+\begin{frame}
+\centering
+\includegraphics[width=5.5cm]{../img/unicam-logo.jpg}
+\date{\today}
+\titlepage
+\end{frame}
+\addtobeamertemplate{frametitle}{}{%
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north east,yshift=2pt] at (current page.north east) {\includegraphics[height=2cm]{../img/unicam-logo-notext.png}};
+\end{tikzpicture}}
+\input{sections/sql/exercises.tex}
+\end{document}

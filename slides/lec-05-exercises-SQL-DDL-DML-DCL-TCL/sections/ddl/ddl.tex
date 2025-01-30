@@ -1,0 +1,400 @@
+\begin{frame}[fragile]{Definire il database}
+I database vengono creati con il comando \textbf{CREATE DATABASE}, seguito dal nome del database:
+\begin{lstlisting}
+CREATE DATABASE nomeDB;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}{Definire le tabelle}
+Le tabelle vengono definite con il comando \textbf{CREATE TABLE}, seguito dal nome della tabella seguito, tra parentesi, dall'elenco degli attributi.
+\begin{itemize}
+    \item Per ogni attributo occorre specificare il nome e il tipo di dato;
+    \item Gli attributi possono essere qualificati mediante diverse clausole che permettono di definire:
+    \begin{itemize}
+        \item la chiave primaria;
+        \item le chiavi esterne;
+        \item l'obbligatoriet\`a e il valore di default di un campo.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{DDL: CREATE TABLE}
+\begin{lstlisting}
+CREATE TABLE nomeTabella(
+    campo1 tipoDato [valore di default] [vincoli],
+    campo2 tipoDato [valore di default] [vincoli],
+    campo3 tipoDato [valore di default] [vincoli],
+    |\ldots|
+);
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{CREATE TABLE: Impiegati}
+\begin{lstlisting}
+CREATE TABLE Impiegati(
+    ID              smallint PRIMARY KEY,
+    Nome            char(20) NOT NULL,
+    Cognome         char(30) NOT NULL,
+    Residenza       char(30) DEFAULT `*** Manca residenza',
+    Stipendio       decimal(9,2),
+    Dipartimento    char(5) REFERENCES Dipartimenti(Codice),
+    UNIQUE(Cognome, Nome, Dipartimento)
+    );
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Impiegati}
+\begin{lstlisting}
+CREATE TABLE Impiegati(
+    |\colorbox{magenta!40}{ID              smallint PRIMARY KEY}|,
+    Nome            char(20) NOT NULL,
+    Cognome         char(30) NOT NULL,
+    Residenza       char(30) DEFAULT `*** Manca residenza',
+    Stipendio       decimal(9,2),
+    Dipartimento    char(5) REFERENCES Dipartimenti(Codice),
+    UNIQUE(Cognome, Nome, Dipartimento)
+);
+\end{lstlisting}
+\begin{minipage}{0.4\textwidth}
+    \begin{block}{ID: chiave primaria}
+        ID \`e chiave primaria della tabella.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Impiegati}
+\begin{lstlisting}
+CREATE TABLE Impiegati(
+    ID              smallint PRIMARY KEY,
+    |\colorbox{magenta!40}{Nome \quad\quad\quad\quad\quad\quad\quad char(20) NOT NULL}|,
+    |\colorbox{magenta!40}{Cognome\quad\quad\quad\quad\quad\quad char(30) NOT NULL}|,
+    Residenza       char(30) DEFAULT `*** Manca residenza',
+    Stipendio       decimal(9,2),
+    Dipartimento    char(5) REFERENCES Dipartimenti(Codice),
+    UNIQUE(Cognome, Nome, Dipartimento)
+);
+\end{lstlisting}
+\begin{block}{Nome, Cognome}
+    Campi obbligatori: non sono ammessi i valori nulli in \textit{Nome} e \textit{Cognome}.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Impiegati}
+\begin{lstlisting}
+CREATE TABLE Impiegati(
+    ID              smallint PRIMARY KEY,
+    Nome            char(20) NOT NULL,
+    Cognome         char(30) NOT NULL,
+    |\colorbox{magenta!40}{Residenza\quad\quad\quad\quad\quad char(30) DEFAULT `*** Manca residenza'}|,
+    Stipendio       decimal(9,2),
+    Dipartimento    char(5) REFERENCES Dipartimenti(Codice),
+    UNIQUE(Cognome, Nome, Dipartimento)
+);
+\end{lstlisting}
+\begin{minipage}{0.7\textwidth}
+\begin{block}{Residenza}
+    Il valore da attribuire a \textit{Residenza} in caso di valore nullo.
+\end{block}
+\end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Impiegati}
+\begin{lstlisting}
+CREATE TABLE Impiegati(
+    ID              smallint PRIMARY KEY,
+    Nome            char(20) NOT NULL,
+    Cognome         char(30) NOT NULL,
+    Residenza       char(30) DEFAULT `*** Manca residenza',
+    Stipendio       decimal(9,2),
+    |\colorbox{magenta!40}{Dipartimento \quad\quad\quad char(5) REFERENCES Dipartimenti(Codice)}|,
+    UNIQUE(Cognome, Nome, Dipartimento)
+);
+\end{lstlisting}
+\begin{block}{Dipartimento: chiave esterna}
+    \textit{Dipartimento} \`e chiave esterna associata a \textit{Codice}. Crea un vincolo di integrit\`a referenziale con \textit{Dipartimenti}.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Impiegati}
+\begin{lstlisting}
+CREATE TABLE Impiegati(
+    ID              smallint PRIMARY KEY,
+    Nome            char(20) NOT NULL,
+    Cognome         char(30) NOT NULL,
+    Residenza       char(30) DEFAULT `*** Manca residenza',
+    Stipendio       decimal(9,2),
+    Dipartimento    char(5) REFERENCES Dipartimenti(Codice),
+    |\colorbox{magenta!40}{UNIQUE(Cognome, Nome, Dipartimento)}|
+);
+\end{lstlisting}
+\begin{block}{Cognome, Nome e Dipartimento: Vincolo di unicit\`a}
+    \textbf{UNIQUE} vieta la presenza di valori duplicati in una colonna o un insieme di colonne: non ci possono essere due dipendenti con identico nome e cognome nello stesso dipartimento.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Impiegati}
+\begin{lstlisting}
+CREATE TABLE Impiegati(
+    ID              smallint PRIMARY KEY,
+    Nome            char(20) NOT NULL,
+    Cognome         char(30) NOT NULL,
+    Residenza       char(30) DEFAULT `*** Manca residenza',
+    Stipendio       decimal(9,2),
+    Dipartimento    char(5) REFERENCES Dipartimenti(Codice),
+    UNIQUE(Cognome, Nome, Dipartimento)
+|\colorbox{magenta!40}{);}|
+\end{lstlisting}
+\begin{minipage}{0.6\textwidth}
+    \begin{block}{Fine comando: punto e virgola}
+        Ogni comando SQL termina con il punto e virgola.
+    \end{block}
+\end{minipage}
+\end{frame}
+%
+\begin{frame}{CREATE TABLE: Impiegati}
+\onslide<1->{\begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}ID & Nome & Cognome & Residenza & Stipendio & Dipartimento\\
+    \hline
+    & & & & & \\
+    \hline
+\end{tabular}}
+\vspace*{0.9cm}
+
+\onslide<2>{Come facciamo a conoscere la struttura della tabella?}
+\end{frame}
+%
+\begin{frame}[fragile]{Descrivere le tabelle}
+Il comando \textbf{DESCRIBE} viene utilizzato per descrivere la struttura di una tabella.
+\begin{lstlisting}
+DESCRIBE nomeTabella;
+\end{lstlisting}
+\begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Field & Type & Null & Key & Default & Extra \\ \hline
+    & & & & & \\ \hline
+\end{tabular}
+\end{frame}
+%
+\begin{frame}[fragile]{DESCRIBE TABLE: Impiegati}
+\begin{lstlisting}
+DESCRIBE Impiegati;
+\end{lstlisting}
+\begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Field & Type & Null & Key & Default & Extra \\
+    \hline
+    ID & smallint & NO & PRI & NULL & \\ \hline
+    Nome & char(20) & NO & & NULL & \\ \hline
+    Cognome & char(30) & NO & MUL & NULL & \\ \hline
+    Residenza & char(30) & YES & & *** Manca residenza & \\ \hline
+    Stipendio & decimal(9,2) & YES & & NULL & \\ \hline
+    Dipartimento & char(5) & YES & & NULL & \\ \hline
+\end{tabular}
+\end{frame}
+%
+\begin{frame}[fragile]{CREATE TABLE: Dipartimenti}
+\begin{lstlisting}
+CREATE TABLE Dipartimenti(
+    Codice          char(5),
+    Descrizione     char(20) NOT NULL,
+    Sede            char(20),
+    Manager         smallint,
+    PRIMARY KEY (Codice),
+    UNIQUE(Descrizione),
+    FOREIGN KEY (Manager) REFERENCES Impiegati(ID)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);    
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Dipartimenti}
+\vspace{-.6cm}
+\begin{lstlisting}
+CREATE TABLE Dipartimenti(
+    Codice          char(5),
+    Descrizione     char(20) NOT NULL,
+    Sede            char(20),
+    Manager         smallint,
+    |\colorbox{magenta!40}{PRIMARY KEY (Codice)}|,
+    UNIQUE(Descrizione),
+    FOREIGN KEY (Manager) REFERENCES Impiegati(ID)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);    
+\end{lstlisting}
+\begin{block}{Codice: chiave primaria}
+    \textit{Codice} \`e chiave primaria della tabella. La clausola \textbf{PRIMARY KEY} pu\`o essere inserita come riga isolata per permettere di dichiarare chiavi primarie formate da pi\`u campi.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Dipartimenti}
+\vspace{-.6cm}
+\begin{lstlisting}
+CREATE TABLE Dipartimenti(
+    Codice          char(5),
+    Descrizione     char(20) NOT NULL,
+    Sede            char(20),
+    Manager         smallint,
+    PRIMARY KEY (Codice),
+    |\colorbox{magenta!40}{UNIQUE(Descrizione)}|,
+    FOREIGN KEY (Manager) REFERENCES Impiegati(ID)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);    
+\end{lstlisting}
+\begin{block}{Descrizione: vincolo di unicit\`a}
+    Nella colonna \textit{Descrizione} non ci possono essere valori duplicati. \textit{Descrizione} identifica univocamente una riga della tabella.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Dipartimenti}
+\vspace{-.6cm}
+\begin{lstlisting}
+CREATE TABLE Dipartimenti(
+    Codice          char(5),
+    Descrizione     char(20) NOT NULL,
+    Sede            char(20),
+    Manager         smallint,
+    PRIMARY KEY (Codice),
+    UNIQUE(Descrizione),
+    |\colorbox{magenta!40}{FOREIGN KEY (Manager) REFERENCES Impiegati(ID)}|
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);    
+\end{lstlisting}
+\begin{block}{Manager: chiave esterna}
+    \textit{Manager} \`e chiave esterna associata al campo \textit{ID} della tabella \textit{Impiegati}.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Dipartimenti}
+\vspace{-.6cm}
+\begin{lstlisting}
+CREATE TABLE Dipartimenti(
+    Codice          char(5),
+    Descrizione     char(20) NOT NULL,
+    Sede            char(20),
+    Manager         smallint,
+    PRIMARY KEY (Codice),
+    UNIQUE(Descrizione),
+    FOREIGN KEY (Manager) REFERENCES Impiegati(ID)
+    |\colorbox{magenta!40}{\quad\quad ON DELETE SET NULL}|
+        ON UPDATE CASCADE
+);    
+\end{lstlisting}
+\begin{block}{Cancellazione}
+    La cancellazione di una riga di \textit{Impiegati} implica che i valori di \textit{Manager} associati all'\textit{ID} di quella riga assumano valore nullo.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Dipartimenti}
+\vspace{-.6cm}
+\begin{lstlisting}
+CREATE TABLE Dipartimenti(
+    Codice          char(5),
+    Descrizione     char(20) NOT NULL,
+    Sede            char(20),
+    Manager         smallint,
+    PRIMARY KEY (Codice),
+    UNIQUE(Descrizione),
+    FOREIGN KEY (Manager) REFERENCES Impiegati(ID)
+        ON DELETE SET NULL
+        |\colorbox{magenta!40}{ON UPDATE CASCADE}|
+);    
+\end{lstlisting}
+\begin{block}{Aggiornamento}
+    L'aggiornamento di un \textit{ID} associato a \textit{Manager} si riflette a catena sui valori di \textit{Manager}.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{DESCRIBE TABLE: Dipartimenti}
+\begin{lstlisting}
+DESCRIBE Dipartimenti;
+\end{lstlisting}
+\begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Field & Type & Null & Key & Default & Extra \\
+    \hline
+    Codice & char(5) & NO & PRI & NULL & \\ \hline
+    Descrizione & char(20) & NO & UNI & NULL & \\ \hline
+    Sede & char(20) & YES & & NULL & \\ \hline
+    Manager & smallint & YES & MUL & NULL & \\ \hline
+\end{tabular}
+\end{frame}
+%
+\begin{frame}[fragile]{Modificare le tabelle}
+La struttura di una tabella pu\`o essere modificata in un secondo momento con il comando \textbf{ALTER TABLE} per:
+\begin{itemize}
+    \item aggiungere una nuova colonna (\textbf{ADD}) a quelle gi\`a esistenti;
+    \begin{lstlisting}
+        ALTER TABLE nomeTabella
+        ADD nomeColonna tipoDato;
+    \end{lstlisting}
+    \item oppure per togliere una colonna (\textbf{DROP}).
+    \begin{lstlisting}
+        ALTER TABLE nomeTabella
+        DROP nomeColonna;
+    \end{lstlisting}
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{DDL: ALTER TABLE - ADD Colonna}
+Il seguente comando inserisce in \textit{Impiegati} una nuova colonna di nome \textit{Nascita} per registrare la data di nascita del dipendente:
+\begin{lstlisting}
+ALTER TABLE Impiegati
+ADD Nascita date;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DDL: ALTER TABLE - DROP Colonna}
+Il seguente comando elimina da \textit{Impiegati} la colonna di nome \textit{Residenza}.
+\begin{lstlisting}
+ALTER TABLE Impiegati
+DROP Residenza;
+\end{lstlisting}
+\begin{minipage}{0.7\textwidth}
+    \begin{alertblock}{Attenzione}
+        Il comando \textbf{DROP} elimina anche i dati contenuti nella colonna!
+    \end{alertblock}
+\end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{DDL: ALTER TABLE - RENAME Colonna}
+Il seguente comando permette di rinominare una colonna di una tabella:
+\begin{lstlisting}
+ALTER TABLE nomeTabella
+RENAME COLUMN vecchioNomeColonna to nuovoNomeColonna;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DDL: ALTER TABLE - MODIFY tipoDato Colonna}
+Il seguente comando permette di modificare il tipo di dato di una colonna di una tabella:
+\begin{lstlisting}
+ALTER TABLE nomeTabella
+MODIFY COLUMN nomeColonna tipoDato;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Eliminare il database}
+I database vengono eliminati con il comando comando \textbf{DROP DATABASE}, seguito dal nome del database:
+\begin{lstlisting}
+DROP DATABASE nomeDB;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Eliminare le tabelle}
+Il comando \textbf{DROP TABLE} elimina una tabella dal database:
+\begin{lstlisting}
+DROP TABLE nomeTabella;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DDL: DROP TABLE}
+Il seguente comando elimina la tabella \textit{Impiegati} dal database:
+\begin{lstlisting}
+DROP TABLE Impiegati;
+\end{lstlisting}
+\end{frame}
+%

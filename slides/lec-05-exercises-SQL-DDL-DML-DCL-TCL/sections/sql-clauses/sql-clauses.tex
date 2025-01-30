@@ -1,0 +1,40 @@
+\begin{frame}{Clausole di SQL}
+Sintesi delle diverse clausole che possono apparire nel comando \textbf{SELECT}:
+\newline
+\\\textbf{SELECT}~~~~~~~Elenco espressioni da mostrare
+\\\textbf{FROM}~~~~~~~~~Tabelle da cui estrarre le righe
+\\\textbf{WHERE}~~~~~~~Condizioni sulle righe estratte
+\\\textbf{GROUP BY}~~Campi da considerare per i raggruppamenti
+\\\textbf{HAVING}~~~~~~~Condizioni sui raggruppamenti
+\\\textbf{ORDER BY}~~~Ordinamenti sulle espressioni elencate nella clausola SELECT
+\end{frame}
+%
+\begin{frame}{Precisazioni sulle clausole SQL}
+\`E opportuno fare le seguenti precisazioni:
+\begin{itemize}[<+->]
+    \item si possono scrivere comandi del tipo: \textbf{SELECT NOW();} oppure \textbf{SELECT 3*4;} nei quali compare la sola clausola SELECT.
+    \item Per estrarre dati da una tabella le uniche clausole che devono comparire \textbf{obbligatoriamente} sono \textbf{SELECT} e \textbf{FROM} mentre le altre sono facoltative.
+    \item Le clausole utilizzate devono essere elencate rispettando l'ordine (slide precedente):
+    SELECT deve precedere FROM, FROM deve precedere WHERE, \ldots, HAVING deve precedere ORDER BY.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}{Precisazioni sulle clausole SQL}
+\begin{itemize}
+    \item Il DBMS esegue il comando SQL elaborando le clausole nel seguente ordine:
+\end{itemize}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} \textbf{Ordine} & \textbf{Clausola} & \textbf{Funzione} \\
+    \hline
+    1 & FROM & Tabelle da cui estrarre le righe\\ \hline
+    2 & WHERE & Condizioni sulle righe estratte\\ \hline
+    3 & GROUP BY & Campi da considerare per i raggruppamenti\\ \hline
+    4 & HAVING & Condizioni sui raggruppamenti\\ \hline
+    5 & SELECT & Elenco espressioni da mostrare\\ \hline
+    6 & ORDER BY & Ordinamenti sulle espressioni elencate nella clausola SELECT\\ \hline
+    7 & LIMIT & I dati restituiti sono limitati al conteggio delle righe\\ \hline
+\end{tabular}
+\end{center}
+\end{frame}

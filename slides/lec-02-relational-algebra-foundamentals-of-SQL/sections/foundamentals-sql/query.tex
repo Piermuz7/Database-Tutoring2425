@@ -1,0 +1,517 @@
+\begin{frame}{QUERY}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}Column1 & Column2 & Column3 & Column4 \\
+    \hline
+    Data1 & Data2 & Data3 & Data4 \\
+    Data5 & Data6 & Data7 & Data8 \\
+    Data9 & Data10 & Data11 & Data12 \\
+    \hline
+    \end{tabular}
+    \begin{tikzpicture}[overlay,remember picture]
+      \draw[->,thick,line width=2pt] (1.5,-0.5) -- (1.5,-1.5) node[midway,right] {Query};
+    \end{tikzpicture}
+    \end{table}
+    
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{3}{|c|}{Temp Table} \\
+    \hline
+    \rowcolor{cyan!30}TempColumn1 & TempColumn2 & TempColumn3 \\
+    \hline
+    TempData1 & TempData2 & TempData3 \\
+    TempData4 & TempData5 & TempData6 \\
+    TempData7 & TempData8 & TempData9 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \end{frame}
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{frame}{SELECT}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}column1 & column2 & column3 & column4 \\
+    \hline
+    data1 & data2 & data3 & data4 \\
+    data5 & data6 & data7 & data8 \\
+    data9 & data10 & data11 & data12 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \vspace{2em} 
+    
+    \texttt{SELECT column1, column2 \\FROM TABLE}
+    \end{frame}
+    %%%%%%%%%%%%%%%%%%%%%
+    \begin{frame}{SELECT}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}column1 & column2 & column3 & column4 \\
+    \hline
+    \cellcolor{red!20} data1 & \cellcolor{red!20} data2 & data3 & data4 \\
+    \cellcolor{red!20} data5 & \cellcolor{red!20} data6 & data7 & data8 \\
+    \cellcolor{red!20} data9 & \cellcolor{red!20} data10 & data11 & data12 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \vspace{2em} 
+    
+    \texttt{SELECT column1, column2 \\FROM TABLE}
+    \end{frame}
+    
+    %%%%%%%%
+    
+    \begin{frame}{SELECT}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}column1 &  column2 & column3 & column4 \\
+    \hline
+     data1 &  data2 & data3 & data4 \\
+     data5 &  data6 & data7 & data8 \\
+     data9 &  data10 & data11 & data12 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \vspace{2em} 
+    
+    \texttt{SELECT * \\FROM TABLE}
+    \end{frame}
+    
+    %%%%%%%%%%%%%%
+    \begin{frame}{SELECT}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}column1 & column2 & column3 & column4 \\
+    \hline
+    \cellcolor{red!20}data1 & \cellcolor{red!20}data2 & \cellcolor{red!20}data3 & \cellcolor{red!20}data4 \\
+    \cellcolor{red!20}data5 & \cellcolor{red!20}data6 & \cellcolor{red!20}data7 & \cellcolor{red!20}data8 \\
+    \cellcolor{red!20}data9 & \cellcolor{red!20}data10 & \cellcolor{red!20}data11 & \cellcolor{red!20}data12 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \vspace{2em} 
+    
+    \texttt{SELECT * \\FROM TABLE}
+    \end{frame}
+    %%%%%%%%%%%%%%%
+    \begin{frame}{SELECT}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}nome &  column2 & column3 & column4 \\
+    \hline
+     Marco &  data2 & data3 & data4 \\
+     Lucia &  data6 & data7 & data8 \\
+     Marco &  data10 & data11 & data12 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \vspace{2em} 
+    
+    \texttt{SELECT nome \\FROM Table}
+    \end{frame}
+    %%%%%%%%%%%%%
+    \begin{frame}{SELECT}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}nome &  column2 & column3 & column4 \\
+    \hline
+    \cellcolor{red!20}Marco &  data2 & data3 & data4 \\
+    \cellcolor{red!20}Lucia &  data6 & data7 & data8 \\
+    \cellcolor{red!20}Marco &  data10 & data11 & data12 \\
+    \hline
+    \end{tabular}
+    \begin{tikzpicture}[overlay,remember picture]
+      \draw[->,thick,line width=2pt] (1.5,-0.5) -- (1.5,-1.5) node[midway,right] {Query};
+    \end{tikzpicture}
+    \end{table}
+    
+    \vspace{2em}
+    
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|}
+    \hline
+    \rowcolor{cyan!30}Result \\
+    \hline
+    Marco \\
+    Lucia \\
+    Marco \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \end{frame}
+    %%%%%%%%%
+    \begin{frame}{SELECT}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|}
+    \hline
+    \rowcolor{cyan!30}Result \\
+    \hline
+    Marco \\
+    Lucia \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \vspace{2em}
+    \texttt{SELECT DISTINCT nome \\FROM Table}
+    \end{frame}
+    %%%%%%%%
+    
+    \begin{frame}{Funzioni di aggregazione}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{2}{|c|}{Esami} \\
+    \hline
+    \rowcolor{cyan!30}voti &  ...  \\
+    \hline
+    18 &  ... \\
+    30 &  ...  \\
+    25 &  ...  \\
+    27 &  ...  \\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \texttt{SELECT MIN(voti)}  \\
+    \texttt{SELECT MAX(voti)}  \\
+    \texttt{SELECT SUM(voti)}  \\
+    \texttt{SELECT AVG(voti)}  \\
+    \texttt{SELECT COUNT(voti)} 
+    \end{frame}
+    %%%%%%%%
+    \begin{frame}{Funzioni di aggregazione}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{2}{|c|}{Esami} \\
+    \rowcolor{cyan!30}\hline
+    voti &  ...  \\
+    \hline
+    18 &  ... \\
+    30 &  ...  \\
+    25 &  ...  \\
+    27 &  ...  \\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \texttt{SELECT MIN(voti)} \textcolor{red}{18} \\
+    \texttt{SELECT MAX(voti)} \textcolor{red}{30} \\
+    \texttt{SELECT SUM(voti)} \textcolor{red}{100} \\
+    \texttt{SELECT AVG(voti)} \textcolor{red}{25} \\
+    \texttt{SELECT COUNT(voti)} \textcolor{red}{4}
+    \end{frame}
+    %%%%%%%%
+    \begin{frame}{FROM}
+    L'istruzione SQL \texttt{FROM} viene utilizzata per specificare la tabella (o tabelle) da cui si desidera estrarre i dati.
+    \end{frame}
+    %%%%%
+    \begin{frame}{WHERE}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}column1 &  column2 & column3 & column4 \\
+    \hline
+     data1 &  data2 & data3 & data4 \\
+     data5 &  data6 & data7 & data8 \\
+     data9 &  data10 & data11 & data12 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \vspace{2em} 
+    
+    \texttt{SELECT * \\FROM TABLE\\ WHERE (condizione)}
+    \end{frame}
+    %%%%%
+    \begin{frame}{WHERE}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{4}{|c|}{Table} \\
+    \hline
+    \rowcolor{cyan!30}column1 &  column2 & column3 & column4 \\
+    \hline
+     \cellcolor{red!20}data1 &  \cellcolor{red!20}data2 & \cellcolor{red!20}data3 & \cellcolor{red!20}data4 \\
+     data5 &  data6 & data7 & data8 \\
+     \cellcolor{red!20}data9 &  \cellcolor{red!20}data10 & \cellcolor{red!20}data11 & \cellcolor{red!20}data12 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \vspace{2em} 
+    
+    \texttt{SELECT * \\FROM TABLE\\ WHERE (condizione)}
+    \end{frame}
+    
+    %%%%%%
+    \begin{frame}{WHERE}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{2}{|c|}{Esami} \\
+    \hline
+    \rowcolor{cyan!30}voti &  ...  \\
+    \hline
+    18 &  ... \\
+    30 &  ...  \\
+    25 &  ...  \\
+    27 &  ...  \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \texttt{SELECT voti \\FROM Esami\\ WHERE voti>25;}
+    \end{frame}
+    %%%%%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{2}{|c|}{Esami} \\
+    \hline
+    \rowcolor{cyan!30}voti &  ...  \\
+    \hline
+    18 &  ... \\
+    \cellcolor{red!20}{30} &  ...  \\
+    25 &  ...  \\
+    \cellcolor{red!20}{27} &  ...  \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \texttt{SELECT voti \\FROM Esami\\ WHERE voti>25;}
+    \end{frame}
+    %%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{IN}
+    \end{itemize}
+    \end{frame}
+    %%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{\textcolor{red}{BETWEEN}}
+        \item \textbf{IN}
+    \end{itemize}
+    \vspace{2em}
+    \texttt{WHERE Price BETWEEN 10 AND 20\\WHERE Price >= 10 AND Price <= 20}
+    \end{frame}
+    %%%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{IN}
+    \end{itemize}
+    \end{frame}
+    %%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{\textcolor{red}{IN}}
+    \end{itemize}
+    \vspace{2em}
+    \texttt{WHERE Country IN ('Germany', 'France', 'UK')\\WHERE Country = 'Germany' OR Country = 'France' OR Country = 'UK'}
+    \end{frame}
+    %%%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{IN}
+        \item \textbf{\textcolor{red}{LIKE\{ \%, \_ \}}}
+    \end{itemize}
+    \vspace{2em}
+    \textbf{\%} rappresenta zero, uno o pi\`u caratteri\\
+    \textbf{\_} rappresenta un singolo carattere\\
+    \end{frame}
+    %%%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{IN}
+        \item \textbf{\textcolor{red}{LIKE\{ \%, \_ \}}}
+    \end{itemize}
+    \vspace{2em}
+    \texttt{SELECT * \\FROM Cliente\\WHERE nome LIKE 'A\%'}
+    \end{frame}
+    %%%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{columns}[T,onlytextwidth]
+    \column{0.6\textwidth}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{IN}
+        \item \textbf{\textcolor{red}{LIKE\{ \%, \_ \}}}
+    \end{itemize}
+    \vspace{2em}
+    \texttt{SELECT * \\FROM Cliente\\WHERE nome LIKE 'A\%'}
+    \column{0.5\textwidth}
+    \centering
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{2}{|c|}{Cliente} \\
+    \hline
+    \rowcolor{cyan!30}nome &  ...  \\
+    \hline
+    Anna &  ... \\
+    Fabrizio &  ...  \\
+    Asia &  ...  \\
+    Laura &  ...  \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \end{columns}
+    \end{frame}
+    %%%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{columns}[T,onlytextwidth]
+    \column{0.6\textwidth}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{IN}
+        \item \textbf{\textcolor{red}{LIKE\{ \%, \_ \}}}
+    \end{itemize}
+    \vspace{2em}
+    \texttt{SELECT * \\FROM Cliente\\WHERE nome LIKE 'A\%'}
+    \column{0.5\textwidth}
+    \centering
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{2}{|c|}{Cliente} \\
+    \hline
+    \rowcolor{cyan!30}nome &  ...  \\
+    \hline
+    \cellcolor{red!20}{Anna} &  ... \\
+    Paolo &  ...  \\
+    \cellcolor{red!20}{Asia} &  ...  \\
+    Paola &  ...  \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \end{columns}
+    \end{frame}
+    %%%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{IN}
+        \item \textbf{\textcolor{red}{LIKE\{ \%, \_ \}}}
+    \end{itemize}
+    \vspace{2em}
+    \texttt{SELECT * \\FROM Cliente\\WHERE nome LIKE 'Paol\_'}
+    \column{0.6\textwidth}
+    \centering
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{2}{|c|}{Cliente} \\
+    \hline
+    \rowcolor{cyan!30}nome &  ...  \\
+    \hline
+    Anna &  ... \\
+    Paolo &  ...  \\
+    Asia &  ...  \\
+    Paola &  ...  \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \end{columns}
+    \end{frame}
+    %%%%%%%%%%%%
+    \begin{frame}{WHERE}
+    \begin{columns}[T,onlytextwidth]
+    \column{0.6\textwidth}
+    \begin{itemize}
+        \item \textbf{Operatori di confronto:} $=, <>, >, <, >=, <=$
+        \item \textbf{Operazioni booleane:} AND, OR, NOT
+        \item \textbf{BETWEEN}
+        \item \textbf{IN}
+        \item \textbf{\textcolor{red}{LIKE\{ \%, \_ \}}}
+    \end{itemize}
+    \vspace{2em}
+    \texttt{SELECT * \\FROM Cliente\\WHERE nome LIKE 'Paol\_'}
+    \column{0.5\textwidth}
+    \centering
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30}\multicolumn{2}{|c|}{Cliente} \\
+    \hline
+    \rowcolor{cyan!30}nome &  ...  \\
+    \hline
+    Anna &  ... \\
+    \cellcolor{red!20}{Paolo} &  ...  \\
+    Asia &  ...  \\
+    \cellcolor{red!20}{Paola} &  ...  \\
+    \hline
+    \end{tabular}
+    \end{table}
+    \end{columns}
+    \end{frame}

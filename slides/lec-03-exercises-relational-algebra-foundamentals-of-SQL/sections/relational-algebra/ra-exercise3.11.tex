@@ -1,0 +1,22 @@
+\def\schemaEx3.11{\small \begin{align*}
+    CITTA &= (\underline{Nome}, Regione, Abitanti)\\
+    ATTRAVERSAMENTI &= (\underline{Citta}, \underline{Fiume})\\
+    FIUMI &= (\underline{Fiume}, Lunghezza)
+    \end{align*}}
+\begin{frame}{Esercizio 3.11}
+    \framesubtitle{3.11.1}
+    \schemaEx3.11
+    Visualizza nome, regione e abitanti per le citt\`a che hanno pi\`u di 50000 abitanti e sono attraversate dal Po oppure dall'Adige.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.11}
+    \framesubtitle{Soluzione 3.11.1}
+    \vspace*{-1.2cm}
+    \schemaEx3.11
+    {\small Nome, regione e abitanti per le citt\`a che hanno pi\`u di 50000 abitanti e sono attraversate dal Po oppure dall'Adige:}
+    \small
+    \begin{gather*}
+        \pi_{Nome,Regione,Abitanti} (\sigma_{(Fiume='Po'~OR~(Fiume='Adige'))} (ATTRAVERSAMENTI)~\bowtie_{Citta=Nome}\\
+        \sigma_{Abitanti>50000}~(CITTA))
+    \end{gather*}
+\end{frame}

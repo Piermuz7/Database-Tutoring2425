@@ -1,0 +1,103 @@
+\begin{frame}[fragile]{Definire i permessi nel database}
+\onslide<1->{I comandi di tipo \textbf{Data Control Language (DCL)} hanno lo scopo di garantire la sicurezza agli oggetti del database.}
+\newline
+\\\onslide<2->{Nei DBMS SQL ogni operazione deve essere autorizzata, ovvero l'utente che esegue l'operazione deve avere i privilegi necessari.}
+\newline
+\\\onslide<3->{Il database administrator (DBA) pu\`o:
+\begin{itemize}
+    \item concedere, con il comando \textbf{GRANT}
+    \item o revocare, con il comando \textbf{REVOKE},
+\end{itemize}
+il diritto di eseguire certe azioni su determinati oggetti del database a specifici (o tutti gli) utenti.}
+\end{frame}
+%
+\begin{frame}[fragile]{DCL: GRANT}
+Il comando \textbf{GRANT} concede i permessi, specificando il tipo di accesso, per le tabelle sulle quali \`e consentito l'accesso e l'elenco degli utenti ai quali \`e permesso di accedere.
+\newline
+\\ Il tipo di accesso pu\`o riguardare, per esempio:
+\begin{itemize}[<+->]
+    \item il diritto di modifica della struttura della tabella con l'aggiunta di nuove colonne;
+    \item oppure di modifica dei dati contenuti nella tabella;
+    \item oppure l'uso del comando SELECT
+    \item \ldots
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{DCL: GRANT - privilegi per Schemi}
+\begin{itemize}
+\item Sintassi di GRANT per concedere privilegi su schemi:
+\begin{lstlisting}
+GRANT < lista_privilegi >
+ON SCHEMA < nome_schema >
+TO { < lista_utenti e gruppi |$\vert$| PUBLIC > }
+[ WITH GRANT OPTION ];
+\end{lstlisting}
+\item Possibili privilegi:
+\\\textbf{CREATEIN}: per creare oggetti (tabelle, viste) nello schema;
+
+\textbf{ALTERIN}:~~~per modificare la struttura di tabelle dello schema;
+
+\textbf{DROPIN}:~~~~per eliminare oggetti dallo schema.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{Esempio DCL: GRANT - privilegi per Schemi}
+Il seguente comando DCL consente agli utenti USR7 e USR42 di creare e modificare oggetti nello schema DB12345:
+\begin{lstlisting}
+GRANT CREATEIN, ALTERIN
+ON SCHEMA DB12345
+TO USR7, USR42;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DCL: GRANT - privilegi per Tabelle e Viste}
+Sintassi di GRANT per concedere privilegi su tabelle e viste:
+\begin{lstlisting}
+GRANT < ALL |$\vert$| lista_privilegi >
+ON [ TABLE ] < nome_tabella >
+TO { < lista_utenti e gruppi |$\vert$| PUBLIC > }
+[ WITH GRANT OPTION ];
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Esempio DCL: GRANT - privilegi per Tabelle}
+Per concedere il diritto di modifica sulla tabella \textit{Impiegati} agli utenti User1 e User2:
+\begin{lstlisting}
+GRANT UPDATE
+ON Impiegati
+TO User1, User2;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DCL: REVOKE}
+La revoca dei permessi con annullamento dei diritti di accesso viene effettuata con il comando \textbf{REVOKE} che ha una sintassi analoga al GRANT.
+\end{frame}
+\begin{frame}[fragile]{DCL: REVOKE - privilegi da Tabelle e Viste}
+Sintassi di REVOKE per rimuovere privilegi da tabella e viste:
+\begin{lstlisting}
+REVOKE < ALL |$\vert$| lista_privilegi >
+ON [ TABLE ] < nome_tabella >
+FROM { < lista_utenti e gruppi |$\vert$| PUBLIC > };
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Esempio DCL: REVOKE - privilegi da Tabelle}
+Per revocare il permesso di modifica sulla tabella \textit{Impiegati} agli utenti User1 e User2:
+\begin{lstlisting}
+REVOKE UPDATE
+ON Impiegati
+FROM User1, User2;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DCL: Privilegi SQL}
+I permessi che possono essere concessi (o revocati) agli utenti sono indicati con le seguenti parole chiave, le quali vanno specificate dopo GRANT o REVOKE:
+\newline
+\\\textbf{ALTER}:~~~~~ per aggiungere o eliminare colonne oppure per modificare tipi di dati;
+\\\textbf{DELETE}:~~~ per eliminare righe dalle tabelle;
+\\\textbf{INDEX}:~~~~~ per creare indici;
+\\\textbf{INSERT}:~~~~per inserire nuove righe nelle tabelle;
+\\\textbf{SELECT}:~~~ per ritrovare i dati  dalle tabelle;
+\\\textbf{UPDATE}:~~ per cambiare i valori contenuti nelle tabelle;
+\\\textbf{ALL}:~~~~~~~~~ per tutti i permessi precedenti.
+\end{frame}

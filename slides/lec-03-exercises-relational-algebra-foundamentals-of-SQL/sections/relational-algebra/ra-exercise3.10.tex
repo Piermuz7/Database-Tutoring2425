@@ -1,0 +1,86 @@
+\def\schemaEx3.10{\small \begin{align*}
+    MATERIE &= (\underline{Codice}, Facolta, Denominazione, Professore)\\
+    STUDENTI &= (\underline{Matricola}, Cognome, Nome, Facolta)\\
+    PROFESSORI &= (\underline{Matricola}, Cognome, Nome)\\
+    ESAMI &= (\underline{Studente}, \underline{Materia}, Voto, Data)\\
+    PIANIDISTUDIO &= (\underline{Studente}, \underline{Materia}, Anno)\\
+    \end{align*}}
+\begin{frame}{Esercizio 3.10}
+    \framesubtitle{3.10.1}
+    \schemaEx3.10
+    Trovare gli studenti che hanno riportato in almeno un esame una votazione pari a 30, mostrando, per ciascuno di essi, nome e cognome e data della prima di tali occasioni.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.10}
+    \framesubtitle{Soluzione 3.10.1}
+    \vspace*{-1.2cm}
+    \schemaEx3.10
+    {\small Studenti che hanno riportato in almeno un esame una votazione pari a 30, mostrando, per ciascuno di essi, nome e cognome e data della prima di tali occasioni:}
+    \small
+    \begin{gather*}
+        \pi_{Nome,Cognome,Data}\\
+        ((\pi_{Studente,Data}(\sigma_{Voto=30} (ESAMI))-\\
+        {\pi_{Studente,Data} ((\sigma_{Voto=30}(ESAMI)~\bowtie_{(Studente=Studente1)~AND~(Data>Data1)}}\\
+        {\rho_{Studente1,Corso1,Voto1,Data1~\leftarrow~Studente,Corso,Voto,Data}~\sigma_{Voto=30}(ESAMI)))}\\
+        {\bowtie_{Studente~=~Matricola}(STUDENTE))}
+    \end{gather*}
+\end{frame}
+%
+% \begin{frame}{Esercizio 3.10}
+%     \framesubtitle{3.10.2}
+%     \schemaEx3.10
+%     Per ogni insegnamento della facolt\`a di ingegneria, gli studenti che hanno superato l'esame nell'ultima seduta svoltaf.
+% \end{frame}
+% %
+% \begin{frame}{Esercizio 3.10}
+%     \framesubtitle{Soluzione 3.10.2}
+%     \vspace*{-1.2cm}
+%     \schemaEx3.10
+%     {\small Per ogni insegnamento della facolt\`a di ingegneria, gli studenti che hanno superato l'esame nell'ultima seduta svolta:}
+%     \small
+%     \begin{gather*}
+%         \sigma_{(Voto~\geq~18)~AND~(Facolta='Ingegneria')}\\
+%         (\pi_{Cognome,Nome,Materia,Voto,Data}\\
+%         (STUDENTI~\bowtie_{Studente=Matricola} (\pi_{Studente,Materia,Voto,Data}~(\sigma_{(D~\geq~Data)})\\
+%         (ESAMI~\bowtie_{Materia=M}~(\rho_{S,M,V,D~\leftarrow~Studente,Materia,Voto,Data}(ESAMI))))))
+%     \end{gather*}
+% \end{frame}
+%
+% \begin{frame}{Esercizio 3.10}
+%     \framesubtitle{3.10.3}
+%     \schemaEx3.10
+%     Trovare gli studenti che hanno superato tutti gli esami previsti dal rispettivo piano di studio.
+% \end{frame}
+% %
+% \begin{frame}{Esercizio 3.10}
+%     \framesubtitle{Soluzione 3.10.3}
+%     \vspace*{-1.2cm}
+%     \schemaEx3.10
+%     {\small Gli studenti che hanno superato tutti gli esami previsti dal rispettivo piano di studio:}
+%     \small
+%     \begin{gather*}
+%         \pi_{Studente}~(PIANIDISTUDIO)-\\
+%         (\pi_{Studente}(\pi_{Studente,Materia}(PIANIDISTUDIO)~-~\pi_{Studente,Materia}(ESAMI)))
+%     \end{gather*}
+% \end{frame}
+%
+\begin{frame}{Esercizio 3.10}
+    \framesubtitle{3.10.6}
+    \schemaEx3.10
+    Trovare nome e cognome degli studenti che hanno sostenuto almeno un esame con un professore che ha il
+    loro stesso nome proprio.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.10}
+    \framesubtitle{Soluzione 3.10.6}
+    \vspace*{-1.2cm}
+    \schemaEx3.10
+    {\small Nome e cognome degli studenti che hanno sostenuto almeno un esame con un professore che ha il
+    loro stesso nome proprio:}
+    \small
+    \begin{gather*}
+        \pi_{Nome,Cognome}(\sigma_{Nome=NomeP}(\\
+        (ESAMI \bowtie_{Studente=Matricola} STUDENTI) \bowtie_{Materia=Codice}\\
+        (\rho_{NomeP,CognomeP \leftarrow Nome,Cognome} (PROFESSORI \bowtie_{Matricola=Professore} MATERIE))))        
+    \end{gather*}
+\end{frame}

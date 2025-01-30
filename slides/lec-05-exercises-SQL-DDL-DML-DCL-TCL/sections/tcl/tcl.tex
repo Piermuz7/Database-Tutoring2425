@@ -1,0 +1,129 @@
+\begin{frame}[fragile]{Le transazioni}
+Le transazioni sono un insieme di operazioni di interrogazione o di modifica dei dati del database che devono essere eseguite unitariamente e che godono delle propriet\`a \textbf{ACID}:
+\begin{itemize}[<+->]
+    \item \textbf{Atomicity}: una transazione \`e un' entit\`a atomica indivisibile. \`E compito del sistema di controllo della sicurezza riuscire a ripristinare la situazione preesistente;
+    \item \textbf{Consistency}: le transazioni non devono violare i vincoli di integrit\`a dei dati. La consistenza \`e gestita dal DBMS con procedure opportune;
+    \item \textbf{Isolation}: gli effetti di una transazione devono essere indipendenti da quello di tutte le altre transazioni eseguite correntemente. L'isolamento \`e gestito dal controllore della concorrenza;
+    \item \textbf{Durability}: le informazioni in un database devono essere memorizzate in modo persistente. Gli effetti di una transazione esguita con esito positivo devono essere memorizzati permanentemente nel database a cura del sottosistema di gestione della sicurezza e del ripristino dei dati.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}{Transazioni in SQL}
+Una transazione consiste in un insieme di comandi SQL, inseriti tra apposte dichiarazioni che definiscono l'inizio e la fine di una transazione.
+\newline
+\\I comandi SQL usati per definire e controllare le transazioni sono:
+\begin{itemize}[<+->]
+    \item \textbf{START TRANSACTION}: per iniziare una nuova transazione;
+    \item \textbf{COMMIT}: per rendere definitivi i cambiamenti apportati al database nella transazione e terminarla;
+    \item \textbf{ROLLBACK}: per annullare i cambiamenti eseguiti dall'inizio della transazione e terminarla;
+    \item \textbf{SAVEPOINT}: per definire situazioni intermedie alle quali ritornare con un comando \textbf{ROLLBACK TO SAVEPOINT} che annulla solo parzialmente la transazione.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{TCL: Esempio ROLLBACK}
+Alla fine della transazione con \textbf{ROLLBACK}, le variazioni apportate al database dall'inizio delle transazione sono annullate.
+\begin{lstlisting}
+START TRANSACTION;
+
+INSERT INTO bollette
+VALUES( NULL, `2015-11-21', 100, 102.45, 1);
+
+ROLLBACK;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{TCL: Esempio COMMIT}
+Con \textbf{COMMIT} si conferma l'inserimento della riga e le variazioni sono eseguite.
+\begin{lstlisting}
+START TRANSACTION;
+
+INSERT INTO bollette
+VALUES( NULL, `2015-11-21', 100, 102.45, 1);
+
+COMMIT;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{TCL: Esempio Transazioni concorrenti}
+\begin{minipage}[t]{0.48\linewidth}
+\textbf{T1:}
+\begin{lstlisting}
+START TRANSACTION;
+
+UPDATE bollette
+SET Importo=Importo-100
+WHERE Numero=12;
+\end{lstlisting}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.48\linewidth}
+\textbf{T2:}
+\begin{lstlisting}
+START TRANSACTION;
+
+UPDATE bollette
+SET Importo=Importo-100
+WHERE Numero=12;
+\end{lstlisting}
+\end{minipage}
+\vspace{.9cm}
+
+Quale sar\`a il risultato della tabella \textit{bollette} dopo che T1 e T2 vengono eseguite?
+\end{frame}
+%
+\begin{frame}[fragile]{TCL: Esempio Transazioni concorrenti}
+\begin{minipage}[t]{0.48\linewidth}
+\textbf{T1:}
+\begin{lstlisting}
+START TRANSACTION;
+
+UPDATE bollette
+SET Importo=Importo-100
+WHERE Numero=12;
+\end{lstlisting}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.48\linewidth}
+\textbf{T2:}
+\begin{lstlisting}
+START TRANSACTION;
+
+UPDATE bollette
+SET Importo=Importo-100
+WHERE Numero=12;
+\end{lstlisting}
+\end{minipage}
+\vspace{.5cm}
+
+\begin{itemize}[<+->]
+    \item T1 inizia e riduce di 100 l'importo della bolletta 12;
+    \item T2 inizia. Non ``vede'' la variazione eseguita da T1;
+    \item Per evitare perdite di aggiornamento, il record 12 non pu\`o essere modificato da T2 sino al termine di T1. MySQL blocca T2 in attesa per 50 secondi, poi abortisce il comando e va in errore in timeout.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{TCL: Esempio Transazioni concorrenti}
+\begin{minipage}[t]{0.48\linewidth}
+\textbf{T1:}
+\begin{lstlisting}
+COMMIT;
+\end{lstlisting}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.48\linewidth}
+\textbf{T2:}
+\begin{lstlisting}
+UPDATE bollette
+SET Importo=Importo-100
+WHERE Numero=12;
+
+COMMIT;
+\end{lstlisting}
+\end{minipage}
+\vspace{.5cm}
+
+\begin{itemize}[<+->]
+    \item Completata la transazione T1, l'aggiornamento di T2 pu\`o essere eseguito;
+    \item I due aggiornamenti sono stati eseguiti in sequenza e il valore dell'importo al termine dei due aggiornamenti \`e quello corretto.
+\end{itemize}
+\end{frame}

@@ -1,0 +1,44 @@
+\def\schemaEx3.17{\small \begin{align*}
+    FARMACI &= (\underline{Codice}, NomeFarmaco, PrincipioAttivo, Produttore, Prezzo)\\
+    PRODUTTORI &= (\underline{CodProduttore}, Nome, Nazione)\\
+    SOSTANZE &= (\underline{ID}, NomeSostanza, Categoria)
+    \end{align*}}
+\begin{frame}{Esercizio 3.17}
+    \framesubtitle{3.17.1}
+    \schemaEx3.17
+    con vincoli di integrit\`a referenziale fra $Produttore$ e la relazione $PRODUTTORI$, fra $PrincipioAttivo$ e la relazione $SOSTANZE$.
+    \newline
+    \\Formulare l'interrogazione che fornisce, per i farmaci il cui principio attivo \`e nella categoria ``sulfamidico'', il nome del farmaco e quello del suo produttore.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.17}
+    \framesubtitle{Soluzione 3.17.1}
+    \vspace*{-1.2cm}
+    \schemaEx3.17
+    {\small Formulare l'interrogazione che fornisce, per i farmaci il cui principio attivo \`e nella categoria ``sulfamidico'', il nome del farmaco e quello del suo produttore:}
+    \small
+    \begin{gather*}
+        A = FARMACI~\bowtie_{PrincipioAttivo~=~ID}(\sigma_{Categoria='sulfamidico'} SOSTANZE);\\
+        \pi_{NomeFarmaco,Nome} (PRODUTTORI~\bowtie_{CodProduttore=Produttore} A)
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.17}
+    \framesubtitle{3.17.2}
+    \schemaEx3.17
+    con vincoli di integrit\`a referenziale fra $Produttore$ e la relazione $PRODUTTORI$, fra $PrincipioAttivo$ e la relazione $SOSTANZE$.
+    \newline
+    \\Formulare l'interrogazione che fornisce, per i farmaci con produttore italiano, il nome del farmaco e quello della sostanza del suo principio attivo.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.17}
+    \framesubtitle{Soluzione 3.17.2}
+    \vspace*{-1.2cm}
+    \schemaEx3.17
+    {\small Formulare l'interrogazione che fornisce, per i farmaci con produttore italiano, il nome del farmaco e quello della sostanza del suo principio attivo:}
+    \small
+    \begin{gather*}
+        B = FARMACI~\bowtie_{Produttore~=~CodProduttore}(\sigma_{Nazione='Italia'} PRODUTTORI);\\
+        \pi_{NomeFarmaco,NomeSostanza} (SOSTANZE~\bowtie_{ID=PrincipioAttivo} B)
+    \end{gather*}
+\end{frame}

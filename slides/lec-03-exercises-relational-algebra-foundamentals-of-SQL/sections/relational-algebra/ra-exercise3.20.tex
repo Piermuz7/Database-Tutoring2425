@@ -1,0 +1,123 @@
+\def\schemaEx3.20{\small \begin{align*}
+    FORNITORI &= (\underline{CF}, Nome, Indirizzo, Citta)\\
+    PRODOTTI &= (\underline{CP}, Nome, Marca, Modello)\\
+    CATALOGO &= (\underline{CF}, \underline{CP}, Costo)
+    \end{align*}
+    $CATALOGO$ con vincoli di integrit\`a referenziale fra l'attributo $CF$ e la relazione $FORNITORI$ e fra l'attributo $CP$ e la relazione $PRODOTTI$.}
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{3.20.1}
+    \vspace{-3.cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    Trovare Nome, Marca e Modello dei prodotti acquistabili con meno di 2000.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{Soluzione 3.20.1}
+    \vspace*{-2cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    {\small Nome, Marca e Modello dei prodotti acquistabili con meno di 2000:}
+    \small
+    \begin{gather*}
+        \pi_{Nome,Marca,Modello} (\sigma_{Costo~<~2000}~PRODOTTI~\bowtie~CATALOGO)
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{3.20.2}
+    \vspace{-3.cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    Trovare i nomi dei fornitori che distribuiscono prodotti IBM (IBM \`e la marca di un prodotto).
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{Soluzione 3.20.2}
+    \vspace*{-2cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    {\small Nomi dei fornitori che distribuiscono prodotti IBM (IBM \`e la marca di un prodotto):}
+    \small
+    \begin{gather*}
+        R = (FORNITORI~\bowtie~CATALOGO)~\bowtie~(\pi_{CP,Marca}~PRODOTTI)\\
+        \pi_{Nome} (\sigma_{Marca='IBM'} (R))
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{3.20.3}
+    \vspace{-3.cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    Trovare i codici di tutti i prodotti che sono forniti da almeno due fornitori.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{Soluzione 3.20.3}
+    \vspace*{-2cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    {\small Codici di tutti i prodotti che sono forniti da almeno due fornitori:}
+    \small
+    \begin{gather*}
+        COPIACATALOGO = \rho_{CF'~\leftarrow~CF} (\pi_{CP,CF} CATALOGO)\\
+        \pi_{CP} (\sigma_{CF~>~CF'} (CATALOGO~\bowtie~COPIACATALOGO))
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{3.20.4}
+    \vspace{-3.cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    Trovare i nomi dei fornitori che distribuiscono tutti i prodotti presenti nel catalogo.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{Soluzione 3.20.4}
+    \vspace*{-1cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    {\small Nomi dei fornitori che distribuiscono tutti i prodotti presenti nel catalogo:}
+    \small
+    \newline
+    {\\Formuliamo innanzitutto l'interrogazione $R$ che trova i fornitori a cui manca almeno un prodotto del catalogo:\\}
+    \vspace{-.5cm}
+    \begin{gather*}
+        R = \pi_{CF}((\pi_{CF} (FORNITORI)~\bowtie~\pi_{CP}(CATALOGO))~-~\pi_{CF,CP}(CATALOGO))\\
+        \pi_{Nome}((\pi_{CF}(FORNITORI)~-~R)~\bowtie~FORNITORI)
+    \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{3.20.5}
+    \vspace{-3.cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    Trovare i nomi dei fornitori che forniscono tutti i prodotti IBM presenti nel catalogo.
+\end{frame}
+%
+\begin{frame}{Esercizio 3.20}
+    \framesubtitle{Soluzione 3.20.5}
+    \vspace*{-2cm}
+    \schemaEx3.20
+    \vspace{.3cm}
+
+    {\small Nomi dei fornitori che forniscono tutti i prodotti IBM presenti nel catalogo:}
+    \small
+    \begin{gather*}
+        CATALOGOIBM = \pi_{CP,CF} (\sigma_{Marca='IBM'} (CATALOGO~\bowtie~PRODOTTI))\\
+        R = \pi_{CF}((\pi_{CF} (FORNITORI)~\bowtie~\pi_{CP}(CATALOGOIBM))~-~\pi_{CF,CP}(CATALOGOIBM))\\
+        \pi_{Nome}((\pi_{CF}(FORNITORI)~-~R)~\bowtie~FORNITORI)
+    \end{gather*}
+\end{frame}

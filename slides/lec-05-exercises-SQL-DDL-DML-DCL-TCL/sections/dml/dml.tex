@@ -1,0 +1,131 @@
+\begin{frame}{Manipolare i dati}
+    \onslide<1->{I valori degli attributi nelle righe della tabella possono essere:
+    \begin{itemize}
+        \item inseriti (\textbf{INSERT})
+        \item aggiornati (\textbf{UPDATE})
+        \item cancellati (\textbf{DELETE})
+    \end{itemize}}
+    \onslide<2->{
+    \begin{alertblock}{La clausola WHERE nel DML}
+        \`E importante notare che nei comandi \textbf{UPDATE} e \textbf{DELETE} compare la clausola \textbf{WHERE} per effetto della quale \`e possibile operare su molte righe, anzich\'e su una sola riga per volta.
+    \end{alertblock}
+    }
+    \onslide<3>{
+    \begin{alertblock}{ATTENZIONE al WHERE}
+        La clausola \textbf{WHERE} specifica quali records dovrebbero essere aggiornati. Se essa viene omessa, verranno aggiornati tutti i record presenti nella tabella!
+    \end{alertblock}
+    }
+\end{frame}
+%
+\begin{frame}[fragile]{DML: INSERT}
+Il comando \textbf{INSERT INTO} viene usato per inserire nuovi records nella tabella.
+
+\`E possibile utilizzarlo in 2 modi:
+\begin{enumerate}
+\item Specificando i nomi delle colonne e dei valori da inserire per tali:
+\begin{lstlisting}
+INSERT INTO nomeTabella (colonna1, colonna2, colonna3, ...)
+VALUES (valore1, valore2, valore3, ...);
+\end{lstlisting}
+\item Senza specificare i nomi delle colonne quando si vogliono aggiungere i valori per tutte le colonne della tabella.
+\begin{lstlisting}
+INSERT INTO nomeTabella
+VALUES (valore1, valore2, valore3, ...);
+\end{lstlisting}
+\end{enumerate}
+\end{frame}
+%
+\begin{frame}[fragile]{INSERT: Impiegati}
+\begin{itemize}
+\item Inserimento di \textbf{una riga} nella tabella Impiegati:
+\begin{lstlisting}
+INSERT INTO Impiegati
+(ID, Nome, Cognome, Residenza, Stipendio, Dipartimento)
+VALUES(20, `Mario', `Rossi', `Camerino', 99999, `R&S');
+\end{lstlisting}
+\item Inserimento di \textbf{pi\`u righe} nella tabella Impiegati:
+\begin{lstlisting}
+INSERT INTO Impiegati
+(ID, Nome, Cognome, Residenza, Stipendio, Dipartimento)
+VALUES
+(20, `Mario', `Rossi', `Camerino', 99999, `R&S'),
+(77, `Luigi', `Verdi', `Castelraimondo', 1234, `Magazzino');
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{DML: UPDATE}
+Il comando \textbf{UPDATE} viene usato per modificare records esistenti nella tabella.
+
+\begin{lstlisting}
+UPDATE nomeTabella
+SET colonna1 = valore1, colonna2 = valore2, ...
+WHERE condizione;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{UPDATE: Impiegati}
+Assegnamento del dipendente con ID=20 al dipartimento \textit{Produzione}:
+\pause
+\begin{lstlisting}
+UPDATE Impiegati
+SET Dipartimento = `Prod'
+WHERE ID = 20;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{UPDATE: Impiegati}
+Aumento stipendio del 5\% ai dipendenti del dipartimento \textit{Produzione}:
+\pause
+\begin{lstlisting}
+UPDATE Impiegati
+SET Stipendio = Stipendio * 1.05
+WHERE Dipartimento = `Prod';
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DML: DELETE}
+Il comando \textbf{DELETE} viene usato per cancellare records nella tabella.
+
+\begin{lstlisting}
+DELETE FROM nomeTabella WHERE condizione;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DELETE: Impiegati}
+Cancellazione del dipendente con ID = 20 dalla tabella \textit{Impiegati}:
+\pause
+\begin{lstlisting}
+DELETE FROM Impiegati
+WHERE ID = 20;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DELETE: Impiegati}
+Cancellazione dei dipendenti del dipartimento di Ricerca \& Sviluppo:
+\pause
+\begin{lstlisting}
+DELETE FROM Impiegati
+WHERE Dipartimento = `R&S';
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{DELETE: Impiegati}
+Cosa produce il seguente comando?
+\begin{lstlisting}
+DELETE FROM Impiegati;
+\end{lstlisting}
+\pause
+\begin{alertblock}{DELETE senza WHERE}
+Manca la clausola \textbf{WHERE}: il comando svuota la tabella \textit{Impiegati} dai dati, ma rimane la sua struttura.
+\end{alertblock}
+\pause
+{\begin{block}{Svuotare le tabelle}
+Per svuotare una tabella \`e possibile utilizzare DELETE FROM nomeTabella. Tuttavia, la maniera pi\`u corretta \`e utilizzare il comando \textbf{TRUNCATE TABLE} nomeTabella, il quale elimina i dati ma mantiene la struttura della tabella.
+\end{block}
+\begin{lstlisting}
+TRUNCATE TABLE Impiegati;
+\end{lstlisting}
+}
+\end{frame}
+%
