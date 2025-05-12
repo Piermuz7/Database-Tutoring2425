@@ -4,6 +4,13 @@
     AUTOVETTURE &= (\underline{Targa}, Modello, Colore, AnnoImmatricolazione, CostoGiornaliero)
     \end{align*}
     $NOLEGGI$ con vincolo di integrit\`a referenziale fra l'attributo $Auto$ e la relazione $AUTOVETTURE$ e con vincolo di integrit\`a referenziale fra l'attributo $Cliente$ e la relazione $CLIENTI$.}
+
+\def\soloschemaEx3.19{\small \begin{align*}
+    CLIENTI &= (\underline{Codice}, Nome, Indirizzo, Citta)\\
+    NOLEGGI &= (\underline{Cliente, Auto, DataPrelievo}, DataRestituzione)\\
+    AUTOVETTURE &= (\underline{Targa}, Modello, Colore, AnnoImmatricolazione, CostoGiornaliero)
+    \end{align*}}
+
 \begin{frame}{Esercizio 3.19}
     \framesubtitle{3.19.1}
     \vspace{-3.cm}
@@ -50,6 +57,200 @@
 \end{frame}
 %
 \begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.2 - Step by step}
+    \vspace*{-2cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small Esempio:}
+
+    \small
+    \centering
+    $NOLEGGI$
+
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente  & Auto & DataPrelievo \\
+    \hline
+    C1 & A1 & 2025-01-10 \\
+    \hline
+    C1 & A2 & 2025-01-15 \\
+    \hline
+    C2 & A3 & 2025-02-01 \\
+    \hline
+    C2 & A3 & 2025-03-01 \\
+    \hline
+    C3 & A4 & 2025-01-20 \\
+    \hline
+    \end{tabular}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.2 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 1: Self-join: confronta ogni noleggio con un altro dello stesso cliente}}
+    
+    \vspace{.3cm}
+
+    {\small \textbf{STEP 1.1: Ridenominazione di $NOLEGGI$ in $NOLEGGI'$:}}
+    
+    \small
+    \begin{gather*}
+        \rho_{X'~\leftarrow~X} (NOLEGGI)
+    \end{gather*}
+    
+    \centering
+    
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente' & Auto' \\
+    \hline
+    C1 & A1 \\
+    \hline
+    C1 & A2 \\
+    \hline
+    C2 & A3 \\
+    \hline
+    C2 & A3 \\
+    \hline
+    C3 & A4 \\
+    \hline
+    \end{tabular}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.2 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 1: Self-join: confronta ogni noleggio con un altro dello stesso cliente}}
+    
+    \vspace{.3cm}
+
+    {\small \textbf{STEP 1.2: Join tra NOLEGGI e NOLEGGI' su Cliente = Cliente' (le date non ci interessano):}}
+    
+    \vspace{.1cm}
+
+    \small
+    
+    \centering
+    
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente & Auto & Cliente' & Auto' \\
+    \hline
+    C1 & A1 & C1 & A2 \\
+    \hline
+    C1 & A1 & C1 & A2 \\
+    \hline
+    C1 & A2 & C1 & A1 \\
+    \hline
+    C1 & A2 & C1 & A2 \\
+    \hline
+    C2 & A3 & C2 & A3 \\
+    \hline
+    C2 & A3 & C2 & A3 \\
+    \hline
+    C3 & A4 & C3 & A4 \\
+    \hline
+    \end{tabular}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.2 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 2: Selezione di Auto $\neq$ Auto'}}
+    
+    \vspace{.3cm}
+
+    {\small Manteniamo solo i casi in cui lo stesso cliente ha noleggiato auto diverse:}
+    
+    \vspace{.1cm}
+
+    \small
+    
+    \centering
+    
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente & Auto & Auto' \\
+    \hline
+    C1 & A1 & A2 \\
+    \hline
+    C1 & A2 & A1 \\
+    \hline
+    \end{tabular}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.2 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 3: Proiezione su Cliente}}
+    
+    \vspace{.3cm}
+
+    {\small Proiettiamo solo l'attributo Cliente:}
+    
+    \small
+    \begin{gather*}
+        \pi_{Cliente} (\sigma_{Auto~\neq~Auto'} (NOLEGGI~\bowtie_{Cliente=Cliente'}~(\rho_{X'~\leftarrow~X} NOLEGGI)))
+    \end{gather*}
+
+    \vspace{.1cm}
+
+    \small
+    
+    \centering
+    
+    \begin{tabular}{|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente \\
+    \hline
+    C1 \\
+    \hline
+    \end{tabular}
+\end{frame}
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.2 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{RISULTATO FINALE: Clienti che hanno noleggiato pi\`u di un'autovettura}}
+    
+    \vspace{.3cm}
+    
+    \small
+    \begin{gather*}
+        \pi_{Cliente} (\sigma_{Auto~\neq~Auto'} (NOLEGGI~\bowtie_{Cliente=Cliente'}~(\rho_{X'~\leftarrow~X} NOLEGGI)))
+    \end{gather*}
+
+    \vspace{.1cm}
+
+    \small
+    
+    \centering
+    
+    \begin{tabular}{|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente \\
+    \hline
+    C1 \\
+    \hline
+    \end{tabular}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
     \framesubtitle{3.19.3}
     \vspace{-3.cm}
     \schemaEx3.19
@@ -71,4 +272,281 @@
         V_{1} = V~\bowtie_{Cliente~=~Cliente'} (\rho_{X'~\leftarrow~X} V)\\
         \pi_{Cliente}~NOLEGGI - \pi_{Cliente}~(\sigma_{Modello~\neq~Modello'} V_1)
     \end{gather*}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.3 - Step by step}
+    \vspace*{-2cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small Esempio:}
+    \begin{minipage}{.33\textwidth}
+    \small
+    \centering
+    $CLIENTI$
+
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30} Codice  & Nome \\
+    \hline
+    C1 & Mario \\
+    \hline
+    C2 & Lucia \\
+    \hline
+    C3 & Andrea \\
+    \hline
+    \end{tabular}
+    \end{minipage}%
+    \begin{minipage}{.33\textwidth}
+    \small
+    \centering
+    $AUTOVETTURE$
+    \begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!30} Targa  & Modello \\
+    \hline
+    A1 & Fiat500 \\
+    \hline
+    A2 & Golf \\
+    \hline
+    A3 & Golf \\
+    \hline
+    A4 & Panda \\
+    \hline
+    \end{tabular}
+    \end{minipage}%
+    \begin{minipage}{.33\textwidth}
+    \small
+    \centering
+    $NOLEGGI$
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente  & Auto & DataPrelievo \\
+    \hline
+    C1 & A1 & 2025-01-10 \\
+    \hline
+    C1 & A4 & 2025-01-15 \\
+    \hline
+    C2 & A2 & 2025-02-01 \\
+    \hline
+    C2 & A3 & 2025-03-01 \\
+    \hline
+    C3 & A4 & 2025-01-20 \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.3 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 1: Join tra NOLEGGI e AUTOVETTURE (chiamiamolo V):}}
+
+    In questo modo, sappiamo che per ogni noleggio abbiamo il modello dell'auto noleggiata.
+
+    \small
+    \begin{gather*}
+        V = NOLEGGI~\bowtie_{Auto~=~Targa}~AUTOVETTURE
+    \end{gather*}
+    
+    \centering
+    
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente  & Auto & Modello \\
+    \hline
+    C1 & A1 & Fiat500 \\
+    \hline
+    C1 & A4 & Panda \\
+    \hline
+    C2 & A2 & Golf \\
+    \hline
+    C2 & A3 & Golf \\
+    \hline
+    C3 & A4 & Panda \\
+    \hline
+    \end{tabular}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.3 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 2: Self-join: confronta ogni noleggio con un altro dello stesso cliente}}
+
+    Creiamo una copia di V con attributi rinominati: (Cliente', Auto', Modello') da confrontare con la versione originale.
+    
+    \begin{minipage}{.45\textwidth}
+    \centering
+    $V'$
+    
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente' & Auto' & Modello' \\
+    \hline
+    C1 & A1 & Fiat500 \\
+    \hline
+    C1 & A4 & Panda \\
+    \hline
+    C2 & A2 & Golf \\
+    \hline
+    C2 & A3 & Golf \\
+    \hline
+    C3 & A4 & Panda \\
+    \hline
+    \end{tabular}
+    \end{minipage}%
+    \begin{minipage}{.45\textwidth}
+    \centering
+    \small
+
+    \centering
+    
+        $V_{1} = V~\bowtie_{Cliente~=~Cliente'} (\rho_{X'~\leftarrow~X} V)$
+
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente & Modello & Modello' \\
+    \hline
+    C1 & Fiat500 & Fiat500 \\
+    \hline
+    C1 & Fiat500 & Panda \\
+    \hline
+    C1 & Panda & Fiat500 \\
+    \hline
+    C1 & Panda & Panda \\
+    \hline
+    \ldots & \ldots & \ldots \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.3 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 3: Filtro le tuple in cui i modelli sono diversi}}
+
+    \small
+    \begin{gather*}
+        \sigma_{Modello~\neq~Modello'} V_1
+    \end{gather*}
+
+    Applico il filtro: voglio vedere solo i clienti che hanno noleggiato due modelli diversi.
+
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente & Modello & Modello' \\
+    \hline
+    C1 & Fiat500 & Panda \\
+    \hline
+    C1 & Panda & Fiat500 \\
+    \hline
+    \end{tabular}
+
+    \vspace{.3cm}
+
+    Solo C1 sopravvive a questo filtro, ovvero ha noleggiato modelli diversi.
+
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.3 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 4: Proiezione dei clienti che hanno noleggiato modelli diversi}}
+
+    \small
+    \begin{gather*}
+        \pi_{Cliente} (\sigma_{Modello~\neq~Modello'} V_1)
+    \end{gather*}
+
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente \\
+    \hline
+    C1 \\
+    \hline
+    \end{tabular}
+
+    \vspace{.3cm}
+
+    Questo \`e l'insieme dei clienti che hanno noleggiato almeno due modelli diversi.
+
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.3 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 5: Tutti i clienti che hanno fatto almeno un noleggio}}
+
+    \small
+    \begin{gather*}
+        \pi_{Cliente}~NOLEGGI
+    \end{gather*}
+
+    \centering
+    \begin{tabular}{|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente \\
+    \hline
+    C1 \\
+    \hline
+    C2 \\
+    \hline
+    C3 \\
+    \hline
+    \end{tabular}
+\end{frame}
+%
+\begin{frame}{Esercizio 3.19}
+    \framesubtitle{Soluzione 3.19.3 - Step by step}
+    \vspace*{-1cm}
+    \soloschemaEx3.19
+    %\vspace{.3cm}
+
+    {\small \textbf{STEP 6: Differenza tra tutti i clienti e quelli che hanno noleggiato modelli diversi}}
+
+    \small
+    \begin{gather*}
+        \pi_{Cliente}~NOLEGGI - \pi_{Cliente}~(\sigma_{Modello~\neq~Modello'} V_1)
+    \end{gather*}
+
+    \centering
+    
+    \begin{tabular}{|c|}
+    \hline
+    \rowcolor{cyan!30} Cliente \\
+    \hline
+    C2 \\
+    \hline
+    C3 \\
+    \hline
+    \end{tabular}
+
+    \vspace{.3cm}
+
+    Questo \`e l'insieme dei clienti che hanno noleggiato solo un modello di auto:
+    \begin{itemize}
+        \item C2 ha noleggiato 2 auto, ma entrambe Golf;
+        \item C3 ha noleggiato 1 auto, Panda.
+    \end{itemize}
+
 \end{frame}
