@@ -258,7 +258,7 @@
     \end{itemize}
     \vspace{1em}
     
-    \textbf{Gli aeroporti italiani che hanno solo voli interni. Rappresentare questa interrogazione con operatori insiemistici.}
+    \textbf{Gli aeroporti italiani che hanno solo voli interni. Rappresentare questa interrogazione con operatori insiemistici (UNION, INTERSECT, EXCEPT).}
 \end{frame}
 \begin{frame}{Esercizio 4.14.10.a}
     \textbf{Soluzione:}
@@ -340,7 +340,7 @@
     
     \texttt{SELECT Citt\`aPart FROM VOLO JOIN AEREO ON VOLO.TipoAereo=AEREO.TipoAereo WHERE NumPasseggeri=      (SELECT MAX( NumPasseggeri ) FROM AEREO )
     \\ UNION
-    \\ SELECT Citt\`aArr FROM VOLO JOIN AEREO ON VOLO.TipoAereo=AEREO.TipoAereo WHERE NumPasseggeri=      (SELECT MAX( NumPasseggeri ) FROM AEREO)}
+    \\ SELECT Citt\`aArr FROM VOLO JOIN AEREO ON VOLO.TipoAereo=AEREO.TipoAereo WHERE NumPasseggeri=      (SELECT MAX( NumPasseggeri ) FROM AEREO )}
 \end{frame}
 %%%%%%%%%%%%%%%%%%
 \end{document}

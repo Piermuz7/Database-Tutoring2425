@@ -105,13 +105,32 @@ CREATE TABLE Impiegati(
     Nome            char(20) NOT NULL,
     Cognome         char(30) NOT NULL,
     Residenza       char(30) DEFAULT `*** Manca residenza',
+    |\colorbox{magenta!40}{Stipendio\quad\quad\quad\quad\quad decimal(9,2),}|
+    Dipartimento    char(5) REFERENCES Dipartimenti(Codice),
+    UNIQUE(Cognome, Nome, Dipartimento)
+);
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+\begin{block}{Stipendio}
+    \textit{Stipendio} rappresenta un importo monetario con massimo 9 cifre totali, di cui 2 decimali.
+\end{block}
+\end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Osservazioni CREATE TABLE: Impiegati}
+\begin{lstlisting}
+CREATE TABLE Impiegati(
+    ID              smallint PRIMARY KEY,
+    Nome            char(20) NOT NULL,
+    Cognome         char(30) NOT NULL,
+    Residenza       char(30) DEFAULT `*** Manca residenza',
     Stipendio       decimal(9,2),
     |\colorbox{magenta!40}{Dipartimento \quad\quad\quad char(5) REFERENCES Dipartimenti(Codice)}|,
     UNIQUE(Cognome, Nome, Dipartimento)
 );
 \end{lstlisting}
 \begin{block}{Dipartimento: chiave esterna}
-    \textit{Dipartimento} \`e chiave esterna associata a \textit{Codice}. Crea un vincolo di integrit\`a referenziale con \textit{Dipartimenti}.
+    \textit{Dipartimento} \`e chiave esterna associata a \textit{Codice}. Crea un vincolo di integrit\`a referenziale con la tabella \textit{Dipartimenti}.
 \end{block}
 \end{frame}
 %

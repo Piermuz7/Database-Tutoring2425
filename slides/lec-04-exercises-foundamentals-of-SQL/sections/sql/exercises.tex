@@ -1,168 +1,272 @@
-\begin{frame}{Esercizio 4.15.1}
-    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
-    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
-    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
-    AUTORE(\underline{Nome, TitoloCanzone})\\
-    CANTANTE(\underline{NomeCantante, CodiceReg})}
+\begin{frame}{Esercizio (ASTA)} 
+    \texttt{QUADRO(\underline{CODICE\#}, AUTORE, PERIODO)\\
+    MOSTRA(\underline{CODICE*}, NOME, ANNO, ORGANIZZATORE)\\
+    ASTA(\underline{MOSTRA*, QUADRO\#}, PREZZO)}
     \vspace{1em}
     
-    \textbf{I cantautori (persone che hanno cantato e scritto la stessa canzone) il cui nome inizia per `D';}
+    \textbf{La lista degli autori , senza duplicati, che hanno venduto
+quadri di prezzo maggiore di 1000;}
 \end{frame}
 
-\begin{frame}{Esercizio 4.15.1}
+\begin{frame}{Esercizio (ASTA)}
     \textbf{Soluzione:}
     \vspace{1em}
     
-    \texttt{SELECT NomeCantante\\FROM CANTANTE \\JOIN ESECUZIONE ON CANTANTE.CodiceReg=ESECUZIONE.CodiceReg\\JOIN AUTORE ON ESECUZIONE.TitoloCanz=AUTORE.TitoloCanzone\\WHERE Nome=NomeCantante and Nome like `d\%'}
+    \texttt{SELECT DISTINCT AUTORE\\FROM ASTA JOIN QUADRO ON QUADRO.CODICE=ASTA.QUADRO\\WHERE
+PREZZO > 1000}
     \end{frame}
+%%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (ASTA) } 
+    \texttt{QUADRO(\underline{CODICE\#}, AUTORE, PERIODO)\\
+    MOSTRA(\underline{CODICE*}, NOME, ANNO, ORGANIZZATORE)\\
+    ASTA(\underline{MOSTRA*, QUADRO\#}, PREZZO)}
+    \vspace{1em}
+    
+    \textbf{La lista degli autori che hanno venduto almeno 3 quadri;}
+\end{frame}
+
+\begin{frame}{Esercizio (ASTA)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT AUTORE, COUNT(*)\\FROM QUADRO,ASTA\\WHERE QUADRO.CODICE=ASTA.QUADRO\\GROUP BY AUTORE
+\\HAVING COUNT(*) >= 3}
+    \end{frame}
+%%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (ASTA) } 
+    \texttt{QUADRO(\underline{CODICE\#}, AUTORE, PERIODO)\\
+    MOSTRA(\underline{CODICE*}, NOME, ANNO, ORGANIZZATORE)\\
+    ASTA(\underline{MOSTRA*, QUADRO\#}, PREZZO)}
+    \vspace{1em}
+    
+    \textbf{I nomi delle mostre dove non si \`e venduto nessun quadro;}
+\end{frame}
+
+\begin{frame}{Esercizio (ASTA)}
+    \textbf{Soluzione con NOT IN:}
+    \vspace{1em}
+    
+    \texttt{SELECT NOME \\FROM MOSTRA \\WHERE CODICE NOT IN (SELECT MOSTRA FROM ASTA)}
+    \end{frame}
+
+\begin{frame}{Esercizio (ASTA)}
+    \textbf{Soluzione con NOT EXIST:}
+    \vspace{1em}
+    
+    \texttt{SELECT NOME \\FROM MOSTRA AS M \\WHERE NOT EXIST (SELECT * \\\hspace{8.5em}FROM ASTA AS A \\\hspace{8.5em}WHERE A.MOSTRA = M.CODICE)}
+    \end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (ASTA) } 
+    \texttt{QUADRO(\underline{CODICE\#}, AUTORE, PERIODO)\\
+    MOSTRA(\underline{CODICE*}, NOME, ANNO, ORGANIZZATORE)\\
+    ASTA(\underline{MOSTRA*, QUADRO\#}, PREZZO)}
+    \vspace{1em}
+    
+    \textbf{I nomi delle mostre dove si sono venduti pi\`u quadri.}
+\end{frame}
+
+\begin{frame}{Esercizio (ASTA)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT MOSTRA.NOME, COUNT(*) \\FROM ASTA,MOSTRA\\WHERE MOSTRA.CODICE = ASTA.MOSTRA\\GROUP BY MOSTRA.NOME\\HAVING COUNT(*) = (SELECT MAX(NQUADRI)\\\hspace{9,5em}FROM
+(SELECT ASTA.MOSTRA, COUNT(*) AS NQUADRI \\\hspace{12,5em}FROM ASTA \\\hspace{12,5em}GROUP BY ASTA.MOSTRA))}
+    \end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (IMMOBILI) } 
+    \texttt{PERSONE(\underline{CF\#}, Nome, Cognome, DataNascita)\\
+    Immobili(\underline{Codice*}, Via, NumeroCivico, Citta, Valore)\\
+    Proprieta(\underline{Persona\#, Immobile*}, Percentuale)}
+    \vspace{1em}
+    
+    \textbf{Il Nome e Cognome delle persone di cui non \`e dato sapere la data di nascita;}
+\end{frame}
+
+\begin{frame}{Esercizio (IMMOBILI)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT Nome , Cognome\\FROM Persone\\WHERE DataNascita IS NULL}
+    \end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (IMMOBILI) } 
+    \texttt{PERSONE(\underline{CF\#}, Nome, Cognome, DataNascita)\\
+    Immobili(\underline{Codice*}, Via, NumeroCivico, Citta, Valore)\\
+    Proprieta(\underline{Persona\#, Immobile*}, Percentuale)}
+    \vspace{1em}
+    
+    \textbf{Il Nome e Cognome delle persone che non hanno immobili;}
+\end{frame}
+
+\begin{frame}{Esercizio (IMMOBILI)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT Nome , Cognome\\FROM Persone\\WHERE CF NOT IN (SELECT Persona FROM Proprieta)}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (IMMOBILI) } 
+    \texttt{PERSONE(\underline{CF\#}, Nome, Cognome, DataNascita)\\
+    Immobili(\underline{Codice*}, Via, NumeroCivico, Citta, Valore)\\
+    Proprieta(\underline{Persona\#, Immobile*}, Percentuale)}
+    \vspace{1em}
+    
+    \textbf{Nome e Cognome dei proprietari che posseggono immobili con percentuali inferioni a 0,5 e con valore compreso tra a 50000 e 100000;}
+\end{frame}
+
+\begin{frame}{Esercizio (IMMOBILI)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT Persone.Nome , Persone.Cognome\\FROM Persone JOIN Proprieta ON Persone.CF = Proprieta.Persona JOIN Immobili ON Proprieta.Immobile = Immobili.Codice\\WHERE Proprieta.Percentuale < 0.5 AND Immobili.Valore BETWEEN 50000 AND 100000}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (IMMOBILI) } 
+    \texttt{PERSONE(\underline{CF\#}, Nome, Cognome, DataNascita)\\
+    Immobili(\underline{Codice*}, Via, NumeroCivico, Citta, Valore)\\
+    Proprieta(\underline{Persona\#, Immobile*}, Percentuale)}
+    \vspace{1em}
+    
+    \textbf{La quantit\`a degli immobili collocati nella citt\`a di Milano.}
+\end{frame}
+
+\begin{frame}{Esercizio (IMMOBILI)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT COUNT(*) \\FROM Immobili \\WHERE Citta = `Milano'}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (CALCIO) } 
+    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
+    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
+    NAZIONALE(\underline{Paese*}, Continente)}
+    \vspace{1em}
+    
+    \textbf{Il nome del/degli Stadio/i con capienza minima;}
+\end{frame}
+
+\begin{frame}{Esercizio (CALCIO)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT Nome \\FROM STADIO\\WHERE Capienza = (SELECT MIN(Capienza) FROM STADIO)}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (CALCIO) } 
+    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
+    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
+    NAZIONALE(\underline{Paese*}, Continente)}
+    \vspace{1em}
+    
+    \textbf{La capienza media degli stadi della citt\`a di `Roma';}
+\end{frame}
+
+\begin{frame}{Esercizio (CALCIO)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT AVG(Capienza)\\FROM STADIO\\WHERE Citta = `Roma'}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (CALCIO) } 
+    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
+    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
+    NAZIONALE(\underline{Paese*}, Continente)}
+    \vspace{1em}
+    
+    \textbf{Il numero delle partite giocate nello stadio `Olimpico';}
+\end{frame}
+
+\begin{frame}{Esercizio (CALCIO)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT COUNT(*)\\FROM INCONTRO\\WHERE NomeStadio = `Olimpico'}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (CALCIO) } 
+    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
+    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
+    NAZIONALE(\underline{Paese*}, Continente)}
+    \vspace{1em}
+    
+    \textbf{Il Nome dello Stadio, Data, Ora delle partite dove ha giocato la `Scozia' ordinato per Data e ora;}
+\end{frame}
+
+\begin{frame}{Esercizio (CALCIO)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT NomeStadio, Data, Ora\\FROM INCONTRO\\WHERE (Squadra1 = `Scozia' OR Squadra2 = `Scozia') \\ORDER BY Data, Ora}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (CALCIO) } 
+    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
+    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
+    NAZIONALE(\underline{Paese*}, Continente)}
+    \vspace{1em}
+    
+    \textbf{La capienza totale degli stadi;}
+\end{frame}
+
+\begin{frame}{Esercizio (CALCIO)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT SUM(Capienza)\\FROM STADIO}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (CALCIO) } 
+    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
+    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
+    NAZIONALE(\underline{Paese*}, Continente)}
+    \vspace{1em}
+    
+    \textbf{Le squadre che hanno giocato al `Meazza';}
+\end{frame}
+
+\begin{frame}{Esercizio (CALCIO)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT Squadra1 as squadra\\FROM INCONTRO\\WHERE NomeStadio = `Meazza'
+\\UNION\\SELECT Squadra2 as squadra\\FROM INCONTRO\\WHERE NomeStadio = `Meazza'}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (CALCIO) } 
+    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
+    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
+    NAZIONALE(\underline{Paese*}, Continente)}
+    \vspace{1em}
+    
+    \textbf{Le squadre che non hanno giocato allo stadio `Flaminio';}
+\end{frame}
+
+\begin{frame}{Esercizio (CALCIO)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT Paese\\FROM NAZIONALE\\WHERE Paese NOT IN (SELECT Squadra1 as squadra \\\hspace{10em}FROM INCONTRO \\\hspace{10em}WHERE NomeStadio = `Flaminio'
+\\\hspace{10em}UNION\\\hspace{10em}SELECT Squadra2 as squadra \\\hspace{10em}FROM INCONTRO \\\hspace{10em}WHERE NomeStadio = `Flaminio')}
+\end{frame}
+%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio (CALCIO) } 
+    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
+    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
+    NAZIONALE(\underline{Paese*}, Continente)}
+    \vspace{1em}
+    
+    \textbf{Il Nome dello Stadio, Data, Ora delle partite dove hanno giocato squadre di continenti diversi.}
+\end{frame}
+
+\begin{frame}{Esercizio (CALCIO)}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT NomeStadio, Data, Ora\\FROM INCONTRO, NAZIONALE N1, NAZIONALE N2\\WHERE Squadra1 = N1.Paese AND Squadra2 = N2.Paese AND NOT (N1.Continente = N2.Continente)}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio 4.15.2}
-    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
-    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
-    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
-    AUTORE(\underline{Nome, TitoloCanzone})\\
-    CANTANTE(\underline{NomeCantante, CodiceReg})}
-    \vspace{1em}
-    
-    \textbf{I titoli dei dischi che contengono canzoni di cui non si conosce l`anno di registrazione;}
-\end{frame}
-
-\begin{frame}{Esercizio 4.15.2}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT TitoloAlbum\\FROM DISCO\\JOIN CONTIENE ON DISCO.NroSerie=CONTIENE.NroSerieDisco
-\\JOIN ESECUZIONE ON
-CONTIENE.CodiceReg=ESECUZIONE.CodiceReg \\WHERE ESECUZIONE.anno IS NULL}
-    \end{frame}
-%%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio 4.15.4}
-    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
-    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
-    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
-    AUTORE(\underline{Nome, TitoloCanzone})\\
-    CANTANTE(\underline{NomeCantante, CodiceReg})}
-    \vspace{1em}
-    
-    \textbf{Gli autori e i cantanti puri, ovvero autori che non hanno mai registrato una canzone e cantanti che non hanno mai scritto una canzone;}
-\end{frame}
-
-\begin{frame}{Esercizio 4.15.4}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT Nomefrom AUTORE\\WHERE Nome NOT IN (SELECT NomeCantante
-FROM CANTANTE)\\
-UNION\\
-SELECT NomeCantante\\FROM CANTANTE\\WHERE NomeCantante NOT IN (SELECT Nome FROM AUTORE)}
-    \end{frame}
-%%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio 4.15.5}
-    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
-    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
-    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
-    AUTORE(\underline{Nome, TitoloCanzone})\\
-    CANTANTE(\underline{NomeCantante, CodiceReg})}
-    \vspace{1em}
-    
-    \textbf{I cantanti del disco che contiene il maggior numero di canzoni;}
-\end{frame}
-
-\begin{frame}{Esercizio 4.15.5}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{CREATE VIEW DiscoNumerato AS\\ SELECT NroSerieDisco , COUNT(*) AS NumCanzoni
-\\FROM CONTIENE\\GROUP BY NroSerieDisco}
-\vspace{1em}
-
-    \texttt{SELECT DISTINCT NomeCantante\\FROM CANTANTE JOIN CONTIENE ON CANTANTE.CodiceReg=CONTIENE.CodiceReg\\JOIN DiscoNumerato ON
-CONTIENE.NroSerieDisco=DiscoNumerato.NroSerieDisco\\WHERE NumCanzoni= (SELECT MAX(NumCanzoni)\\ \hspace{9.5em}FROM DiscoNumerato)}
-    \end{frame}
-%%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio 4.15.6}
-    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
-    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
-    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
-    AUTORE(\underline{Nome, TitoloCanzone})\\
-    CANTANTE(\underline{NomeCantante, CodiceReg})}
-    \vspace{1em}
-    
-    \textbf{Gli autori solisti di ``collezioni di successi'' (dischi in cui tutte le canzoni sono di un solo cantante e in cui almeno tre registrazioni sono di anni precedenti la pubblicazione del disco);}
-\end{frame}
-
-\begin{frame}{Esercizio 4.15.6}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT NroSerie\\FROM DISCO\\WHERE NroSerie NOT IN\\(SELECT NroSerieDisco\\FROM CONTIENE JOIN CANTANTE AS S1 ON CONTIENE.CodiceReg=S1.CodiceReg\\JOIN CANTANTE AS S2 ON CONTIENE.CodiceReg =S2.CodiceReg\\WHERE S1.NomeCantante<>S2.NomeCantante)\\AND NroSerie IN\\(SELECT NroSerieDisco, COUNT(*)\\FROM CONTIENE JOIN ESECUZIONE ON CodiceReg=CodiceReg JOIN DISCO ON
-DISCO.NroSerie=CONTIENE.NroSerieDisco)\\WHERE ESECUZIONE.Anno<DISCO.Anno
-\\GROUP BY NroSerieDisco
-HAVING COUNT(*) >=3)}
-    \end{frame}
-%%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio 4.15.7}
-    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
-    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
-    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
-    AUTORE(\underline{Nome, TitoloCanzone})\\
-    CANTANTE(\underline{NomeCantante, CodiceReg})}
-    \vspace{1em}
-    
-    \textbf{I cantanti che non hanno mai registrato una canzone come solisti;}
-\end{frame}
-
-\begin{frame}{Esercizio 4.15.7}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT DISTINCT NomeCantante\\FROM CANTANTE\\WHERE NomeCantante NOT IN(SELECT S1.NomeCantante\\\hspace{13em}FROM CANTANTE AS S1\\\hspace{13em}WHERE CodiceReg NOT IN(SELECT CodiceReg\\\hspace{24,5em}FROM CANTANTE S2\\\hspace{24,5em}WHERE S2.NomeCantante <> \\\hspace{24,5em}S1.NomeCantante))}
-    \end{frame}
-%%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio 4.15.8}
-    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
-    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
-    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
-    AUTORE(\underline{Nome, TitoloCanzone})\\
-    CANTANTE(\underline{NomeCantante, CodiceReg})}
-    \vspace{1em}
-    
-    \textbf{I cantanti che non hanno mai inciso un disco in cui comparissero come unici cantanti;}
-\end{frame}
-
-\begin{frame}{Esercizio 4.15.8}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{CREATE VIEW CantantiUnDisco AS
-\\SELECT NomeCantante
-\\FROM CONTIENE JOIN CANTANTE ONCONTIENE.CodiceReg=CANTANTE.CodiceReg\\WHERE NroSerieDisco NOT IN
-\\(select NroSerieDisco
-FROM CONTIENE JOIN CANTANTE AS S1 ON
-CONTIENE.CodiceReg=S1.CodiceReg\\JOIN CANTANTE AS S2 ON CodiceReg=S2.CodiceReg\\WHERE S1.NomeCantante<>S2.NomeCantante)\\
-\vspace{1em}
-SELECT NomeCantante\\FROM CANTANTE
-WHERE NomeCantante NOT IN (SELECT NomeCantante\\FROM CantantiUnDisco)}
-    \end{frame}
-%%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio 4.15.9}
-    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
-    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
-    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
-    AUTORE(\underline{Nome, TitoloCanzone})\\
-    CANTANTE(\underline{NomeCantante, CodiceReg})}
-    \vspace{1em}
-    
-    \textbf{I cantanti che hanno sempre registrato canzoni come solisti.}
-\end{frame}
-
-\begin{frame}{Esercizio 4.15.9}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT NomeCantante\\FROM CANTANTE\\WHERE NomeCantante NOT IN(SELECT S1.NomeCantante\\\hspace{13em}FROM CANTANTE AS S1 JOIN ESECUZIONE ON\\\hspace{12,5em} CodiceReg=S1.CodiceReg JOIN CANTANTE AS S2 ON\\\hspace{12,5em} CodiceReg=S2.CodiceReg)\\\hspace{13em}WHERE S1.NomeCantante<>S2.NomeCantante)}
-    \end{frame}
-%%%%%%%%%%%%%%%%%%
 \begin{frame}{Esercizio 4.19}
     \texttt{PRODOTTI(\underline{Codice}, Nome, Categoria)\\
     VENDITE(\underline{CodiceProdotto}, Data, Incasso)}
@@ -269,7 +373,7 @@ WHERE NomeCantante NOT IN (SELECT NomeCantante\\FROM CantantiUnDisco)}
     \hline
     \rowcolor{cyan!30} Codice \\
     \hline
-    103\\
+    \\
     \hline
     \end{tabular}
     \end{minipage}%
@@ -296,7 +400,7 @@ supportato da tale dbms.}
     
     \textbf{Soluzione:}\\
     \texttt{SELECT *\\FROM Animali, Padroni\\WHERE (padrone = codiceFiscale AND etaPadrone>40)
-OR padrone = NULL.}
+OR padrone IS NULL.}
 \end{frame}
 %%%%%%%%%%%%%%%%%%
 \begin{frame}{Esercizio 4.26.1} 
@@ -333,264 +437,168 @@ mostra il numero di tali voli.}
     \texttt{SELECT Citta, COUNT(*)\\FROM Aereoporti JOIN Voli ON Aeroporti.Codice = Voli.Destinazione \\GROUP BY Citta}
     \end{frame}
 %%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (ASTA)} 
-    \texttt{QUADRO(\underline{CODICE\#}, AUTORE, PERIODO)\\
-    MOSTRA(\underline{CODICE*}, NOME, ANNO, ORGANIZZATORE)\\
-    ASTA(\underline{MOSTRA*, QUADRO\#}, PREZZO)}
+\begin{frame}{Esercizio 4.15.1}
+    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
+    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
+    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
+    AUTORE(\underline{Nome, TitoloCanzone})\\
+    CANTANTE(\underline{NomeCantante, CodiceReg})}
     \vspace{1em}
     
-    \textbf{La lista degli autori , senza duplicati, che hanno venduto
-quadri di prezzo maggiore di 1000;}
+    \textbf{I cantautori (persone che hanno cantato e scritto la stessa canzone) il cui nome inizia per `D';}
 \end{frame}
 
-\begin{frame}{Esercizio (ASTA)}
+\begin{frame}{Esercizio 4.15.1}
     \textbf{Soluzione:}
     \vspace{1em}
     
-    \texttt{SELECT DISTINCT AUTORE\\FROM ASTA JOIN QUADRO ON QUADRO.CODICE=ASTA.QUADRO\\WHERE
-PREZZO > 1000}
+    \texttt{SELECT NomeCantante\\FROM CANTANTE \\JOIN ESECUZIONE ON CANTANTE.CodiceReg=ESECUZIONE.CodiceReg\\JOIN AUTORE ON ESECUZIONE.TitoloCanz=AUTORE.TitoloCanzone\\WHERE Nome=NomeCantante AND Nome LIKE `D\%'}
+    \end{frame}
+%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio 4.15.2}
+    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
+    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
+    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
+    AUTORE(\underline{Nome, TitoloCanzone})\\
+    CANTANTE(\underline{NomeCantante, CodiceReg})}
+    \vspace{1em}
+    
+    \textbf{I titoli dei dischi che contengono canzoni di cui non si conosce l`anno di registrazione;}
+\end{frame}
+
+\begin{frame}{Esercizio 4.15.2}
+    \textbf{Soluzione:}
+    \vspace{1em}
+    
+    \texttt{SELECT TitoloAlbum\\FROM DISCO\\JOIN CONTIENE ON DISCO.NroSerie=CONTIENE.NroSerieDisco
+\\JOIN ESECUZIONE ON
+CONTIENE.CodiceReg=ESECUZIONE.CodiceReg \\WHERE ESECUZIONE.anno IS NULL}
     \end{frame}
 %%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (ASTA) } 
-    \texttt{QUADRO(\underline{CODICE\#}, AUTORE, PERIODO)\\
-    MOSTRA(\underline{CODICE*}, NOME, ANNO, ORGANIZZATORE)\\
-    ASTA(\underline{MOSTRA*, QUADRO\#}, PREZZO)}
+\begin{frame}{Esercizio 4.15.4}
+    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
+    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
+    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
+    AUTORE(\underline{Nome, TitoloCanzone})\\
+    CANTANTE(\underline{NomeCantante, CodiceReg})}
     \vspace{1em}
     
-    \textbf{La lista degli autori che hanno venduto almeno 3 quadri;}
+    \textbf{Gli autori e i cantanti puri, ovvero autori che non hanno mai registrato una canzone e cantanti che non hanno mai scritto una canzone;}
 \end{frame}
 
-\begin{frame}{Esercizio (ASTA)}
+\begin{frame}{Esercizio 4.15.4}
     \textbf{Soluzione:}
     \vspace{1em}
     
-    \texttt{SELECT AUTORE, COUNT(*)\\FROM QUADRO,ASTA\\WHERE QUADRO.CODICE=ASTA.QUADRO\\GROUP BY AUTORE
-\\HAVING COUNT(*) >= 3}
+    \texttt{SELECT Nome AS NomeFiltrato FROM AUTORE\\WHERE Nome NOT IN (SELECT NomeCantante
+FROM CANTANTE)\\
+UNION\\
+SELECT NomeCantante as NomeFiltrato\\FROM CANTANTE\\WHERE NomeCantante NOT IN (SELECT Nome FROM AUTORE)}
     \end{frame}
 %%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (ASTA) } 
-    \texttt{QUADRO(\underline{CODICE\#}, AUTORE, PERIODO)\\
-    MOSTRA(\underline{CODICE*}, NOME, ANNO, ORGANIZZATORE)\\
-    ASTA(\underline{MOSTRA*, QUADRO\#}, PREZZO)}
+\begin{frame}{Esercizio 4.15.5}
+    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
+    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
+    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
+    AUTORE(\underline{Nome, TitoloCanzone})\\
+    CANTANTE(\underline{NomeCantante, CodiceReg})}
     \vspace{1em}
     
-    \textbf{I nomi delle mostre dove non si \`e venduto nessun quadro;}
+    \textbf{I cantanti del disco che contiene il maggior numero di canzoni;}
 \end{frame}
 
-\begin{frame}{Esercizio (ASTA)}
+\begin{frame}{Esercizio 4.15.5}
     \textbf{Soluzione:}
     \vspace{1em}
     
-    \texttt{SELECT NOME \\FROM MOSTRA \\WHERE CODICE NOT IN (SELECT MOSTRA FROM ASTA)}
+    \texttt{CREATE VIEW DiscoNumerato AS\\ SELECT NroSerieDisco, COUNT(*) AS NumCanzoni
+\\FROM CONTIENE\\GROUP BY NroSerieDisco}
+\vspace{1em}
+
+    \texttt{SELECT DISTINCT NomeCantante\\FROM CANTANTE JOIN CONTIENE ON CANTANTE.CodiceReg=CONTIENE.CodiceReg\\JOIN DiscoNumerato ON
+CONTIENE.NroSerieDisco=DiscoNumerato.NroSerieDisco\\WHERE NumCanzoni= (SELECT MAX(NumCanzoni)\\ \hspace{9.5em}FROM DiscoNumerato)}
     \end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (ASTA) } 
-    \texttt{QUADRO(\underline{CODICE\#}, AUTORE, PERIODO)\\
-    MOSTRA(\underline{CODICE*}, NOME, ANNO, ORGANIZZATORE)\\
-    ASTA(\underline{MOSTRA*, QUADRO\#}, PREZZO)}
+%%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio 4.15.6}
+    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
+    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
+    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
+    AUTORE(\underline{Nome, TitoloCanzone})\\
+    CANTANTE(\underline{NomeCantante, CodiceReg})}
     \vspace{1em}
     
-    \textbf{I nomi delle mostre dove si sono venduti pi\`u quadri.}
+    \textbf{Gli autori solisti di ``collezioni di successi'' (dischi in cui tutte le canzoni sono di un solo cantante e in cui almeno tre registrazioni sono di anni precedenti la pubblicazione del disco);}
 \end{frame}
 
-\begin{frame}{Esercizio (ASTA)}
+\begin{frame}{Esercizio 4.15.6}
     \textbf{Soluzione:}
     \vspace{1em}
     
-    \texttt{SELECT MOSTRA.NOME, COUNT(*) \\FROM ASTA,MOSTRA\\WHERE MOSTRA.CODICE = ASTA.MOSTRA\\GROUP BY MOSTRA.NOME\\HAVING COUNT(*) = (SELECT MAX(NQUADRI)\\\hspace{9,5em}FROM
-(SELECT ASTA.MOSTRA, COUNT(*) AS NQUADRI \\\hspace{12,5em}FROM ASTA \\\hspace{12,5em}GROUP BY ASTA.MOSTRA))}
+    \texttt{SELECT NroSerie\\FROM DISCO\\WHERE NroSerie NOT IN\\(SELECT NroSerieDisco\\FROM CONTIENE JOIN CANTANTE AS S1 ON CONTIENE.CodiceReg=S1.CodiceReg\\JOIN CANTANTE AS S2 ON CONTIENE.CodiceReg =S2.CodiceReg\\WHERE S1.NomeCantante<>S2.NomeCantante)\\AND NroSerie IN\\(SELECT NroSerieDisco, COUNT(*)\\FROM CONTIENE JOIN ESECUZIONE ON CONTIENE.CodiceReg=ESECUZIONE.CodiceReg JOIN DISCO ON
+DISCO.NroSerie=CONTIENE.NroSerieDisco\\WHERE ESECUZIONE.Anno<DISCO.Anno
+\\GROUP BY NroSerieDisco
+HAVING COUNT(*) >=3)}
     \end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (IMMOBILI) } 
-    \texttt{PERSONE(\underline{CF\#}, Nome, Cognome, DataNascita)\\
-    Immobili(\underline{Codice*}, Via, NumeroCivico, Citta, Valore)\\
-    Proprieta(\underline{Persona\#, Immobile*}, Percentuale)}
+%%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio 4.15.7}
+    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
+    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
+    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
+    AUTORE(\underline{Nome, TitoloCanzone})\\
+    CANTANTE(\underline{NomeCantante, CodiceReg})}
     \vspace{1em}
     
-    \textbf{Il Nome e Cognome delle persone di cui non \`e dato sapere la data di nascita;}
+    \textbf{I cantanti che non hanno mai registrato una canzone come solisti;}
 \end{frame}
 
-\begin{frame}{Esercizio (IMMOBILI)}
+\begin{frame}{Esercizio 4.15.7}
     \textbf{Soluzione:}
     \vspace{1em}
     
-    \texttt{SELECT Nome , Cognome\\FROM Persone\\WHERE DataNascita IS NULL}
+    \texttt{SELECT DISTINCT NomeCantante\\FROM CANTANTE\\WHERE NomeCantante NOT IN(SELECT S1.NomeCantante\\\hspace{13em}FROM CANTANTE AS S1\\\hspace{13em}WHERE CodiceReg NOT IN(SELECT CodiceReg\\\hspace{24,5em}FROM CANTANTE AS S2\\\hspace{24,5em}WHERE S2.NomeCantante <> \\\hspace{24,5em}S1.NomeCantante))}
     \end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (IMMOBILI) } 
-    \texttt{PERSONE(\underline{CF\#}, Nome, Cognome, DataNascita)\\
-    Immobili(\underline{Codice*}, Via, NumeroCivico, Citta, Valore)\\
-    Proprieta(\underline{Persona\#, Immobile*}, Percentuale)}
+%%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio 4.15.8}
+    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
+    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
+    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
+    AUTORE(\underline{Nome, TitoloCanzone})\\
+    CANTANTE(\underline{NomeCantante, CodiceReg})}
     \vspace{1em}
     
-    \textbf{Il Nome e Cognome delle persone che non hanno immobili;}
+    \textbf{I cantanti che non hanno mai inciso un disco in cui comparissero come unici cantanti;}
 \end{frame}
 
-\begin{frame}{Esercizio (IMMOBILI)}
+\begin{frame}{Esercizio 4.15.8}
     \textbf{Soluzione:}
     \vspace{1em}
     
-    \texttt{SELECT Nome , Cognome\\FROM Persone\\WHERE CF NOT IN (SELECT Persona FROM Proprieta)}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (IMMOBILI) } 
-    \texttt{PERSONE(\underline{CF\#}, Nome, Cognome, DataNascita)\\
-    Immobili(\underline{Codice*}, Via, NumeroCivico, Citta, Valore)\\
-    Proprieta(\underline{Persona\#, Immobile*}, Percentuale)}
+    \texttt{CREATE VIEW CantantiUnDisco AS
+\\SELECT NomeCantante
+\\FROM CONTIENE JOIN CANTANTE ONCONTIENE.CodiceReg=CANTANTE.CodiceReg\\WHERE NroSerieDisco NOT IN
+\\(SELECT NroSerieDisco
+FROM CONTIENE JOIN CANTANTE AS S1 ON
+CONTIENE.CodiceReg=S1.CodiceReg\\JOIN CANTANTE AS S2 ON CodiceReg=S2.CodiceReg\\WHERE S1.NomeCantante<>S2.NomeCantante)\\
+\vspace{1em}
+SELECT NomeCantante\\FROM CANTANTE
+WHERE NomeCantante NOT IN (SELECT NomeCantante\\FROM CantantiUnDisco)}
+    \end{frame}
+%%%%%%%%%%%%%%%%%%
+\begin{frame}{Esercizio 4.15.9}
+    \texttt{DISCO(\underline{NroSerie}, TitoloAlbum,Anno,Prezzo)\\
+    CONTIENE(\underline{NroSerieDisco, CodiceReg} , NroProg)\\
+    ESECUZIONE(\underline{CodiceReg}, TitoloCanz, Anno)\\
+    AUTORE(\underline{Nome, TitoloCanzone})\\
+    CANTANTE(\underline{NomeCantante, CodiceReg})}
     \vspace{1em}
     
-    \textbf{Nome e Cognome dei proprietari che posseggono immobili con percentuali inferioni a 0,5 e con valore compreso tra a 50000 e 100000;}
+    \textbf{I cantanti che hanno sempre registrato canzoni come solisti.}
 \end{frame}
 
-\begin{frame}{Esercizio (IMMOBILI)}
+\begin{frame}{Esercizio 4.15.9}
     \textbf{Soluzione:}
     \vspace{1em}
     
-    \texttt{SELECT Persone.CF , Persone.Nome , Persone.Cognome\\FROM Persone JOIN Proprieta ON Persone.CF = Proprieta.Persona JOIN Immobili ON Proprieta.Immobile = Immobili.Codice\\WHERE Proprieta.Percentuale < 0.5 AND Immobili.Valore BETWEEN 50000 AND 100000}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (IMMOBILI) } 
-    \texttt{PERSONE(\underline{CF\#}, Nome, Cognome, DataNascita)\\
-    Immobili(\underline{Codice*}, Via, NumeroCivico, Citta, Valore)\\
-    Proprieta(\underline{Persona\#, Immobile*}, Percentuale)}
-    \vspace{1em}
-    
-    \textbf{La quantit\`a degli immobili collocati nella citt\`a di Milano.}
-\end{frame}
-
-\begin{frame}{Esercizio (IMMOBILI)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT COUNT(*) \\FROM Immobili JOIN Proprieta ON Immobili.Codice= Proprieta.Immobile \\WHERE Citta = `Milano'}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (CALCIO) } 
-    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
-    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
-    NAZIONALE(\underline{Paese*}, Continente)}
-    \vspace{1em}
-    
-    \textbf{Il nome del/degli Stadio/i con capienza minima;}
-\end{frame}
-
-\begin{frame}{Esercizio (CALCIO)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT Nome \\FROM STADIO\\WHERE Capienza = (SELECT MIN(Capienza) FROM STADIO)}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (CALCIO) } 
-    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
-    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
-    NAZIONALE(\underline{Paese*}, Continente)}
-    \vspace{1em}
-    
-    \textbf{La capienza media degli stadi della citt\`a di `Roma';}
-\end{frame}
-
-\begin{frame}{Esercizio (CALCIO)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT AVG(Capienza)\\FROM STADIO\\WHERE Citta = `Roma'}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (CALCIO) } 
-    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
-    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
-    NAZIONALE(\underline{Paese*}, Continente)}
-    \vspace{1em}
-    
-    \textbf{Il numero delle partite giocate nello stadio `Olimpico';}
-\end{frame}
-
-\begin{frame}{Esercizio (CALCIO)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT COUNT(*)\\FROM INCONTRO\\WHERE NomeStadio = `Olimpico'}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (CALCIO) } 
-    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
-    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
-    NAZIONALE(\underline{Paese*}, Continente)}
-    \vspace{1em}
-    
-    \textbf{Il Nome dello Stadio, Data, Ora delle partite dove gioca la `Scozia' ordinato per Data e ora;}
-\end{frame}
-
-\begin{frame}{Esercizio (CALCIO)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT NomeStadio, Data, Ora\\FROM INCONTRO\\WHERE (Squadra1 = `Scozia' OR Squadra2 = `Scozia') \\ORDER BY Data, Ora}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (CALCIO) } 
-    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
-    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
-    NAZIONALE(\underline{Paese*}, Continente)}
-    \vspace{1em}
-    
-    \textbf{La capienza totale degli stadi;}
-\end{frame}
-
-\begin{frame}{Esercizio (CALCIO)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT SUM(Capienza)\\FROM STADIO}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (CALCIO) } 
-    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
-    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
-    NAZIONALE(\underline{Paese*}, Continente)}
-    \vspace{1em}
-    
-    \textbf{Le squadre che giocano al `Meazza';}
-\end{frame}
-
-\begin{frame}{Esercizio (CALCIO)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT Squadra1 as squadra\\FROM INCONTRO\\WHERE NomeStadio = `Meazza'
-\\UNION\\SELECT Squadra2 as squadra\\FROM INCONTRO\\WHERE NomeStadio = `Meazza'}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (CALCIO) } 
-    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
-    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
-    NAZIONALE(\underline{Paese*}, Continente)}
-    \vspace{1em}
-    
-    \textbf{Le squadre che non giocano allo stadio `Flaminio';}
-\end{frame}
-
-\begin{frame}{Esercizio (CALCIO)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT Paese\\FROM NAZIONALE\\WHERE Paese NOT IN (SELECT Squadra1 \\\hspace{10em}FROM INCONTRO \\\hspace{10em}WHERE NomeStadio = `Flaminio'
-\\\hspace{10em}UNION\\\hspace{10em}SELECT Squadra2 \\\hspace{10em}FROM INCONTRO \\\hspace{10em}WHERE NomeStadio = `Flaminio')}
-\end{frame}
-%%%%%%%%%%%%%%%%%
-\begin{frame}{Esercizio (CALCIO) } 
-    \texttt{STADIO(\underline{Nome\#}, Citta, Capienza)\\
-    INCONTRO(\underline{NomeStadio\#,Squadra1*, Squadra2*}, Data, Ora)\\
-    NAZIONALE(\underline{Paese*}, Continente)}
-    \vspace{1em}
-    
-    \textbf{l Nome dello Stadio, Data, Ora delle partite dove giocano squadre di continenti diversi.}
-\end{frame}
-
-\begin{frame}{Esercizio (CALCIO)}
-    \textbf{Soluzione:}
-    \vspace{1em}
-    
-    \texttt{SELECT NomeStadio, Data, Ora\\FROM INCONTRO, NAZIONALE N1, NAZIONALE N2\\WHERE Squadra1 = N1.Paese AND Squadra2 = N2.Paese AND NOT (N1.Continente = N2.Continente)}
-\end{frame}
+    \texttt{SELECT NomeCantante\\FROM CANTANTE\\WHERE NomeCantante NOT IN(SELECT S1.NomeCantante\\\hspace{13em}FROM CANTANTE AS S1 JOIN ESECUZIONE ON\\\hspace{12,5em} CodiceReg=S1.CodiceReg JOIN CANTANTE AS S2 ON\\\hspace{12,5em} CodiceReg=S2.CodiceReg\\\hspace{13em}WHERE S1.NomeCantante<>S2.NomeCantante)}
+    \end{frame}
+%%%%%%%%%%%%%%%%%%
