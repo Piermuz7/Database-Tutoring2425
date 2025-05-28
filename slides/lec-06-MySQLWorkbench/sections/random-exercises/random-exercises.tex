@@ -123,7 +123,7 @@ Con vincoli di integrit\`a referenziale fra l'attributo Negozio di LISTINO e la 
 \pause
 \begin{lstlisting}
 SELECT COUNT(*)
-FROM Listino PRODOTTI.
+FROM Listino
 WHERE Prodotto = `A';
 \end{lstlisting}
 \end{frame}
@@ -136,7 +136,7 @@ Con vincoli di integrit\`a referenziale fra l'attributo Negozio di LISTINO e la 
 \\I codici dei prodotti che vengono venduti in una sola citt\`a.
 \pause
 \begin{lstlisting}
-SELECT DISTINCT Prodotto, COUNT(citta)
+SELECT DISTINCT Prodotto
 FROM Listino JOIN Negozi ON Negozio=IDnegozio
 GROUP BY prodotto
 HAVING COUNT(*) = 1;
@@ -170,7 +170,7 @@ SELECT Auto, DataPrelievo, CLIENTI.*,
 (DataRestituzione-DataPrelievo)*CostoGiornaliero AS CostoGlobale
 FROM NOLEGGI JOIN CLIENTI ON Cliente = Codice
 JOIN AUTOVETTURE ON Auto = Targa
-AND YEAR(DataPrelievo) = 2008;    
+WHERE YEAR(DataPrelievo) = 2008;    
 \end{lstlisting}
 \end{frame}
 %
@@ -324,11 +324,11 @@ WHERE CodR IN (
     WHERE Argomento = `Automobilismo'
     GROUP BY CodR HAVING COUNT(*)>=10
     ) 
-AND CodR IN 
-        (SELECT CodR FROM ARTICOLO
-        WHERE Argomento = `Motociclismo'
-        GROUP BY CodR HAVING COUNT(*) >= 25
-        );   
+AND CodR IN (
+    SELECT CodR FROM ARTICOLI
+    WHERE Argomento = `Motociclismo'
+    GROUP BY CodR HAVING COUNT(*) >= 25
+    );
 \end{lstlisting}
 \end{frame}
 %
@@ -348,8 +348,9 @@ SELECT M.NomeM, COUNT(*) AS NumeroDipinti
 FROM MUSEI AS M JOIN OPERE AS O ON M.IdMuseo = O.IdMuseo
 WHERE NOT EXISTS (
     SELECT *
-    FROM OPERE AS O2 JOIN O ON O2.IdMuseo = O.IdMuseo
-    WHERE O2.Tipo <> `Dipinto' )
+    FROM OPERE AS O2
+    WHERE O2.IdMuseo = M.IdMuseo AND O2.Tipo <> 'Dipinto'
+)
 GROUP BY M.IdMuseo, M.NomeM;
 \end{lstlisting}
 \end{frame}
@@ -412,7 +413,7 @@ HAVING COUNT(*) >= 20;
 \end{lstlisting}
 \end{frame}
 %
-\begin{frame}[fragile]{Random: Es. 21}
+\begin{frame}[fragile]{Random: Es. 22}
 \vspace{-.5cm}
 Dato il seguente schema:
 \schemaMuseiOpereArtisti

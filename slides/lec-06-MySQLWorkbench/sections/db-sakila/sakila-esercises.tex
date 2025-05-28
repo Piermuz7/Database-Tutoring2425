@@ -80,6 +80,54 @@ LIMIT 1;
 \begin{frame}[fragile]{Sakila: Es. 7}
 Inserire un record per rappresentare `Mary Smith' che oggi affitta `Academy Dinosaur' da `Mike Hillyer' presso lo Store 1.
 \pause
+\newline
+\newline
+Per ottenere la data ed orario corrente: '\textbf{NOW()}'
+\end{frame}
+
+\begin{frame}[fragile]{Sakila: Es. 7}
+Inserire un record per rappresentare `Mary Smith' che oggi affitta `Academy Dinosaur' da `Mike Hillyer' presso lo Store 1.
+\newline
+\newline
+Per ottenere l'id dell'articolo 'Academy Dinosaur':
+\begin{lstlisting}
+SELECT inv.inventory_id
+FROM inventory AS inv
+JOIN film AS fi ON inv.film_id = fi.film_id
+WHERE fi.title = 'Academy Dinosaur'
+AND inv.store_id = 1
+LIMIT 1;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Sakila: Es. 7}
+Inserire un record per rappresentare `Mary Smith' che oggi affitta `Academy Dinosaur' da `Mike Hillyer' presso lo Store 1.
+\newline
+\newline
+Per ottenere l'id del cliente 'Mary Smith':
+\begin{lstlisting}
+SELECT customer_id
+FROM customer
+WHERE first_name = 'Mary' AND last_name = 'Smith'
+AND store_id = 1;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Sakila: Es. 7}
+Inserire un record per rappresentare `Mary Smith' che oggi affitta `Academy Dinosaur' da `Mike Hillyer' presso lo Store 1.
+\newline
+\newline
+Per ottenere l'id del commesso 'Mike Hillyer':
+\begin{lstlisting}
+SELECT staff_id
+FROM staff
+WHERE first_name = 'Mike' AND last_name = 'Hillyer'
+AND store_id = 1;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Sakila: Es. 7}
+Inserire un record per rappresentare `Mary Smith' che oggi affitta `Academy Dinosaur' da `Mike Hillyer' presso lo Store 1.
 \begin{lstlisting}
 INSERT INTO rental
 (rental_date, inventory_id, customer_id, staff_id)
@@ -87,6 +135,7 @@ VALUES
 (NOW(), 1, 1, 1);
 \end{lstlisting}
 \end{frame}
+
 %
 \begin{frame}[fragile]{Sakila: Es. 8}
 Qual \`e la lunghezza media di tutti i film del DB sakila?
@@ -176,7 +225,7 @@ Elencare gli attori per nome, cognome e numero di film fatti, ordinati da chi ha
 Nell'elenco devono comparire solo gli attori che hanno fatto pi\`u di 33 film (33 compreso).
 \pause
 \begin{lstlisting}
-SELECT first_name, last_name, count(*) AS `n. film'
+SELECT first_name, last_name, count(*) AS numero_film
 FROM film JOIN film_actor
 ON film.film_id = film_actor.film_id 
 JOIN actor ON actor.actor_id = film_actor.actor_id
