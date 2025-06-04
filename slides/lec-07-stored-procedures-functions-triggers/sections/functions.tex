@@ -1,0 +1,342 @@
+\newcommand{\xmark}{\textcolor{black}{\ding{55}}}
+\renewcommand{\checkmark}{\textcolor{black}{\ding{51}}}
+\begin{frame}[fragile]{Functions}
+\vspace{-.7cm}
+\begin{minipage}{.85\textwidth}
+\begin{block}{Function}
+Una \textbf{function} (o funzione) \`e un blocco di codice SQL che esegue un'operazione specifica e restituisce un valore.
+\end{block}
+\end{minipage}
+
+\vspace{.2cm}
+
+Le funzioni:
+\begin{itemize}[<+->]
+    \item sono simili alle SPs, ma sono progettate per restituire un singolo valore e possono essere utilizzate all'interno di espressioni SQL.
+    \item possono essere utilizzate in qualsiasi contesto in cui si possa utilizzare un'espressione, come ad esempio in una clausola \texttt{SELECT}, \texttt{WHERE} o \texttt{ORDER BY}.
+    \item possono accettare parametri di input e possono essere definite per restituire un valore di qualsiasi tipo di dato supportato dal DBMS.
+    \item possono essere utilizzate per eseguire operazioni complesse, come calcoli matematici, manipolazione di stringhe o operazioni su date.
+    \item possono essere definite come \textbf{deterministiche} o \textbf{non deterministiche}.
+    \item \ldots
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Sintassi}
+\vspace{-1cm}
+La sintassi per creare una funzione in MySQL \`e la seguente:
+
+\begin{lstlisting}
+DELIMITER //
+CREATE FUNCTION nome_funzione
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+RETURNS tipoDato [caratteristiche]
+BEGIN
+    statement_sql
+    RETURN valore;
+END //
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+|\colorbox{magenta!40}{DELIMITER //}|
+CREATE FUNCTION nome_funzione
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+RETURNS tipoDato [caratteristiche]
+BEGIN
+    statement_sql
+    RETURN valore;
+END //
+DELIMITER ;
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+    \small \begin{block}{Delimitatore}
+    L'istruzione \texttt{DELIMITER} viene utilizzata per cambiare il delimitatore predefinito di MySQL, che \`e il punto e virgola (\texttt{;}).
+    Questo \`e necessario per poter definire correttamente la funzione, poich\'e il blocco di codice della funzione pu\`o contenere pi\`u istruzioni SQL.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.6cm}
+\begin{lstlisting}
+DELIMITER //
+|\colorbox{magenta!40}{CREATE FUNCTION nome\_funzione}|
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+RETURNS tipoDato [caratteristiche]
+BEGIN
+    statement_sql
+    RETURN valore;
+END //
+DELIMITER ;
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+    \begin{block}{CREATE FUNCTION}
+    Questa istruzione viene utilizzata per creare una nuova funzione nel database.
+    Il nome della funzione deve essere un identificatore univoco all'interno del database.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.9cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE FUNCTION nome_funzione
+|\colorbox{magenta!40}{(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)}|
+RETURNS tipoDato[caratteristiche]
+BEGIN
+    statement_sql
+    RETURN valore;
+END //
+DELIMITER ;
+\end{lstlisting}
+
+\vspace{-.4cm}
+
+\begin{minipage}{\textwidth}
+    \small \begin{block}{Parametri}
+    I parametri di input della funzione sono definiti tra parentesi dopo il nome della funzione.
+    Possono essere utilizzati per passare valori alla funzione e possono essere di qualsiasi tipo di dato supportato dal DBMS.
+    
+    I parametri sono opzionali, ma se presenti, devono essere definiti in modo che il numero e il tipo di parametri corrispondano a quelli utilizzati quando si richiama la funzione.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.9cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE FUNCTION nome_funzione
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+|\colorbox{magenta!40}{RETURNS tipoDato}| [caratteristiche]
+BEGIN
+    statement_sql
+    RETURN valore;
+END //
+DELIMITER ;
+\end{lstlisting}
+
+\vspace{-.4cm}
+
+\begin{minipage}{\textwidth}
+    \small
+    \begin{block}{Tipo e Valore di Ritorno}
+    Il tipo di dato restituito dalla funzione \`e specificato dopo la clausola \texttt{RETURNS}.
+    Il valore restituito dalla funzione deve essere dello stesso tipo di dato specificato.
+    La clausola \texttt{RETURNS} \`e obbligatoria e deve essere presente per ogni funzione.
+    
+    Il valore restituito dalla funzione viene specificato utilizzando l'istruzione \texttt{RETURN}, il quale deve essere compatibile con il tipo di dato specificato nella clausola \texttt{RETURNS}.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.9cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE FUNCTION nome_funzione
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+RETURNS tipoDato |\colorbox{magenta!40}{[caratteristiche]}|
+BEGIN
+    statement_sql
+    RETURN valore;
+END //
+DELIMITER ;
+\end{lstlisting}
+
+\vspace{-.4cm}
+
+\begin{minipage}{\textwidth}
+    \scriptsize
+    \begin{block}{\small Caratteristiche}
+    Le caratteristiche della funzione possono includere:
+    \begin{itemize}
+        \item \texttt{DETERMINISTIC} o \texttt{NOT DETERMINISTIC}: indica se la funzione restituisce sempre lo stesso risultato per gli stessi input.
+        \item \texttt{SQL SECURITY INVOKER} o \texttt{SQL SECURITY DEFINER}: specifica il contesto di sicurezza in cui la funzione viene eseguita.
+        \item Altre opzioni specifiche del DBMS.
+    \end{itemize}
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.6cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE FUNCTION nome_funzione
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+RETURNS tipoDato [caratteristiche]
+|\colorbox{magenta!40}{BEGIN}|
+    statement_sql
+    RETURN valore;
+|\colorbox{magenta!40}{END //}|
+DELIMITER ;
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+    \begin{block}{BEGIN ... END}
+    L'istruzione \texttt{BEGIN} indica l'inizio del blocco di codice della funzione, mentre \texttt{END} indica la fine del blocco.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE FUNCTION nome\_funzione
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+RETURNS tipoDato [caratteristiche]
+BEGIN
+    |\colorbox{magenta!40}{statement\_sql}|
+    RETURN valore;
+END //
+DELIMITER ;
+\end{lstlisting}
+
+\vspace{-.4cm}
+
+\begin{minipage}{\textwidth}
+    \begin{block}{Statement SQL}
+    All'interno del blocco \texttt{BEGIN ... END}, si possono inserire una o pi\`u istruzioni SQL che definiscono la logica della funzione.
+    
+    Le istruzioni SQL possono includere operazioni di selezione, inserimento, aggiornamento o cancellazione dei dati, nonch\'e operazioni di calcolo o manipolazione dei dati.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE FUNCTION nome_funzione
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+RETURNS tipoDato [caratteristiche]
+BEGIN
+    statement_sql
+    |\colorbox{magenta!40}{RETURN valore;}|
+END //
+DELIMITER ;
+\end{lstlisting}
+
+\vspace{-.4cm}
+
+\begin{minipage}{\textwidth}
+    \begin{block}{Statement RETURN}
+    L'istruzione \texttt{RETURN} viene utilizzata per restituire il valore dalla funzione.
+    Il valore restituito deve essere dello stesso tipo di dato specificato nella clausola \texttt{RETURNS}.
+    Se non viene specificato un valore di ritorno, la funzione restituir\`a \texttt{NULL} per impostazione predefinita.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE FUNCTION nome_funzione
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+RETURNS tipoDato [caratteristiche]
+BEGIN
+    statement_sql
+    RETURN valore;
+END //
+|\colorbox{magenta!40}{DELIMITER ;}|
+\end{lstlisting}
+
+\vspace{-.4cm}
+
+\begin{minipage}{\textwidth}
+    \begin{block}{Delimitatore Finale}
+    L'istruzione \texttt{DELIMITER ;} viene utilizzata per ripristinare il delimitatore predefinito di MySQL, che \`e il punto e virgola (\texttt{;}).
+    Questo \`e necessario per poter eseguire correttamente le istruzioni SQL successive alla definizione della funzione.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}{Functions: Vantaggi}
+    \begin{itemize}[<+->]
+        \item \textbf{Riutilizzabilit\`a}: scrivere la logica una volta sola e utilizzarla per pi\`u query.
+        \item \textbf{Modularit\`a}: dividere la logica complessa in unit\`a pi\`u piccole e gestibili.
+	    \item \textbf{Query semplificate}: astrarre calcoli o trasformazioni all'interno di una funzione.
+	    \item \textbf{Prestazioni}: precompilate ed eseguite sul lato server, riducendo i calcoli sul client.
+	    \item \textbf{Facilit\`a d'uso nelle query}: \`e possibile utilizzare le funzioni direttamente in SELECT, WHERE, ORDER BY, ecc.
+	    \item \textbf{Miglioramento della leggibilit\`a}: rende le query SQL pi\`u pulite, nascondendo la logica complessa dietro le chiamate di funzione.
+	    \item \ldots
+    \end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Esempio Sakila}
+\framesubtitle{Esempio di creazione di una Function}
+
+\vspace{-.5cm}
+
+La seguente function calcola il totale speso da un cliente specificato tramite il suo ID:
+\small 
+\begin{lstlisting}
+DELIMITER \\
+CREATE FUNCTION getTotalSpent(cust_id INT)
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE total DECIMAL(10,2);
+    SELECT SUM(amount)
+    INTO total
+    FROM payment
+    WHERE customer_id = cust_id;
+    RETURN IFNULL(total, 0.00);
+END \\
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions: Esempio Sakila}
+\framesubtitle{Esempio di chiamata di una Function}
+Per richiamare la function appena creata, si utilizza la seguente sintassi:
+\small 
+\begin{lstlisting}
+SELECT 
+    customer_id, 
+    CONCAT(first_name, ' ', last_name) AS full_name,
+    getTotalSpent(customer_id) AS total_spent
+FROM customer
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}{SPs vs Functions in MySQL}
+\centering
+\small
+    \begin{tabular}{|p{2.2cm}|p{4.5cm}|p{4.5cm}|}
+        \hline
+        \rowcolor{cyan!30} \textbf{Feature} & \textbf{SP} & \textbf{Function} \\
+        \hline
+        Scopo & Esegue un'azione (es. insert, update, delete) & Restituisce un valore (usata nelle espressioni) \\
+        \hline
+        Tipo di ritorno & Pu\`o restituire 0 o pi\`u valori tramite parametri \texttt{OUT} & Deve restituire un solo valore tramite \texttt{RETURN} \\
+        \hline
+        Utilizzo in SQL & Si chiama con \texttt{CALL} $nome\_procedura(...)$ & Si usa nelle espressioni SQL, es. \texttt{SELECT} $nome\_funzione(...)$ \\
+        \hline
+        DML & \checkmark~(es. \texttt{INSERT}, \texttt{UPDATE}, \texttt{DELETE}) & \xmark~Deve essere solo in lettura \\
+        \hline
+        Utilizzabile in SELECT & \xmark & \checkmark \\
+        \hline
+        Parametri in ingresso/uscita & Supporta parametri \texttt{IN}, \texttt{OUT} e \texttt{INOUT} & Solo parametri \texttt{IN} \\
+        \hline
+        Controllo delle transazioni & \checkmark~Pu\`o contenere \texttt{COMMIT}, \texttt{ROLLBACK} & \xmark~Non pu\`o gestire transazioni \\
+        \hline
+    \end{tabular}
+\end{frame}

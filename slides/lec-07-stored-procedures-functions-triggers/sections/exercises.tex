@@ -1,0 +1,433 @@
+\def\consegnaSPsExOne{
+Creare una stored procedure \textbf{get\_customer\_total\_payment} che riceve un \textbf{customer\_id} e restituisce l'importo totale pagato da quel cliente.
+}
+\def\consegnaSPsExTwo{
+Creare una stored procedure \textbf{insert\_rental} che inserisce una nuova riga nella tabella \textbf{rental} dato:
+    \begin{itemize}
+        \item \textbf{customer\_id}
+        \item \textbf{inventory\_id}
+        \item \textbf{staff\_id}
+    \end{itemize}
+}
+\def\consegnaSPsExThree{
+Creare una stored procedure \textbf{deactivate\_inactive\_customers} che imposta \textbf{active = 0} per tutti i clienti che non hanno effettuato un pagamento negli ultimi 12 mesi.
+}
+\def\consegnaFunctionsExOne{
+Creare una funzione \textbf{get\_customer\_full\_name} che prende un \textbf{customer\_id} e restituisce il nome completo (ad esempio, 'John Smith') come stringa unica.
+}
+\def\consegnaFunctionsExTwo{
+Creare una funzione \textbf{get\_rental\_count} che restituisce il numero di noleggi effettuati da un determinato \textbf{customer\_id}.
+}
+\def\consegnaFunctionsExThree{
+Creare una funzione \textbf{is\_film\_available} che prende un \textbf{film\_id} e restituisce 1 se c'\`e almeno una copia di quel film nell'inventario, altrimenti 0.
+}
+\def\consegnaTriggersExOne{
+Creare un trigger che memorizzi il \textbf{titolo} e il \textbf{timestamp} di cancellazione di qualsiasi film che viene eliminato dalla \textbf{tabella film}.
+
+Utilizzare una nuova tabella chiamata \textbf{deleted\_films\_log}.
+}
+\def\consegnaTriggersExTwo{
+Creare un trigger che aggiorni una tabella \textbf{customer\_payment\_count} ogni volta che viene inserito un pagamento.
+Se il cliente esiste gi\`a nella tabella, incrementare il suo conteggio; altrimenti, inserirlo con count = 1.
+
+Prima di tutto, creare una tabella di riepilogo \textbf{customer\_payment\_count(customer\_id, payment\_count)}.
+}
+\def\consegnaTriggersExThree{
+Creare un trigger che, prima di cancellare un cliente, copia i dati del cliente in una tabella \textbf{archived\_customers} per scopi di registrazione.
+}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Esercizio 1: Calcolo del Totale Pagato da un Cliente}
+\consegnaSPsExOne
+\end{frame}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Soluzione Esercizio 1: Calcolo del Totale Pagato da un Cliente}
+\consegnaSPsExOne
+
+\vspace{.2cm}
+
+\textbf{Creazione della stored procedure:}
+\begin{lstlisting}
+DELIMITER \\
+CREATE PROCEDURE get_customer_total_payment(IN cust_id INT, OUT total DECIMAL(10,2))
+BEGIN
+    SELECT SUM(amount)
+    INTO total
+    FROM payment
+    WHERE customer_id = cust_id;
+END\\
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Soluzione Esercizio 1: Calcolo del Totale Pagato da un Cliente}
+\consegnaSPsExOne
+
+\vspace{.2cm}
+
+\textbf{Chiamata della stored procedure:}
+\begin{lstlisting}
+CALL get_customer_total_payment(1, @total);
+SELECT @total;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Esercizio 2: Inserimento di un Noleggio}
+\consegnaSPsExTwo
+\end{frame}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Soluzione Esercizio 2: Inserimento di un Noleggio}
+
+\vspace{-.5cm}
+
+\textbf{Creazione della stored procedure:}
+\begin{lstlisting}
+DELIMITER \\
+
+CREATE PROCEDURE insert_rental(
+    IN p_customer_id INT,
+    IN p_inventory_id INT,
+    IN p_staff_id INT
+)
+BEGIN
+    INSERT INTO rental (rental_date, inventory_id, customer_id, staff_id)
+    VALUES (NOW(), p_inventory_id, p_customer_id, p_staff_id);
+END\\
+
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Soluzione Esercizio 2: Inserimento di un Noleggio}
+\consegnaSPsExOne
+
+\vspace{.2cm}
+
+\textbf{Chiamata della stored procedure:}
+\begin{lstlisting}
+CALL insert_rental(1, 1000, 2);
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Esercizio 3: Disattivazione Clienti Inattivi}
+\consegnaSPsExThree
+\end{frame}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Soluzione Esercizio 3: Disattivazione Clienti Inattivi}
+
+\vspace{-.5cm}
+\small
+\textbf{Creazione della stored procedure:}
+\begin{lstlisting}
+DELIMITER \\
+
+CREATE PROCEDURE deactivate_inactive_customers()
+BEGIN
+    UPDATE customer
+    SET active = 0
+    WHERE customer_id IN (
+        SELECT c.customer_id
+        FROM customer c
+        LEFT JOIN payment p ON c.customer_id = p.customer_id
+        GROUP BY c.customer_id
+        HAVING MAX(p.payment_date) < DATE_SUB(NOW(), INTERVAL 12 MONTH)
+    );
+END\\
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Stored Procedures}
+\framesubtitle{Soluzione Esercizio 3: Disattivazione Clienti Inattivi}
+\consegnaSPsExOne
+
+\vspace{.2cm}
+
+\textbf{Chiamata della stored procedure:}
+\begin{lstlisting}
+CALL deactivate_inactive_customers();
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Esercizio 1: Nome Completo del Cliente}
+\consegnaFunctionsExOne
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Soluzione Esercizio 1: Nome Completo del Cliente}
+
+\vspace{-.5cm}
+\small
+\textbf{Creazione della funzione:}
+\begin{lstlisting}
+DELIMITER \\
+
+CREATE FUNCTION get_customer_full_name(cust_id INT)
+RETURNS VARCHAR(100)
+DETERMINISTIC
+BEGIN
+    DECLARE full_name VARCHAR(100);
+    SELECT CONCAT(first_name, ' ', last_name)
+    INTO full_name
+    FROM customer
+    WHERE customer_id = cust_id;
+    RETURN full_name;
+END\\
+
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Soluzione Esercizio 1: Nome Completo del Cliente}
+\consegnaFunctionsExOne
+
+\vspace{.2cm}
+
+\textbf{Chiamata della funzione:}
+\begin{lstlisting}
+SELECT get_customer_full_name(1);
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Esercizio 2: Conteggio dei Noleggi per Cliente}
+\consegnaFunctionsExTwo
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Soluzione Esercizio 2: Conteggio dei Noleggi per Cliente}
+
+\vspace{-.5cm}
+\small
+\textbf{Creazione della funzione:}
+\begin{lstlisting}
+DELIMITER \\
+
+CREATE FUNCTION get_rental_count(cust_id INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE rental_total INT;
+    SELECT COUNT(*) INTO rental_total
+    FROM rental
+    WHERE customer_id = cust_id;
+    RETURN rental_total;
+END\\
+
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Soluzione Esercizio 2: Conteggio dei Noleggi per Cliente}
+\consegnaFunctionsExTwo
+
+\vspace{.2cm}
+
+\textbf{Chiamata della funzione:}
+\begin{lstlisting}
+SELECT get_rental_count(1);
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Esercizio 3: Disponibilit\`a del Film}
+\consegnaFunctionsExThree
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Soluzione Esercizio 3: Disponibilit\`a del Film}
+
+\vspace{-.5cm}
+\scriptsize
+\textbf{Creazione della funzione:}
+\begin{lstlisting}
+DELIMITER \\
+
+CREATE FUNCTION is_film_available(film_id_input INT)
+RETURNS TINYINT
+DETERMINISTIC
+BEGIN
+    DECLARE count_inventory INT;
+    SELECT COUNT(*) INTO count_inventory
+    FROM inventory
+    WHERE film_id = film_id_input;
+
+    IF count_inventory > 0 THEN
+        RETURN 1;
+    ELSE
+        RETURN 0;
+    END IF;
+END\\
+
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Functions}
+\framesubtitle{Soluzione Esercizio 3: Disponibilit\`a del Film}
+\consegnaFunctionsExThree
+
+\vspace{.2cm}
+
+\textbf{Chiamata della funzione:}
+\begin{lstlisting}
+SELECT is_film_available(100);
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Esercizio 1: Log di Cancellazione dei Film}
+\consegnaTriggersExOne
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Soluzione Esercizio 1: Log di Cancellazione dei Film}
+\consegnaTriggersExOne
+
+\vspace{.5cm}
+
+\textbf{Step 1: Creazione della tabella di log}
+\begin{lstlisting}
+CREATE TABLE IF NOT EXISTS deleted_films_log (
+    film_id INT,
+    title VARCHAR(255),
+    deleted_at DATETIME
+);
+
+\end{lstlisting}
+
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Soluzione Esercizio 1: Log di Cancellazione dei Film}
+\consegnaTriggersExOne
+
+\vspace{.2cm}
+
+\textbf{Step 2: Creazione del trigger}
+\begin{lstlisting}
+DELIMITER \\
+CREATE TRIGGER after_delete_film_log
+AFTER DELETE ON film
+FOR EACH ROW
+BEGIN
+    INSERT INTO deleted_films_log(film_id, title, deleted_at)
+    VALUES (OLD.film_id, OLD.title, NOW());
+END\\
+DELIMITER ;
+\end{lstlisting}
+
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Esercizio 2: Conteggio dei Pagamenti per Cliente}
+\consegnaTriggersExTwo
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Soluzione Esercizio 2: Conteggio dei Pagamenti per Cliente}
+
+\consegnaTriggersExTwo
+
+\vspace{.5cm}
+
+\textbf{Step 1: Creazione della tabella di riepilogo}
+\begin{lstlisting}
+CREATE TABLE IF NOT EXISTS customer_payment_count (
+    customer_id INT PRIMARY KEY,
+    payment_count INT DEFAULT 0
+);
+
+\end{lstlisting}
+
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Soluzione Esercizio 2: Conteggio dei Pagamenti per Cliente}
+
+\scriptsize
+
+\vspace{-1cm}
+
+\textbf{Step 2: Creazione del trigger}
+\begin{lstlisting}
+DELIMITER \\
+
+CREATE TRIGGER after_insert_payment_count
+AFTER INSERT ON payment
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT * FROM customer_payment_count WHERE customer_id = NEW.customer_id) THEN
+        UPDATE customer_payment_count
+        SET payment_count = payment_count + 1
+        WHERE customer_id = NEW.customer_id;
+    ELSE
+        INSERT INTO customer_payment_count(customer_id, payment_count)
+        VALUES (NEW.customer_id, 1);
+    END IF;
+END\\
+
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Esercizio 3: Impedire la Cancellazione di Staff Attivi}
+\consegnaTriggersExThree
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Soluzione Esercizio 3: Impedire la Cancellazione di Staff Attivi}
+
+\textbf{Step 1: Creazione della tabella di archiviazione}
+\begin{lstlisting}
+CREATE TABLE IF NOT EXISTS archived_customers (
+    customer_id INT,
+    store_id TINYINT,
+    first_name VARCHAR(45),
+    last_name VARCHAR(45),
+    email VARCHAR(50),
+    address_id SMALLINT,
+    active BOOLEAN,
+    create_date DATETIME,
+    archive_date DATETIME
+);
+
+\end{lstlisting}
+
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers}
+\framesubtitle{Soluzione Esercizio 3: Impedire la Cancellazione di Staff Attivi}
+
+\vspace{-.5cm}
+\small
+\textbf{Step 2: Creazione del trigger}
+\begin{lstlisting}
+DELIMITER \\
+CREATE TRIGGER before_delete_customer_archive
+BEFORE DELETE ON customer
+FOR EACH ROW
+BEGIN
+    INSERT INTO archived_customers (
+        customer_id, store_id, first_name, last_name, email,
+        address_id, active, create_date, archive_date
+    )
+    VALUES (
+        OLD.customer_id, OLD.store_id, OLD.first_name, OLD.last_name, OLD.email,
+        OLD.address_id, OLD.active, OLD.create_date, NOW()
+    );
+END\\
+DELIMITER ;
+\end{lstlisting}
+\end{frame}

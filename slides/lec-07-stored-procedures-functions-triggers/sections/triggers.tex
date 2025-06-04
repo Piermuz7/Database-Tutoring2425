@@ -1,0 +1,215 @@
+\begin{frame}[fragile]{Triggers}
+\vspace{-.7cm}
+\begin{minipage}{.85\textwidth}
+\begin{block}{Trigger}
+Un \textbf{trigger} \`e un oggetto del database che viene automaticamente eseguito in risposta a determinati eventi che si verificano su una tabella o una vista.
+
+In altre parole, un trigger \`e una SP che viene attivata automaticamente quando si verificano eventi specifici nel database.
+\end{block}
+\end{minipage}
+
+\vspace{.2cm}
+
+I trigger:
+\begin{itemize}[<+->]
+    \item consentono l'esecuzione di istruzioni SQL quando si verificano eventi specifici del database, ad esempio quando qualcuno aggiunge, modifica o rimuove dati.
+    \item sono comunemente utilizzati per mantenere l'integrit\`a dei dati, tracciare le modifiche e applicare le regole di business automaticamente, senza bisogno di input manuali.
+    \item permettono agli sviluppatori di automatizzare le attivit\`a, garantire la coerenza dei dati e mantenere una registrazione accurata delle attivit\`a del database.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}{Triggers}
+    \begin{itemize}
+        \item I DBMS che supportano la programmazione basata su regole possono creare basi di dati che sono dette \textbf{basi di dati attive};
+        \item Le istruzioni vengono dette ``triggers'' (o regole attive) e vengono interpretate dal processore delle regole del DBMS;
+        \item I trigger possono essere:
+            \begin{itemize}
+                \item \textbf{esterni}: definiti dal Database Administrator (DBA) o dagli sviluppatori applicativi;
+                \item \textbf{interni}: definiti dal DBMS stesso (non visibili all'utente).
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+%
+\begin{frame}{Triggers: Evento-Condizione-Azione}
+    \begin{itemize}
+        \item Paradigma Evento-Condizione-Azione (ECA):
+            \begin{itemize}
+                \item \textbf{Evento}: un evento che si verifica nel database, come l'inserimento, l'aggiornamento o la cancellazione di dati.
+                Quando si verifica un evento, il trigger viene \textbf{attivato}.
+                \item \textbf{Condizione}: un predicato che deve essere soddisfatta affinch\'e il trigger venga attivato.
+                Se il predicato \`e vero, il trigger entra nello stato \textbf{valutato}. Se il predicato \`e falso, il trigger resta nello stato \textbf{non valutato}.
+                \item \textbf{Azione}: l'azione da eseguire quando l'evento si verifica e la condizione \`e soddisfatta.
+                Il trigger entra nello stato \textbf{eseguito} e l'azione viene eseguita.
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+%
+\begin{frame}{Triggers: Regole Relazionali}
+    Esistono due modalit\`a:
+    \begin{itemize}
+        \item \textbf{Immediata}: l'azione viene eseguita immediatamente dopo che l'evento si verifica e la condizione \`e soddisfatta;
+        \begin{itemize}
+            \item \textbf{BEFORE}: l'azione viene eseguita prima che l'evento venga completato;
+            \item \textbf{AFTER}: l'azione viene eseguita dopo che l'evento \`e stato completato.
+        \end{itemize}
+        \item \textbf{Differita}: Il trigger si attiva solo alla fine della transazione, cio\`e quando viene dato il comando COMMIT.
+    \end{itemize}
+    e due livelli di granularit\`a:
+    \begin{itemize}
+        \item \textbf{row-level}: l'attivazione avviene per ogni tupla coinvolta nell'evento; \textbf{MySQL} \checkmark
+        \item \textbf{statement-level}: l'attivazione avviene per ogni primitiva SQL. \textbf{MySQL} \xmark
+    \end{itemize}
+
+    \begin{block}{Nota bene}
+        MySQL supporta solo trigger a livello \textbf{row-level}.
+        I trigger a livello \textbf{statement-level} non sono supportati.
+        I trigger possono essere definiti per gli eventi \textbf{INSERT}, \textbf{UPDATE} e \textbf{DELETE}.
+    \end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers: Sintassi SQL}
+\framesubtitle{Sintassi}
+\vspace{-.5cm}
+\begin{lstlisting}
+CREATE TRIGGER nome_trigger
+    { BEFORE |\textbar| AFTER } {INSERT |\textbar| DELETE |\textbar| UPDATE}
+
+    ON nome_tabella
+
+    [ REFERENCING reference ]
+
+    [ FOR EACH ROW |\textbar| STATEMENT ]
+
+    [ WHEN (condizione) ]
+
+    azione;
+\end{lstlisting}
+
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers: Esempio Sakila BEFORE INSERT}
+\framesubtitle{Esempio creazione trigger}
+\vspace{-.5cm}
+\textbf{Obiettivo}: prima di inserire un nuovo cliente, convertiamo automaticamente il \\last\_name in maiuscolo.
+
+\begin{lstlisting}
+    DELIMITER \\
+    CREATE TRIGGER before_insert_customer
+    BEFORE INSERT ON customer
+    FOR EACH ROW
+    BEGIN
+        SET NEW.last_name = UPPER(NEW.last_name);
+    END\\
+    DELIMITER ;
+\end{lstlisting}
+
+\vspace{-.2cm}
+
+\begin{block}{Osservazioni}
+    \small \textbf{NEW} \`e una parola chiave che rappresenta la nuova riga che verr\`a inserita nella tabella.
+    
+    \textbf{UPPER()} \`e una funzione SQL che converte il testo in maiuscolo.
+    Il trigger viene attivato prima dell'inserimento di una nuova riga nella tabella \texttt{customer}.
+\end{block}
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers: Esempio Sakila BEFORE INSERT}
+\framesubtitle{Esempio inserimento cliente}
+
+Inseriamo un nuovo cliente nella tabella customer:
+\begin{lstlisting}
+INSERT INTO customer (store_id,first_name,last_name,email,address_id,active,create_date)
+VALUES (1,'Mario','rossi','mario.rossi@example.com',5,1,NOW());
+\end{lstlisting}
+
+Verifichiamo che il trigger abbia convertito il last\_name in maiuscolo:
+\begin{lstlisting}
+SELECT * FROM customer
+WHERE email = 'mario.rossi@example.com';
+
+\end{lstlisting}
+
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers: Esempio Sakila AFTER UPDATE}
+\framesubtitle{Esempio creazione trigger}
+\vspace{-.5cm}
+\textbf{Obiettivo}: registrare ogni modifica all'importo (amount) di un pagamento, salvando le informazioni nella tabella payment\_audit.
+
+\begin{lstlisting}
+CREATE TABLE IF NOT EXISTS payment_audit (
+    payment_id INT,
+    old_amount DECIMAL(5,2),
+    new_amount DECIMAL(5,2),
+    changed_at DATETIME
+);
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers: Esempio Sakila AFTER UPDATE}
+\framesubtitle{Esempio creazione trigger}
+\vspace{-.5cm}
+
+\begin{lstlisting}
+DELIMITER \\
+
+CREATE TRIGGER after_update_payment
+AFTER UPDATE ON payment
+FOR EACH ROW
+BEGIN
+    IF OLD.amount <> NEW.amount THEN
+        INSERT INTO payment_audit(payment_id, old_amount, new_amount, changed_at)
+        VALUES (OLD.payment_id, OLD.amount, NEW.amount, NOW());
+    END IF;
+END\\
+
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers: Esempio Sakila AFTER UPDATE}
+\framesubtitle{Esempio aggiornamento pagamento}
+\vspace{-.5cm}
+
+Controlliamo se esiste un pagamento da aggiornare:
+\begin{lstlisting}
+    SELECT payment_id, amount
+    FROM payment
+    WHERE amount > 5
+    LIMIT 1;
+\end{lstlisting}
+
+Se esiste (supponiamo payment\_id = 3), aggiorniamo l'importo del pagamento:
+\begin{lstlisting}
+    UPDATE payment
+    SET amount = 9.99
+    WHERE payment_id = 3;
+\end{lstlisting}
+
+Verifichiamo che il trigger abbia registrato la modifica:
+\begin{lstlisting}
+    SELECT * FROM payment_audit
+    WHERE payment_id = 3;
+\end{lstlisting}
+
+\end{frame}
+%
+\begin{frame}[fragile]{Triggers: Comandi utili}
+
+Per visualizzare i \textbf{trigger definiti} nel database:
+\begin{lstlisting}
+    SHOW TRIGGERS;
+\end{lstlisting}
+
+Per \textbf{eliminare} un trigger:
+\begin{lstlisting}
+    DROP TRIGGER IF EXISTS nome_trigger;
+\end{lstlisting}
+
+Per visualizzare il \textbf{codice sorgente} di un trigger:
+\begin{lstlisting}
+    SHOW CREATE TRIGGER nome_trigger;
+\end{lstlisting}
+
+\end{frame}
+%

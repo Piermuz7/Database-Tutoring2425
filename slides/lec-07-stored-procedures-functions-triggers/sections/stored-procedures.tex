@@ -1,0 +1,214 @@
+\begin{frame}[fragile]{Stored Procedures (SPs)}
+\vspace{-.7cm}
+\begin{minipage}{.85\textwidth}
+\begin{block}{Stored Procedure}
+Una \textbf{stored procedure (SP)} (procedura memorizzata) \`e un codice SQL preparato che pu\`o essere salvato e riutilizzato pi\`u volte.
+\end{block}
+\end{minipage}
+
+\vspace{.2cm}
+
+\begin{itemize}[<+->]
+    \item SP = insieme di istruzioni SQL raggruppate per eseguire un compito specifico;
+    \item Le SPs possono essere richiamate da:
+        \begin{itemize}
+            \item utenti
+            \item applicazioni
+            \item o altre procedure
+        \end{itemize}
+        \item Le SPs sono essenziali per automatizzare le attivit\`a del database, migliorare l'efficienza e ridurre la ridondanza.
+        Incapsulando la logica all'interno delle SPs, gli sviluppatori possono semplificare il flusso di lavoro e applicare regole aziendali coerenti tra pi\`u applicazioni e sistemi.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs}
+\framesubtitle{Sintassi}
+\vspace{-1cm}
+La sintassi per creare una SP varia a seconda del DBMS, ma in generale segue questo schema:
+
+\begin{lstlisting}
+DELIMITER //
+CREATE PROCEDURE nome_procedura
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+BEGIN
+statement_sql
+END //
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+|\colorbox{magenta!40}{DELIMITER //}|
+CREATE PROCEDURE nome_procedura
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+BEGIN
+statement_sql
+END //
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+    \begin{block}{Delimitatore}
+    Si tratta di un carattere speciale che pu\`o essere utilizzato per terminare un'istruzione SQL.
+    Questo carattere speciale pu`o essere $//$, $\$\$$, $@@$, ecc.
+    Separa le singole istruzioni all'interno di uno script, di una query o di una stored procedure pi\`u grandi, consentendo a MySQL di interpretarle ed eseguirle correttamente.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+DELIMITER //
+|\colorbox{magenta!40}{CREATE PROCEDURE nome\_procedura}|
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+BEGIN
+statement_sql
+END //
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+    \begin{block}{CREATE PROCEDURE}
+    Questa istruzione viene utilizzata per creare una nuova stored procedure nel database.
+    Il nome della procedura deve essere un identificatore univoco all'interno del database.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE PROCEDURE nome_procedura
+|\colorbox{magenta!40}{(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)}|
+BEGIN
+statement_sql
+END //
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+    \scriptsize \begin{block}{Parametri}
+    I parametri sono opzionali e possono essere utilizzati per passare valori alla procedura.
+    
+    Possono essere di tipo:
+    \begin{itemize}
+        \item \textbf{IN}: il valore viene passato alla procedura, ma non pu\`o essere modificato all'interno della procedura;
+        \item \textbf{OUT}: il valore pu\`o essere modificato all'interno della procedura e il risultato viene restituito al chiamante;
+        \item \textbf{INOUT}: il valore viene passato alla procedura e pu\`o essere modificato all'interno della procedura.
+    \end{itemize}
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE PROCEDURE nome_procedura
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+|\colorbox{magenta!40}{BEGIN}|
+statement_sql
+|\colorbox{magenta!40}{END //}|
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+    \begin{block}{BEGIN ... END}
+    L'istruzione \texttt{BEGIN} indica l'inizio del blocco di codice della procedura, mentre \texttt{END} indica la fine del blocco.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Osservazioni}
+\framesubtitle{Sintassi}
+\vspace{-.8cm}
+\begin{lstlisting}
+DELIMITER //
+CREATE PROCEDURE nome_procedura
+(param1 tipoDato, param2 tipoDato, ..., paramN tipoDato)
+BEGIN
+|\colorbox{magenta!40}{statement\_sql}|
+END //
+\end{lstlisting}
+\begin{minipage}{\textwidth}
+    \begin{block}{Statement SQL}
+    All'interno del blocco \texttt{BEGIN ... END}, si possono inserire una o pi\`u istruzioni SQL che definiscono la logica della procedura.
+    
+    Queste istruzioni possono includere operazioni di selezione, inserimento, aggiornamento o cancellazione di dati, nonch\'e altre operazioni di gestione del database.
+    \end{block}
+    \end{minipage}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Vantaggi}
+    \begin{itemize}[<+->]
+        \item \textbf{Riutilizzabilit\`a}: le SPs possono essere richiamate pi\`u volte, riducendo la necessit\`a di riscrivere lo stesso codice SQL in diverse parti dell'applicazione.
+        \item \textbf{Prestazioni}: le SPs possono migliorare le prestazioni del database, poich\'e il codice SQL viene compilato e ottimizzato una sola volta, riducendo il tempo di esecuzione.
+        \item \textbf{Sicurezza}: le SPs possono essere utilizzate per limitare l'accesso ai dati, consentendo agli utenti di eseguire solo determinate operazioni senza concedere loro accesso diretto alle tabelle del database.
+        \item \textbf{Manutenibilit\`a}: le SPs possono semplificare la manutenzione del codice, poich\'e le modifiche alla logica della procedura possono essere apportate in un unico punto, senza dover aggiornare pi\`u parti dell'applicazione.
+        \item \ldots
+    \end{itemize}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Esempio Sakila con Parametro di Input}
+\framesubtitle{Esempio di creazione di una SP}
+La seguente SP restituisce tutti i film noleggiati da un cliente avente ID specificato:
+\small 
+\begin{lstlisting}
+DELIMITER \\
+
+CREATE PROCEDURE getCustomerRentals(IN cust_id INT)
+BEGIN
+    SELECT f.title, r.rental_date
+    FROM rental r
+    JOIN inventory i ON r.inventory_id = i.inventory_id
+    JOIN film f ON i.film_id = f.film_id
+    WHERE r.customer_id = cust_id
+    ORDER BY r.rental_date DESC;
+END \\
+
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Esempio Sakila con Parametro di Input}
+\framesubtitle{Esempio di chiamata di una SP}
+Per richiamare la SP appena creata, si utilizza la seguente sintassi:
+\small 
+\begin{lstlisting}
+CALL getCustomerRentals(1);
+
+oppure
+
+SET @cust_id = 1;
+CALL getCustomerRentals(@cust_id);
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{SPs: Esempio Sakila con Parametro di Input e Output}
+\framesubtitle{Esempio di creazione di una SP}
+La seguente SP restituisce il numero di noleggi effettuati da un cliente avente ID specificato:
+\small
+\begin{lstlisting}
+DELIMITER \\
+CREATE PROCEDURE getCustomerRentalCount(IN cust_id INT,
+OUT rental_count INT)
+BEGIN
+    SELECT COUNT(*)
+    INTO rental_count
+    FROM rental
+    WHERE customer_id = cust_id;
+END \\
+DELIMITER ;
+\end{lstlisting}
+\end{frame}
+%
+\begin{frame}[fragile]{SPs: Esempio Sakila con Parametro di Input e Output}
+\framesubtitle{Esempio di chiamata di una SP}
+Per richiamare la SP appena creata, si utilizza la seguente sintassi:
+\small 
+\begin{lstlisting}
+SET @cust_id = 1;
+CALL getCustomerRentalCount(@cust_id, @rental_count);
+
+SELECT @cust_id AS 'ID cliente',
+@rental_count AS 'numero di noleggi effettuati';
+\end{lstlisting}
+\end{frame}
