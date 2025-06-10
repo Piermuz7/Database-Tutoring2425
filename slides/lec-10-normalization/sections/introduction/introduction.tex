@@ -554,11 +554,7 @@ Un database \`e in 1NF se ogni tabella rispetta le propriet\`a precedentemente e
 La tabella \`e in 1NF?
 \pause
 
-NO!
-\begin{itemize}[<+->]
-    \item tutte le righe della tabella non contengono lo stesso numero di colonne;
-    \item non tutti i valori che compaiono nelle colonne sono dello stesso tipo (es. Tipologia)
-\end{itemize}
+NO! tutte le righe della tabella non contengono lo stesso numero di colonne;
 \end{frame}
 %
 \begin{frame}{Prima Forma Normale (1NF)}
@@ -623,7 +619,7 @@ Si.
 Manca qualcosa?
 
 \pause
-Non \`e stat definita la chiave primaria della relazione\ldots
+Non \`e stata definita la chiave primaria della relazione\ldots
 \end{frame}
 %
 \begin{frame}{Prima Forma Normale (1NF)}
@@ -737,7 +733,7 @@ Applicando l'algoritmo di scomposizione:
             \item il determinante della dipendenza funzionale \`e la chiave primaria della tabella definita in \ref{step:2nf1}:
             \\\textbf{Negozi}(\underline{Magazzino}, IndirizzoMagazzino)
             \item si costruisce una seconda relazione rimuovendo dalla tabella di partenza tutti gli attributi che sono determinati dalla dipendenza funzionale considerata:
-            \\\textbf{Inventario}(\underline{Prodotto}, Magazzino, Quantita)
+            \\\textbf{Inventario}(\underline{Prodotto}, \underline{Magazzino}, Quantita)
         \end{enumerate}
         \end{minipage}
         \item L'algoritmo termina poich\`e tutte le tabelle sono in 2NF.
@@ -791,8 +787,28 @@ Applicando l'algoritmo di scomposizione:
     \begin{equation*}
     \hspace{1cm} \text{G} \rightarrow \text{CP}
 \end{equation*}}
-    \only<4>{
-    \begin{table}[h]
+\end{minipage}
+\end{frame}
+
+\begin{frame}{Seconda Forma Normale (2NF)}
+\begin{minipage}[t]{0.45\textwidth}
+    \tiny
+    \begin{tabular}{| p{1.5cm} | p{2cm} | p{2cm} | p{1.5cm} |}
+        \hline
+        \rowcolor{cyan!30} \textbf{\underline{GIOCO}} & \textbf{\underline{PIATTAFORMA}} & \textbf{PUBBLICAZIONE} \\ \hline
+        Dragon Ball Z: Budokai Tenkaichi & PS2 & 6/10/2005 \\ \hline
+        Dragon Ball Z: Budokai & PS2 & 3/2/2003 \\ \hline
+        Dragon Ball Z: Budokai & GameCube & 13/2/2003 \\ \hline
+        Dragon Ball Z: The Legacy of Goku & GBA & 20/6/2002 \\ \hline
+        Dragon Ball Z: Ultimate Tenkaichi & PS3 & 25/10/2011 \\ \hline
+        Dragon Ball Z: Ultimate Tenkaichi & Xbox360 & 1/11/2011 \\ \hline
+        Dragon Ball Z: Budokai Tenkaichi 3 & PS2 & 4/11/2007 \\ \hline
+        Dragon Ball Z: Budokai Tenkaichi 3 & Wii & 10/11/2007 \\ \hline
+    \end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\begin{table}[h]
     \centering
     \scriptsize
     \vspace{-3cm}
@@ -806,14 +822,14 @@ Applicando l'algoritmo di scomposizione:
         Dragon Ball Z: Budokai Tenkaichi 3 & Namco Bandai \\ \hline
     \end{tabular}
 \end{table}
-    }
 \end{minipage}
 \end{frame}
+
 %
 \begin{frame}{Terza Forma Normale (3NF)}
 \vspace{-1.5cm}
 \begin{minipage}{0.9\textwidth}
-Una relazione \`e in \textbf{terza normale (3NF)} quando \`e in 2NF e TUTTI gli attributi non-chiave (non primi) dipendono direttamente dalla chiave, cio\`e non possiede attributi che dipendono soltanto da una parte della chiave, cio\`e non attributi non-chiave che dipendono da altri attributi non-chiave.
+Una relazione \`e in \textbf{terza normale (3NF)} quando \`e in 2NF e TUTTI gli attributi non-chiave (non primi) dipendono direttamente dalla chiave, cio\`e non possiede attributi che dipendono soltanto da una parte della chiave, cio\`e attributi non-chiave che dipendono da altri attributi non-chiave.
 \end{minipage}
 \pause
 
@@ -988,7 +1004,7 @@ Una dipendenza transitiva si A $ \rightarrow $ B si verifica quando:
         \hline
         \rowcolor{cyan!30} \textbf{\underline{ALLENAMENTO}} & \textbf{\underline{MAESTRO}} \\ \hline
         Arti Marziali & Muten \\ \hline
-        Gravità maggiore & Re Kaioh \\ \hline
+        Gravit\`a maggiore & Re Kaioh \\ \hline
         Risveglio potere & Kaiohshin il sommo \\ \hline
         Arti Marziali & Condor \\ \hline
     \end{tabular}
