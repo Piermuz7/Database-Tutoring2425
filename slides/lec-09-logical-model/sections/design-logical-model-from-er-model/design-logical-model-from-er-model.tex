@@ -31,7 +31,7 @@ Questa operazione si divide in due fasi:
     \end{columns}
 \end{frame}
 %
-\begin{frame}{Ristrutturazion: Fase 1}
+\begin{frame}{Ristrutturazione: Fase 1}
 \textbf{1) Analisi delle ridondanze}
 \\\vspace{2em}
 In uno schema ER le ridondanze sono le presenze ripetute di attributi che possono essere ricavate da altri.
@@ -53,7 +53,7 @@ In uno schema ER le ridondanze sono le presenze ripetute di attributi che posson
     \end{figure}}
 \end{frame}
 %
-\begin{frame}{Ristrutturazion: Fase 2}
+\begin{frame}{Ristrutturazione: Fase 2}
 \textbf{2) Partizionamento/accorpamento di entit\`a e associazioni}
 \\\vspace{2em}
 Gli accessi ad una entit\`a possono essere ridotti separando o raggruppando degli attributi.
@@ -63,7 +63,7 @@ Gli accessi ad una entit\`a possono essere ridotti separando o raggruppando degl
     \end{figure}
 \end{frame}
 %
-\begin{frame}{Ristrutturazion: Fase 3}
+\begin{frame}{Ristrutturazione: Fase 3}
 \textbf{3) Eliminazione delle generalizzazioni}
 \\\vspace{2em}
 Il modello logico del DB non permette la presenza di generalizzazioni, vanno quindi eliminate. Ci sono 3 diversi metodi di eliminazione e vanno scelti in base alle esigenze.
@@ -95,7 +95,7 @@ Il modello logico del DB non permette la presenza di generalizzazioni, vanno qui
     \end{columns}
 \end{frame} 
 %
-\begin{frame}{Ristrutturazion: Fase 3}
+\begin{frame}{Ristrutturazione: Fase 3}
 \textbf{3) Eliminazione delle generalizzazioni}
 \\\vspace{2em}
 \begin{center}
@@ -117,7 +117,7 @@ Il modello logico del DB non permette la presenza di generalizzazioni, vanno qui
     \end{columns}
 \end{frame}
 %
-\begin{frame}{Ristrutturazion: Fase 3}
+\begin{frame}{Ristrutturazione: Fase 3}
 \textbf{3) Eliminazione delle generalizzazioni}
 \\\vspace{2em}
 \begin{center}
@@ -139,14 +139,14 @@ Il modello logico del DB non permette la presenza di generalizzazioni, vanno qui
     \end{columns}
 \end{frame}
 %
-\begin{frame}{Ristrutturazion: Fase 4}
+\begin{frame}{Ristrutturazione: Fase 4}
 \vspace{-3cm}
 \textbf{4) scelta degli identificatori primari}
 \\\vspace{2em}
 Le chiavi primarie devono essere non nulle e non esterne. Sono da preferire chiavi non composte o almeno composte da meno attributi possibile.
 \end{frame}
 %
-\begin{frame}{Ristrutturazion: Fase 5}
+\begin{frame}{Ristrutturazione: Fase 5}
 \textbf{5) Normalizzazione degli attributi}
 \\\vspace{2em}
 Gli attributi composti devono essere rimossi.
@@ -170,7 +170,7 @@ Gli attributi composti devono essere rimossi.
     \end{columns}
 \end{frame}
 %
-\begin{frame}{Ristrutturazion: Fase 5}
+\begin{frame}{Ristrutturazione: Fase 5}
 \textbf{5) Normalizzazione degli attributi}
 \\\vspace{2em}
 Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
@@ -200,8 +200,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{DIRETTORE} & (\underline{ID}$^{\#}$, nome, cognome) \\
-            \textbf{DIPARTIMENTO} & (\underline{ID}, nome, sede, direttore$^{\#}$)
+            \textbf{DIRETTORI} & (\underline{ID}$^{\#}$, nome, cognome) \\
+            \textbf{DIPARTIMENTI} & (\underline{ID}, nome, sede, direttore$^{\#}$)
         \end{tabular}
     };
 \end{tikzpicture}
@@ -210,8 +210,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \uncover<2->{\begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt,scale = 0.9] {
         \begin{tabular}{ll}
-            \textbf{DIRETTORE} & (\underline{ID}, nome, cognome, dipartimento$^{\#}$) \\
-            \textbf{DIPARTIMENTO} & (\underline{ID}$^{\#}$, nome, sede)
+            \textbf{DIRETTORI} & (\underline{ID}, nome, cognome, dipartimento$^{\#}$) \\
+            \textbf{DIPARTIMENTI} & (\underline{ID}$^{\#}$, nome, sede)
         \end{tabular}
     };
 \end{tikzpicture}}
@@ -228,8 +228,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{DIRETTORE} & (\underline{ID}$^{\#}$, nome, cognome) \\
-            \textbf{DIPARTIMENTO} & (\underline{ID}, nome, sede, dataInizio, direttore$^{\#}$)
+            \textbf{DIRETTORI} & (\underline{ID}$^{\#}$, nome, cognome) \\
+            \textbf{DIPARTIMENTI} & (\underline{ID}, nome, sede, dataInizio, direttore$^{\#}$)
         \end{tabular}
     };
 \end{tikzpicture}
@@ -238,8 +238,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \uncover<2->{\begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt,scale = 0.9] {
         \begin{tabular}{ll}
-            \textbf{DIRETTORE} & (\underline{ID}, nome, cognome, dataInizio, dipartimento$^{\#}$) \\
-            \textbf{DIPARTIMENTO} & (\underline{ID}$^{\#}$, nome, sede)
+            \textbf{DIRETTORI} & (\underline{ID}, nome, cognome, dataInizio, dipartimento$^{\#}$) \\
+            \textbf{DIPARTIMENTI} & (\underline{ID}$^{\#}$, nome, sede)
         \end{tabular}
     };
 \end{tikzpicture}}
@@ -257,8 +257,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
     \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{USER} & (\underline{ID}$^{\#}$, username) \\
-            \textbf{COMMENTO} & (\underline{ID}, testo, user$^{\#}$)
+            \textbf{USERS} & (\underline{ID}$^{\#}$, username) \\
+            \textbf{COMMENTI} & (\underline{ID}, testo, user$^{\#}$)
         \end{tabular}
     };
 \end{tikzpicture}
@@ -277,7 +277,7 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
     \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{PERSONA} & (\underline{nome}, \underline{cognome}, \underline{dataNascita}, \underline{citta}$^{\#}$, tel. indirizzo) \\
+            \textbf{PERSONE} & (\underline{nome}, \underline{cognome}, \underline{dataNascita}, \underline{citta}$^{\#}$, tel. indirizzo) \\
             \textbf{CITTA} & (\underline{ID}$^{\#}$, nome)
         \end{tabular}
     };
@@ -286,7 +286,7 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
     \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{PERSONA} & (\underline{nome}, \underline{cognome}, \underline{dataNascita}, \underline{CP}$^{\#}$, \underline{nomeCitta}$^{*}$, tel. indirizzo) \\
+            \textbf{PERSONE} & (\underline{nome}, \underline{cognome}, \underline{dataNascita}, \underline{CP}$^{\#}$, \underline{nomeCitta}$^{*}$, tel. indirizzo) \\
             \textbf{CITTA} & (\underline{CodicePostale}$^{\#}$, \underline{nome}$^{*}$)
         \end{tabular}
     };
@@ -306,8 +306,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{USER} & (\underline{ID}$^{\#}$, username) \\
-            \textbf{POST}& (\underline{ID}$^*$, data)\\
+            \textbf{USERS} & (\underline{ID}$^{\#}$, username) \\
+            \textbf{POSTS}& (\underline{ID}$^*$, data)\\
             \textbf{LIKE} & (\underline{USER}$^{\#}$, \underline{POST}$^{*}$)
         \end{tabular}
     };
@@ -326,7 +326,7 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \uncover<2->{\begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{USER} & (\underline{ID}$^{\#*}$, username) \\
+            \textbf{USERS} & (\underline{ID}$^{\#*}$, username) \\
             \textbf{FOLLOW}& (\underline{IDfollower}$^\#$, \underline{IDfollowed}$^*$)\\
         \end{tabular}
     };
