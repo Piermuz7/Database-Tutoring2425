@@ -200,8 +200,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{DIRETTORE} & (\underline{ID}$^{\#}$, nome, cognome) \\
-            \textbf{DIPARTIMENTO} & (\underline{ID}, nome, sede, direttore$^{\#}$)
+            \textbf{DIRETTORI} & (\underline{ID}$^{\#}$, nome, cognome) \\
+            \textbf{DIPARTIMENTI} & (\underline{ID}, nome, sede, direttore$^{\#}$)
         \end{tabular}
     };
 \end{tikzpicture}
@@ -210,8 +210,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \uncover<2->{\begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt,scale = 0.9] {
         \begin{tabular}{ll}
-            \textbf{DIRETTORE} & (\underline{ID}, nome, cognome, dipartimento$^{\#}$) \\
-            \textbf{DIPARTIMENTO} & (\underline{ID}$^{\#}$, nome, sede)
+            \textbf{DIRETTORI} & (\underline{ID}, nome, cognome, dipartimento$^{\#}$) \\
+            \textbf{DIPARTIMENTI} & (\underline{ID}$^{\#}$, nome, sede)
         \end{tabular}
     };
 \end{tikzpicture}}
@@ -228,8 +228,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{DIRETTORE} & (\underline{ID}$^{\#}$, nome, cognome) \\
-            \textbf{DIPARTIMENTO} & (\underline{ID}, nome, sede, dataInizio, direttore$^{\#}$)
+            \textbf{DIRETTORI} & (\underline{ID}$^{\#}$, nome, cognome) \\
+            \textbf{DIPARTIMENTI} & (\underline{ID}, nome, sede, dataInizio, direttore$^{\#}$)
         \end{tabular}
     };
 \end{tikzpicture}
@@ -238,8 +238,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \uncover<2->{\begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt,scale = 0.9] {
         \begin{tabular}{ll}
-            \textbf{DIRETTORE} & (\underline{ID}, nome, cognome, dataInizio, dipartimento$^{\#}$) \\
-            \textbf{DIPARTIMENTO} & (\underline{ID}$^{\#}$, nome, sede)
+            \textbf{DIRETTORI} & (\underline{ID}, nome, cognome, dataInizio, dipartimento$^{\#}$) \\
+            \textbf{DIPARTIMENTI} & (\underline{ID}$^{\#}$, nome, sede)
         \end{tabular}
     };
 \end{tikzpicture}}
@@ -257,8 +257,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
     \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{USER} & (\underline{ID}$^{\#}$, username) \\
-            \textbf{COMMENTO} & (\underline{ID}, testo, user$^{\#}$)
+            \textbf{USERS} & (\underline{ID}$^{\#}$, username) \\
+            \textbf{COMMENTI} & (\underline{ID}, testo, user$^{\#}$)
         \end{tabular}
     };
 \end{tikzpicture}
@@ -277,7 +277,7 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
     \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{PERSONA} & (\underline{nome}, \underline{cognome}, \underline{dataNascita}, \underline{citta}$^{\#}$, tel. indirizzo) \\
+            \textbf{PERSONE} & (\underline{nome}, \underline{cognome}, \underline{dataNascita}, \underline{citta}$^{\#}$, tel. indirizzo) \\
             \textbf{CITTA} & (\underline{ID}$^{\#}$, nome)
         \end{tabular}
     };
@@ -286,7 +286,7 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
     \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{PERSONA} & (\underline{nome}, \underline{cognome}, \underline{dataNascita}, \underline{CP}$^{\#}$, \underline{nomeCitta}$^{*}$, tel. indirizzo) \\
+            \textbf{PERSONE} & (\underline{nome}, \underline{cognome}, \underline{dataNascita}, \underline{CP}$^{\#}$, \underline{nomeCitta}$^{*}$, tel. indirizzo) \\
             \textbf{CITTA} & (\underline{CodicePostale}$^{\#}$, \underline{nome}$^{*}$)
         \end{tabular}
     };
@@ -306,8 +306,8 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{USER} & (\underline{ID}$^{\#}$, username) \\
-            \textbf{POST}& (\underline{ID}$^*$, data)\\
+            \textbf{USERS} & (\underline{ID}$^{\#}$, username) \\
+            \textbf{POSTS}& (\underline{ID}$^*$, data)\\
             \textbf{LIKE} & (\underline{USER}$^{\#}$, \underline{POST}$^{*}$)
         \end{tabular}
     };
@@ -326,7 +326,7 @@ Gli attributi con cardinalit\`a devono essere trasformati in entit\`a
 \uncover<2->{\begin{tikzpicture}
     \node[draw=black, thick, inner sep=5pt, scale=0.9] {
         \begin{tabular}{ll}
-            \textbf{USER} & (\underline{ID}$^{\#*}$, username) \\
+            \textbf{USERS} & (\underline{ID}$^{\#*}$, username) \\
             \textbf{FOLLOW}& (\underline{IDfollower}$^\#$, \underline{IDfollowed}$^*$)\\
         \end{tabular}
     };
